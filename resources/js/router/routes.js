@@ -12,7 +12,19 @@ export default [
   { path: '/email/verify/:id', name: 'verification.verify', component: page('auth/verification/verify.vue') },
   { path: '/email/resend', name: 'verification.resend', component: page('auth/verification/resend.vue') },
 
+  // ------------- OUR ROUTES
+
   { path: '/home', name: 'home', component: page('home.vue') },
+
+  { path: '/collection/:id', name: 'collection', component: page('collection.vue') },
+
+  { path: '/collection/item/:id', name: 'item', component: page('item.vue') },
+
+
+  // --------------- / OUR ROUTES
+
+
+
   { path: '/settings',
     component: page('settings/index.vue'),
     children: [

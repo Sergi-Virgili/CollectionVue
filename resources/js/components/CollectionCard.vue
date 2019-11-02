@@ -2,13 +2,39 @@
 
 
     <div class="card ">
-        <div class="card-header title">{{collection.name}}</div>
-        <img class = "card-img-top"
-        v-on:click="goToCollection()"
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTb2uP4V6vxSK235Y88V8C8nQSoe13BnzWzs_VIzNLW2ppA1KeN&s" alt="">        <div class="footer">
+       <div v-on:click="deleteOnClick()"
+                v-if= "collection.author"
+                class="">
+                <DeleteButton
+                    :collection = 'collection'
+                    />
 
-            <!-- <div class="likes"><love-button :collection = 'collection'/></div> -->
 
+        </div>
+        <div class="card-header title">
+
+            {{collection.name}}
+             {{collection.id}}
+
+
+        </div>
+        <router-link :to="{name:'collection', params:{id: collection.id}}">
+          <img    class = "card-img-top"
+
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTb2uP4V6vxSK235Y88V8C8nQSoe13BnzWzs_VIzNLW2ppA1KeN&s" alt="">
+          </router-link>
+      <div class="footer">
+
+            <div class="likes">
+                <LoveComponent :collection = 'collection'></LoveComponent>
+            </div>
+            <div
+                v-if= "collection.author"
+                class="likes">
+                <EditButton :collection = 'collection' />
+
+
+            </div>
         </div>
     </div>
     <!-- <div class="card collection-card">
@@ -25,18 +51,35 @@
 </template>
 
 <script>
+import axios from 'axios'
+import LoveComponent from './buttons/LoveComponent'
+import EditButton from './buttons/EditButton'
+import DeleteButton from './buttons/DeleteButton'
+
+
 
 export default {
-    // components: [
-    //   love,
-    // ],
+
+    components: {
+      LoveComponent,
+      EditButton,
+      DeleteButton,
+
+    },
     props: ['collection'],
     methods: {
-        goToCollection(){
-            location.href='/app/collection/'+this.collection.id
+
+
+
+        deleteOnClick() {
+
+            axios.delete(`/api/collection/${this.collection.id}`)
+                    .then(this.$emit('delete'));
         }
+
     }
 }
+
 </script>
 
 <style scoped>

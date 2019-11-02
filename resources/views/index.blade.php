@@ -15,6 +15,8 @@ $config = [
   <title>{{ config('app.name') }}</title>
 
   <link rel="stylesheet" href="{{ mix('dist/css/app.css') }}">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
 </head>
 <body>
   <div id="app"></div>

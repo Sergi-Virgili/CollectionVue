@@ -1,9 +1,17 @@
 <template>
+<div>
     <div class="collection-list">
-        <CollectionCard v-for='collection in collections'
-            :key="collection.index"
-            :collection='collection' />
+        <CollectionCard
+            v-for='(collection, index) in collections'
+            :key="collection.id"
+            :collection='collection'
+            class=""
+            @delete = "deleteCollection(index)" />
+
+
     </div>
+
+</div>
     <!-- <CollectionCard /> -->
 
 </template>
@@ -11,42 +19,59 @@
 <script>
 import axios from 'axios'
 import CollectionCard from './CollectionCard'
-export default {
 
+export default {
+    props: {
+        categoryId: Number
+    },
     components: {
       CollectionCard,
     },
-    props: [],
+
     data()  {
         return {
             collections: []
         }
     },
     mounted() {
-        this.importCategoryData();
+
+        this.importCategoryData(this.categoryId);
+
+
+    },
+
+
+    watch: {
+        categoryId: function () {
+            this.importCategoryData(this.categoryId);
+        },
     },
     methods: {
-        importCategoryData(){
+
+        importCategoryData(id){
             axios.get(
-            `api/category/collections/1}`)
+            `/api/category/collections/${id}`)
                 .then( (response) =>
                 {
-                    console.log(response)
+
                     this.collections = response.data}
                 )
+        },
+        deleteCollection(index){
+            this.collections.splice(index,1)
         }
     }
 
 }
 </script>
 
-<style>
+<style lang='scss'>
 
     .collection-list {
-        width: 90%;
+       // width: 90%;
         margin: 0 auto;
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-columns:  1fr 1fr;
         gap:1em;
     }
 

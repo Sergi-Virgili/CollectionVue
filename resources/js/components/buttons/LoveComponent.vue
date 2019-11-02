@@ -13,7 +13,7 @@ export default {
 
         iLove() {
             //emit
-            alert('I love that')
+            //alert('I love that')
         }
     }
 }

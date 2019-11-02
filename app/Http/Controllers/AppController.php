@@ -40,31 +40,52 @@ class AppController extends Controller
     }
 
     public function apiCollectionsByCotegory(Category $category) {
-
-        //TODO IF AUTH ONLY USER CATEGORIES
-
         $collections = $category->collections;
 
-        // foreach ($categories as $category) {
-        //     $category['collections'] = $category->collections;
+        //TODO IF AUTH ONLY USER CATEGORIES
+        if (auth()->user()){
 
-        // }
 
+
+            foreach ($collections as $collection) {
+
+                $collection['author'] = false;
+                $collection['userLove'] = false;
+
+
+                if($collection->user->id == auth()->user()->id){
+
+                    $collection['author'] = true;
+
+                }
+
+                // if($collection->isCollectionLoveByUser(auth()->user())){
+
+                //      $collection['userLove'] = true;
+                //  }
+
+
+            }
+
+
+        }
         return response()->json($collections);
     }
 
-    public function apiCollectionShow(Collection $collection) {
+    public function destroy(Collection $collection)
+    {
 
-        //RETURN ITEMS FROM COLLECTION
+        $collection->delete();
+
+    }
+
+    public function Show($collection) {
+
+        $collection = Collection::all()->find($collection);
 
 
+        return response()->json($collection);
 
-        // foreach ($categories as $category) {
-        //     $category['collections'] = $category->collections;
-
-        // }
-
-        return $items;
     }
 
     public function apiCollectionsFromCategories(Array $categories){

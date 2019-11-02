@@ -12,8 +12,11 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::get('/', 'AppController@apiHome');
-Route::get('/category/collections/{category}', 'AppController@apiCollectionsByCotegory');
+
+
+// ------------
+
+
 
 Route::group(['middleware' => 'auth:api'], function () {
     Route::post('logout', 'Auth\LoginController@logout');
@@ -39,3 +42,12 @@ Route::group(['middleware' => 'guest:api'], function () {
     Route::post('oauth/{driver}', 'Auth\OAuthController@redirectToProvider');
     Route::get('oauth/{driver}/callback', 'Auth\OAuthController@handleProviderCallback')->name('oauth.callback');
 });
+
+Route::get('/', 'AppController@apiHome');
+
+Route::get('/category/collections/{category}', 'AppController@apiCollectionsByCotegory');
+
+Route::get('/collection/{callection}', 'AppController@Show');
+Route::get('/collection/item/{item}', 'AppController@show');
+
+Route::delete('/collection/{collection}', 'AppController@destroy');
