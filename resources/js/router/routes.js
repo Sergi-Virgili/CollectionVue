@@ -16,9 +16,16 @@ export default [
 
   { path: '/home', name: 'home', component: page('home.vue') },
 
-  { path: '/collection/:id', name: 'collection', component: page('collection.vue') },
+  { path: '/collection/:collectionId',
+    name: 'collection',
+    component: page('collection.vue'),
+      children: [
+        { path: 'item/:id', name: 'item', component: page('item.vue') }
 
-  { path: '/collection/item/:id', name: 'item', component: page('item.vue') },
+      ]
+  },
+
+  // { path: '/collection/item/:id', name: 'item', component: page('item.vue') },
 
 
   // --------------- / OUR ROUTES

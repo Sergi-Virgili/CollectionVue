@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h1 :key='item.id'>item: {{item.id}} {{item.name}} </h1>
+    <h3>item: {{item.id}} {{item.name}} </h3>
+
+
   </div>
 </template>
 
@@ -8,7 +10,7 @@
 import axios from 'axios'
 export default {
 
-  middleware: 'auth',
+  //middleware: 'auth',
 
   components: {
 
@@ -17,21 +19,22 @@ export default {
   data()  {
 
         return {
-          item: {}
+          item: {},
+          params: {}
         }
     },
-  beforeMount() {
-    this.item.id = this.$route.params.id
-    //alert(this.collection.id)
-  },
+
 
   mounted() {
+    this.item.id = this.$route.params.id
     this.getData()
+
   },
 
   methods: {
     getData() {
       axios.get(`/api/collection/item/${this.item.id}`)
+
         .then((response) => {
           this.item = response.data
         })

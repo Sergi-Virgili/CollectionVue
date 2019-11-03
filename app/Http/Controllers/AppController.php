@@ -82,7 +82,8 @@ class AppController extends Controller
     public function Show($collection) {
 
         $collection = Collection::all()->find($collection);
-
+        $items = $collection->items;
+        $collection['items'] = $items;
 
         return response()->json($collection);
 

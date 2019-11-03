@@ -47,7 +47,8 @@ Route::get('/', 'AppController@apiHome');
 
 Route::get('/category/collections/{category}', 'AppController@apiCollectionsByCotegory');
 
-Route::get('/collection/{callection}', 'AppController@Show');
-Route::get('/collection/item/{item}', 'AppController@show');
+Route::get('/collection/{callection}', 'AppController@show');
+
+Route::get('/collection/item/{item}', 'ItemController@show');
 
 Route::delete('/collection/{collection}', 'AppController@destroy');

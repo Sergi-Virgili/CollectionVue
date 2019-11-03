@@ -18,7 +18,7 @@
 
 
         </div>
-        <router-link :to="{name:'collection', params:{id: collection.id}}">
+        <router-link :to="{name:'collection', params:{collectionId: collection.id}}">
           <img    class = "card-img-top"
 
                   src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTb2uP4V6vxSK235Y88V8C8nQSoe13BnzWzs_VIzNLW2ppA1KeN&s" alt="">
