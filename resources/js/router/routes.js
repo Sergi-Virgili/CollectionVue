@@ -15,6 +15,7 @@ export default [
   // ------------- OUR ROUTES
 
   { path: '/home', name: 'home', component: page('home.vue') },
+  { path: '/my-collections', name: 'myCollections', component: page('myCollections.vue') },
   { path: '/edit_collection/:collectionId', name: 'collectionEdit', component: page('collectionEdit.vue') },
   { path: '/new_collection/:collectionId', name: 'collectionNew', component: page('collectionNew.vue') },
 

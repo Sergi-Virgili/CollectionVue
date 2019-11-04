@@ -49,6 +49,8 @@ Route::get('/category/collections/{category}', 'AppController@apiCollectionsByCo
 
 Route::get('/collection/{callection}', 'AppController@show');
 
+Route::get('/mycollections', 'CollectionController@myCollections');
+
 Route::get('/collection/item/{item}', 'ItemController@show');
 
 Route::delete('/collection/{collection}', 'AppController@destroy');

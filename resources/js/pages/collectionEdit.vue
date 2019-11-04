@@ -10,20 +10,28 @@
 
     <button @click="$refs.fileInput.click()">Pick Image</button>
     <button @click="onUpload">Upload</button>
+    
     <img v-if="url" :src="url" alt="">
-
-    <div v-for="item in collection.items" :key="item.id" class="item-list">
+    <img v-if="url" :src="url" alt="">
+    <div class="item-list">
+    <div v-for="item in collection.items" :key="item.id" >
 
       <router-link :to="'/collection/'+collection.id+'/item/'+item.id" class="card" >
 
-        <div class="card-header">{{collection.name}}</div>
-        <img class="card-img-top" src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Amiga500_system.jpg" alt="">
+        <div class="card-header">{{item.name}}</div>
+        <img 
+          class="card-img-top" 
+          src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Amiga500_system.jpg"
+          alt="">
+        <div class="card-footer">
 
-        <div class="card-body">{{collection.description}}</div>
+        </div>
+        <!-- <div class="card-body">{{collection.description}}</div> -->
 
       </router-link>
 
 
+    </div>
     </div>
     <!-- <div class="view_child"
 
@@ -38,6 +46,8 @@
 
 <script>
 import axios from 'axios'
+
+
 export default {
 
   middleware: 'auth',
@@ -62,7 +72,7 @@ export default {
 
   mounted() {
     this.collection.id = this.$route.params.collectionId
-     this.getData()
+     
     this.getData()
     this.params = this.$route.params
   },
@@ -111,7 +121,7 @@ export default {
 <style lang="scss" scoped>
   .view_child {
 
-    height: 200px;
+    // height: 200px;
   }
 
   .item-list {
@@ -119,7 +129,7 @@ export default {
 
       margin: 0 auto;
       display: grid;
-      grid-template-columns:  1fr 1fr 1fr;
+      grid-template-columns:  1fr 1fr;
       gap:1em;
 
   }
