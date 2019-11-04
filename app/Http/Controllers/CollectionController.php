@@ -87,14 +87,27 @@ class CollectionController extends Controller
      * @param  \App\Collection  $collection
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Collection $collection)
+    // public function update(Request $request, Collection $collection)
+    // {
+    //     if($request->image){
+    //         $newimage = new Image();
+    //         $newimage->storeImageCollection($request, $collection->id);
+    //         }
+    //         $collection->update($request->all());
+
+    //     return redirect('home/'.'Collections');
+    // }
+    public function update(Request $request, $id)
     {
+        $collection = Collection::find($id);
+        dd($request->image);
         if($request->image){
             $newimage = new Image();
             $newimage->storeImageCollection($request, $collection->id);
             }
             $collection->update($request->all());
-        return redirect('home/'.'Collections');
+
+        //return redirect('home/'.'Collections');
     }
 
     /**
@@ -115,12 +128,12 @@ class CollectionController extends Controller
         dd($request);
     }
     public function apiIndexAuth () {
-        
+
         $collections = auth()->user()->collections;
-        
+
         foreach ($collections as $collection){
             $collection['items'] = $collection->items;
-            
+
         }
         return $collections;
     }
@@ -135,7 +148,7 @@ class CollectionController extends Controller
     public function apiDelete (Collection $collection) {
 
         return $collection;
-        
+
 
     }
 }

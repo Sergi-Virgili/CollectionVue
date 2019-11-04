@@ -1,22 +1,21 @@
 <template>
   <div>
 
-    <h1>collection: {{collection.id}} {{collection.name}}</h1>
-
+    <h2>collection: {{collection.name}}</h2>
+    <img :src="collection.image" :alt="collection.name">
     <div v-for="item in collection.items" :key="item.id">
 
       <router-link :to="'/collection/'+collection.id+'/item/'+item.id" >link</router-link>
 
 
     </div>
-
-    <div class="view_child"
+    <!-- <div class="view_child"
 
       v-touch:swipe.left="swipeHandler">
-    <transition name="fade" mode="out-in">
+
       <router-view :key="this.$route.params.id+1"/>
-    </transition>
-    </div>
+
+    </div> -->
 
   </div>
 </template>

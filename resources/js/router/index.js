@@ -4,9 +4,12 @@ import Meta from 'vue-meta'
 import routes from './routes'
 import Router from 'vue-router'
 import { sync } from 'vuex-router-sync'
+import Vue2TouchEvents from 'vue2-touch-events'
+
 
 Vue.use(Meta)
 Vue.use(Router)
+Vue.use(Vue2TouchEvents)
 
 // The middleware for every page of the application.
 const globalMiddleware = ['locale', 'check-auth']
