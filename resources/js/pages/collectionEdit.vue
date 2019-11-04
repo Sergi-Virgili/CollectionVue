@@ -1,18 +1,74 @@
 <template>
   <div>
+    <div class="card"
+      >
+      <div class="card-header">
+        <input
+            v-model="collection.name"
+            class = "form-control" 
+            type="text" 
+            name = 'name'
+            
+            v-if='edit.title'
+            >
+        <h3 
+          v-if="!edit.title"
+         @click="editTitle()"
+          >
+          
 
-    <h2>collection: {{collection.name}}</h2>
-    <input
-      type="file"
-      @change="OnFileSelected"
-      style = "display:none"
-      ref ="fileInput">
+          {{collection.name}}
+          
+        </h3>
+          <div 
+            v-if="!edit.title"
+            @click="editTitle()">
+            <EditButton 
+              />
 
-    <button @click="$refs.fileInput.click()">Pick Image</button>
-    <button @click="onUpload">Upload</button>
-    
-    <img v-if="url" :src="url" alt="">
-    <img v-if="url" :src="url" alt="">
+          </div>
+          <div 
+            v-if="edit.title"
+            @click="editTitle()">
+            <p>X</p>
+
+          </div>
+        </div>
+      <input
+        type="file"
+        @change="OnFileSelected"
+        style = "display:none"
+        ref ="fileInput">
+
+      <button @click="$refs.fileInput.click()">Pick Image</button>
+      <button @click="onUpload">Upload</button>
+      
+      <div class="image-card"></div>
+      
+      <img v-if="url" :src="url" alt="">
+
+      <div class="card-body">
+        
+        <p>
+        {{collection.description}}
+        </p>
+        <div 
+            v-if="!edit.title"
+            @click="editDescription()">
+            <EditButton 
+              />
+
+          </div>
+          <div 
+            v-if="edit.title"
+            @click="editDescription()">
+            <p>X</p>
+
+          </div>
+        </div>
+
+    </div>
+
     <div class="item-list">
     <div v-for="item in collection.items" :key="item.id" >
 
@@ -46,6 +102,8 @@
 
 <script>
 import axios from 'axios'
+//import LoveComponent from './LoveComponent'
+import EditButton from '../components/buttons/EditButton'
 
 
 export default {
@@ -53,16 +111,21 @@ export default {
   middleware: 'auth',
 
   components: {
-
+  //  LoveComponent,
+    EditButton
   },
 
   data()  {
 
         return {
           collection: {},
+          LastCollection: {},
           params: {},
           fileSelected : null,
           url: null,
+          edit: {
+            title: false
+          }
         }
   },
   beforeMount() {
@@ -78,12 +141,32 @@ export default {
   },
 
   methods: {
+   
+    editTitle() {
+      if (this.edit.title ) {
+        this.onUpload()
+        this.edit.title = false
+        return null
+      }
+      this.edit.title = true
+      
+    },
+    editDescription(){
+      if (this.edit.description ) {
+        this.onUpload()
+        this.edit.description = false
+        return null
+      }
+      this.edit.description = true
+    
+    },
+
     getData() {
       axios.get(`/api/collection/${this.collection.id }`)
         .then((response) => {
           this.collection = response.data
-
-          console.log(this.collection)
+          this.lastCollection = this.collection
+         
         })
     },
     swipeHandler(direction) {
@@ -101,14 +184,13 @@ export default {
 
       let params = new FormData();
       params = {
-
-        image: this.fileSelected
+        name: this.collection.name,
+        
         }
 
-      axios.put(`/api/collection/${this.collection.id}`, params, { headers: {
-        'Content-Type': 'multipart/form-data'
-    }}
-    ).then((res)=>{})
+      axios.put(`/api/collection/${this.collection.id}`, params)
+    
+      .then((res)=>{})
     }
   }
 
@@ -131,6 +213,17 @@ export default {
       display: grid;
       grid-template-columns:  1fr 1fr;
       gap:1em;
+  }
 
+  .image-card {
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/c/c3/Amiga500_system.jpg");
+    height: 40vh;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+  }
+  .card-header {
+    display: flex;
+    justify-content: space-between;
   }
 </style>

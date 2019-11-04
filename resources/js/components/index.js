@@ -3,7 +3,6 @@ import Card from './Card'
 import Child from './Child'
 import Button from './Button'
 import Checkbox from './Checkbox'
-// import LoveComponent from './buttons/LoveComponent'
 
 import { HasError, AlertError, AlertSuccess } from 'vform'
 
@@ -15,7 +14,7 @@ import { HasError, AlertError, AlertSuccess } from 'vform'
   Checkbox,
   HasError,
   AlertError,
-  AlertSuccess
+  AlertSuccess,
 
   // CollectionList
 ].forEach(Component => {

@@ -1,6 +1,6 @@
 <template>
 <div>
-  <i class="fas fa-pen" ></i> 
+  <i class="fas fa-pen" v-on:click="edit()"></i> 
 </div>
 </template>
 
@@ -9,7 +9,9 @@ export default {
 
     methods: {
 
-        
+        edit() {
+            
+        }
     }
 }
 </script>
