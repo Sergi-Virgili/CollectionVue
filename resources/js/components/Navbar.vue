@@ -2,8 +2,10 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-white">
     <div class="container">
       <router-link :to="{ name: user ? 'home' : 'welcome' }" class="navbar-brand">
-        {{ appName }}
+        <!-- {{ appName }} -->
+        CoLeCT
       </router-link>
+
 
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false">
         <span class="navbar-toggler-icon" />
@@ -13,9 +15,10 @@
         <ul class="navbar-nav">
           <locale-dropdown />
           <li class="nav-item">
-            
-            
+
+
           </li>
+
         </ul>
 
         <ul class="navbar-nav ml-auto">
@@ -27,12 +30,15 @@
               <img :src="user.photo_url" class="rounded-circle profile-photo mr-1">
               {{ user.name }}
             </a>
+
             <div class="dropdown-menu">
+
+
               <router-link :to="{ name: 'settings.profile' }" class="dropdown-item pl-3">
                 <fa icon="cog" fixed-width />
                 {{ $t('settings') }}
               </router-link>
-              
+
 
               <div class="dropdown-divider" />
               <a href="#" class="dropdown-item pl-3" @click.prevent="logout">
@@ -53,7 +59,26 @@
                 {{ $t('register') }}
               </router-link>
             </li>
+
           </template>
+          <router-link :to="{ name: 'home' }" class="dropdown-item pl-3">
+              Home
+          </router-link>
+          <router-link :to="{ name: 'home' }" class="dropdown-item pl-3">
+              The Best
+          </router-link>
+          <router-link :to="{ name: 'myCollections' }" class="dropdown-item pl-3">
+              My Collections
+          </router-link>
+          <router-link :to="{ name: 'myCollections' }" class="dropdown-item pl-3">
+              My Categories
+          </router-link>
+          <router-link :to="{ name: 'myCollections' }" class="dropdown-item pl-3">
+              Add Collection
+          </router-link>
+          <router-link :to="{ name: 'myCollections' }" class="dropdown-item pl-3">
+              My Favorites
+          </router-link>
         </ul>
       </div>
     </div>

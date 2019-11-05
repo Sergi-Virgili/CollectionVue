@@ -72,6 +72,7 @@ class Image extends Model
 
     public function storeImageCollection($request, $id){
 
+
         DB::beginTransaction();
         try{
             //save image
@@ -79,11 +80,13 @@ class Image extends Model
         $newimage = new Image();
 
         //obtenemos el campo file definido en el formulario
-        $image = $request->file('image');
+       // $image = $request->file('image');
+        $image = $request->image;
 
         //obtenemos el nombre del archivo
-        $nombrearchivo = $image->getClientOriginalName();
-
+       // $nombrearchivo = $image->getClientOriginalName();
+        dd($nombrearchivo);
+        $nombrearchivo = 'file';
         //indicamos que queremos guardar un nuevo archivo en el disco local
         Storage::disk('local')->put($nombrearchivo,  \File::get($image));
 

@@ -100,10 +100,14 @@ class CollectionController extends Controller
     public function update(Request $request, $id)
     {
         $collection = Collection::find($id);
-        //dd($request->image);
+
+
         if($request->image){
+
             $newimage = new Image();
+
             $newimage->storeImageCollection($request, $collection->id);
+
             }
             $collection->update($request->all());
 
@@ -159,10 +163,10 @@ class CollectionController extends Controller
             foreach ($collections as $collection) {
 
                 $collection['author'] = true;
-            
-            
+
+
             }
-            return $collections; 
+            return $collections;
         }
     }
 }

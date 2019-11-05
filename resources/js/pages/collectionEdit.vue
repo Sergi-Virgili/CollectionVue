@@ -5,34 +5,34 @@
       <div class="card-header">
         <input
             v-model="collection.name"
-            class = "form-control" 
-            type="text" 
+            class = "form-control"
+            type="text"
             name = 'name'
-            
+
             v-if='edit.title'
             >
-        <h3 
+        <h3
           v-if="!edit.title"
          @click="editTitle()"
           >
-          
+
 
           {{collection.name}}
-          
+
         </h3>
-          <div 
+          <div
             v-if="!edit.title"
             @click="editTitle()">
-            <EditButton 
+            <EditButton
               />
 
           </div>
-          <div 
+          <div
             v-if="edit.title"
             @click="editTitle()">
             <CheckButton />
           </div>
-          <!-- <div 
+          <!-- <div
             v-if="edit.title"
             @click="CancelEdit()">
             <TrashButton />
@@ -47,33 +47,33 @@
 
       <button @click="$refs.fileInput.click()">Pick Image</button>
       <button @click="onUpload">Upload</button>
-      
+
       <div class="image-card"></div>
-      
+
       <img v-if="url" :src="url" alt="">
 
       <div class="card-body">
-        
+
         <p
           v-if="!edit.description">
         {{collection.description}}
         </p>
 
-        <textarea 
+        <textarea
           rows="5"
           v-if="edit.description"
           class="form-group area-input"
           v-model="collection.description"></textarea>
-        <div 
+        <div
 
-            
+
             v-if="!edit.description"
             @click="editDescription()">
-            <EditButton 
+            <EditButton
               />
 
           </div>
-          <div 
+          <div
             v-if="edit.description"
             @click="editDescription()">
             <CheckButton />
@@ -89,8 +89,8 @@
       <router-link :to="'/collection/'+collection.id+'/item/'+item.id" class="card" >
 
         <div class="card-header">{{item.name}}</div>
-        <img 
-          class="card-img-top" 
+        <img
+          class="card-img-top"
           src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Amiga500_system.jpg"
           alt="">
         <div class="card-footer">
@@ -133,13 +133,14 @@ export default {
   },
 
   data()  {
-        
+
         return {
           collection: {},
           lastCollection: {},
           params: {},
           fileSelected : null,
           url: null,
+          image: '',
           edit: {
             title: false,
             description: false
@@ -153,7 +154,7 @@ export default {
 
   mounted() {
     this.collection.id = this.$route.params.collectionId
-     
+
     this.getData()
     this.params = this.$route.params
   },
@@ -174,7 +175,7 @@ export default {
         return null
       }
       this.edit.title = true
-      
+
     },
     editDescription(){
       if (this.edit.description ) {
@@ -183,7 +184,7 @@ export default {
         return null
       }
       this.edit.description = true
-    
+
     },
 
     getData() {
@@ -191,7 +192,7 @@ export default {
         .then((response) => {
           this.collection = response.data
           this.lastCollection = this.collection
-         
+
         })
     },
     swipeHandler(direction) {
@@ -200,22 +201,30 @@ export default {
     },
     OnFileSelected(evente) {
 
-      console.log(event)
+
       this.fileSelected = event.target.files[0]
-      this.url = URL.createObjectURL(this.fileSelected);
-      console.log(event.target.files[0])
+     // this.url = URL.createObjectURL(this.fileSelected);
+      let reader = new FileReader
+      reader.readAsDataURL(this.fileSelected)
+      reader.onload = e => {
+        console.log(e.target.result)
+        this.image = e.target.result
+      }
+
     },
     onUpload() {
 
       let params = new FormData();
       params = {
         name: this.collection.name,
-        description: this.collection.description
+        description: this.collection.description,
+        image: this.image
 
         }
 
+      //axios.put(`/api/collection/${this.collection.id}`, {'image' : this.image})
       axios.put(`/api/collection/${this.collection.id}`, params)
-    
+
       .then((res)=>{
         this.lastCollection = this.collection
       })

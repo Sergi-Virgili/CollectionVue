@@ -28,6 +28,7 @@
             <div class="likes">
                 <LoveComponent :collection = 'collection'></LoveComponent>
             </div>
+            <router-link :to="{name:'collectionEdit', params:{collectionId: collection.id}}">
             <div
                 v-if= "collection.author"
                 class="likes">
@@ -35,6 +36,7 @@
 
 
             </div>
+            </router-link>
         </div>
     </div>
     <!-- <div class="card collection-card">

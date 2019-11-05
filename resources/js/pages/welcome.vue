@@ -18,11 +18,11 @@
 
     <div class="text-center">
       <div class="title mb-4">
-        {{ title }}
+        CoLeCT
       </div>
 
       <div class="links">
-        <a href="https://github.com/cretueusebiu/laravel-vue-spa">github.com/cretueusebiu/laravel-vue-spa</a>
+        <a href="">Connect people - Collect U Want</a>
       </div>
     </div>
   </div>
