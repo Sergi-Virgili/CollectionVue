@@ -15,7 +15,10 @@ export default {
 </script>
 
 <style scoped>
-
+   
+    i {
+        padding: 1em;
+    }
 
     i:hover {
         color: darkgreen;

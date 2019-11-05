@@ -12,9 +12,10 @@
       <div id="navbarToggler" class="collapse navbar-collapse">
         <ul class="navbar-nav">
           <locale-dropdown />
-          <!-- <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li> -->
+          <li class="nav-item">
+            
+            
+          </li>
         </ul>
 
         <ul class="navbar-nav ml-auto">
@@ -31,6 +32,7 @@
                 <fa icon="cog" fixed-width />
                 {{ $t('settings') }}
               </router-link>
+              
 
               <div class="dropdown-divider" />
               <a href="#" class="dropdown-item pl-3" @click.prevent="logout">
