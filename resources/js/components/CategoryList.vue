@@ -1,17 +1,17 @@
 <template>
+<div>
     <div class="category-list">
 
         <div v-for="(category, id) in categories"
             :key='category.index'
-            v-on:click='onClickCategorySelect(category.id, id)'>
+            v-on:click='onClickCategorySelect(category.id, category.name)'>
         <CategoryItem
             :category='category'
             />
-
-
         </div>
-
     </div>
+    <h3> {{categoryName}} </h3>
+</div>
 </template>
 
 <script>
@@ -25,7 +25,8 @@ export default {
     data() {
         return {
             categories: [],
-            categoryId: 6
+            categoryId: 6,
+            categoryName: ''
         }
     },
 
@@ -41,13 +42,15 @@ export default {
                     (res) => this.categories = res.data
                 )
         },
-        onClickCategorySelect(id) {
+        onClickCategorySelect(id, categoryName) {
 
-            this.$emit('categorySelect', id)
-        }
+            this.$emit('categorySelect', id, )
+            this.categoryName = categoryName
+        },
     }
-
 }
+
+
 </script>
 
 <style>

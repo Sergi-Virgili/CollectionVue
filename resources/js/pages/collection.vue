@@ -17,23 +17,24 @@
       <router-view :key="this.$route.params.id+1"/>
     </transition>
     </div>
-
+    <CommentsList  />
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import CommentsList from '../components/comentarios/MyCommentsComponent.vue' 
 export default {
 
   middleware: 'auth',
 
   components: {
-
+    CommentsList,
   },
 
   data()  {
-
         return {
+         
           collection: {},
           params: {}
         }
@@ -45,6 +46,8 @@ export default {
 
   mounted() {
     this.collection.id = this.$route.params.collectionId
+    this.collectionIdprop = this.collection.id
+   
      this.getData()
     this.getData()
     this.params = this.$route.params

@@ -58,4 +58,10 @@ Route::delete('/collection/{collection}', 'AppController@destroy');
 
 Route::put('/collection/{id}', 'CollectionController@update');
 
+Route::post('/comments', 'CommentController@store');
+Route::delete('/comments/{comment}', 'CommentController@destroy');
 
+Route::get('/comments/{comment}', 'CommentController@index');
+Route::get('/comments/{comment}/edit', 'CommentController@edit');
+Route::put('/comments/{comment}', 'CommentController@update');
+//Route::apiResource('comments', 'CommentController');
