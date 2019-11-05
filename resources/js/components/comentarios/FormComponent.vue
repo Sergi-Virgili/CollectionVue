@@ -33,7 +33,8 @@ import axios from 'axios'
         methods: {
             newComment(){
                 const params ={
-                    content:this.content
+                    content:this.content,
+                    collection_id: this.$route.params.collectionId
                 };
                 this.content = '';
 
