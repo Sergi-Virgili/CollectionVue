@@ -8,7 +8,7 @@
             <p  v-else id="reves">{{comment.content}}</p>
 
             </div>
-
+            <div>publicado por {{comment.user}}</div>
             <div class="panel-footer">
             <button v-if="editMode" class="btn btn-success" v-on:click="onClickUpdate()">
                 Guardar Cambios
