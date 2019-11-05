@@ -36,7 +36,7 @@ public function store(Request $request)
     $comment = new Comment;
     $comment->content = $request->content;
     $comment->user_id = auth()->id();
-    $comment->collection_id = 8;
+    $comment->collection_id = $request->collection_id;
     $comment->save();
     return $comment;
 }
