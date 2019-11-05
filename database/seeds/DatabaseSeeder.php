@@ -16,5 +16,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CollectionsTable::class);
         $this->call(ItemSeeder::class);
         $this->call(LoveSeeder::class);
+        $this->call(CommentsSeeder::class);
     }
 }

@@ -1,6 +1,9 @@
 <template>
+
 <div>
+    
     <div class="collection-list">
+        
         <CollectionCard
             v-for='(collection, index) in collections'
             :key="collection.id"
@@ -8,9 +11,8 @@
             class=""
             @delete = "deleteCollection(index)" />
 
-
     </div>
-
+        
 </div>
     <!-- <CollectionCard /> -->
 
@@ -22,7 +24,7 @@ import CollectionCard from './CollectionCard'
 
 export default {
     props: {
-        categoryId: Number
+        categoryId: Number,
     },
     components: {
       CollectionCard,
