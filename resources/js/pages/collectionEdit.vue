@@ -30,9 +30,14 @@
           <div 
             v-if="edit.title"
             @click="editTitle()">
-            <p>X</p>
-
+            <CheckButton />
           </div>
+          <div 
+            v-if="edit.title"
+            @click="CancelEdit()">
+            <TrashButton />
+          </div>
+
         </div>
       <input
         type="file"
@@ -49,18 +54,26 @@
 
       <div class="card-body">
         
-        <p>
+        <p
+          v-if="!edit.description">
         {{collection.description}}
         </p>
+
+        <textarea 
+          v-if="edit.description"
+          class="form-group area-input"
+          v-model="collection.description"></textarea>
         <div 
-            v-if="!edit.title"
+
+            
+            v-if="!edit.description"
             @click="editDescription()">
             <EditButton 
               />
 
           </div>
           <div 
-            v-if="edit.title"
+            v-if="edit.description"
             @click="editDescription()">
             <p>X</p>
 
@@ -104,6 +117,8 @@
 import axios from 'axios'
 //import LoveComponent from './LoveComponent'
 import EditButton from '../components/buttons/EditButton'
+import CheckButton from '../components/buttons/CheckButton'
+import TrashButton from '../components/buttons/TrashButton'
 
 
 export default {
@@ -111,8 +126,9 @@ export default {
   middleware: 'auth',
 
   components: {
-  //  LoveComponent,
-    EditButton
+    CheckButton,
+    EditButton,
+    TrashButton
   },
 
   data()  {
@@ -124,7 +140,8 @@ export default {
           fileSelected : null,
           url: null,
           edit: {
-            title: false
+            title: false,
+            description: false
           }
         }
   },
@@ -185,7 +202,8 @@ export default {
       let params = new FormData();
       params = {
         name: this.collection.name,
-        
+        description: this.collection.description
+
         }
 
       axios.put(`/api/collection/${this.collection.id}`, params)
@@ -201,9 +219,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .view_child {
+  .area-input {
 
-    // height: 200px;
+    width: 100%;
   }
 
   .item-list {
