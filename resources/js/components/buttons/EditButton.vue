@@ -16,7 +16,7 @@ export default {
 
 <style scoped>
 
-
+    i {padding: 1em}
     i:hover {
         color: darkgreen;
         cursor: pointer;

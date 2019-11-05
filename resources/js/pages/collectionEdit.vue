@@ -32,11 +32,11 @@
             @click="editTitle()">
             <CheckButton />
           </div>
-          <div 
+          <!-- <div 
             v-if="edit.title"
             @click="CancelEdit()">
             <TrashButton />
-          </div>
+          </div> -->
 
         </div>
       <input
@@ -60,6 +60,7 @@
         </p>
 
         <textarea 
+          rows="5"
           v-if="edit.description"
           class="form-group area-input"
           v-model="collection.description"></textarea>
@@ -75,7 +76,7 @@
           <div 
             v-if="edit.description"
             @click="editDescription()">
-            <p>X</p>
+            <CheckButton />
 
           </div>
         </div>
@@ -132,10 +133,10 @@ export default {
   },
 
   data()  {
-
+        
         return {
           collection: {},
-          LastCollection: {},
+          lastCollection: {},
           params: {},
           fileSelected : null,
           url: null,
@@ -158,7 +159,14 @@ export default {
   },
 
   methods: {
-   
+    //TODO CANCEL EDIT FUNCTION
+    CancelEdit() {
+      this.edit.title = false
+      this.collection = this.lastCollection
+      console.log(this.lastCollection.name)
+      console.log(this.collection.name)
+    },
+
     editTitle() {
       if (this.edit.title ) {
         this.onUpload()
@@ -208,7 +216,9 @@ export default {
 
       axios.put(`/api/collection/${this.collection.id}`, params)
     
-      .then((res)=>{})
+      .then((res)=>{
+        this.lastCollection = this.collection
+      })
     }
   }
 
