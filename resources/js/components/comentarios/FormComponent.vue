@@ -21,15 +21,21 @@
 
 <script>
 import axios from 'axios'
+import { mapGetters } from 'vuex'
+
     export default {
         data(){
             return {
                 content:'',
+
             }
         },
         mounted() {
             console.log('Component mounted.')
         },
+        computed: mapGetters({
+    user: 'auth/user'
+  }),
         methods: {
             newComment(){
                 const params ={
@@ -41,6 +47,9 @@ import axios from 'axios'
                 axios.post('/api/comments', params)
                     .then((response) => {
                         const comment = response.data;
+                        comment.isAuthor = true;
+                        comment.authorName = this.user.name
+                        console.log(this.user.name)
                         this.$emit('new', comment);
             });
 

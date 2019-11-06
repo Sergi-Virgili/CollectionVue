@@ -24,7 +24,17 @@ public function index($id){
     
     $collection= Collection::all()->find($id);
     $comments= $collection->comments;
+
+    foreach ($comments as $comment){
+        $comment['isAuthor']=false;
+        if($comment->user_id==auth()->user()->id) {
+            $comment['isAuthor']=true;
+        }
+        $userName = $comment->user->name;
+        $comment['authorName'] = $userName; 
+    }
     return $comments;
+    
 }
 
 /**

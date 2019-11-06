@@ -1,5 +1,6 @@
 <template>
 <div class="panel panel-default">
+            <div>Publicado por {{comment.authorName}}</div>
             <div class="panel-heading">Publicado el {{comment.created_at}} </div>
 
             <div class="panel-body">
@@ -8,15 +9,14 @@
             <p  v-else id="reves">{{comment.content}}</p>
 
             </div>
-            <div>publicado por {{comment.user}}</div>
             <div class="panel-footer">
-            <button v-if="editMode" class="btn btn-success" v-on:click="onClickUpdate()">
+            <button v-if="editMode && comment.isAuthor" class="btn btn-success" v-on:click="onClickUpdate()">
                 Guardar Cambios
             </button>
-            <button v-else class="btn btn-default" v-on:click="onClickEdit()">
+            <button v-if="!editMode && comment.isAuthor" class="btn btn-default" v-on:click="onClickEdit()">
                 Editar 
             </button>
-            <button class="btn btn-danger" v-on:click="onClickDelete()">
+            <button v-if="comment.isAuthor" class="btn btn-danger" v-on:click="onClickDelete()">
                 Eliminar
             </button>
         </div>

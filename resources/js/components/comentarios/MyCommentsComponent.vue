@@ -30,7 +30,16 @@ import FormComponent from './FormComponent.vue'
             }
         },
         mounted() {
-            axios.get('/api/comments/'+this.collection_Id).then((response) =>  {
+            this.getData();
+        },
+        methods:{
+            addComment(comment){
+                
+               // this.comments.isAuthor=true;
+                this.comments.push(comment);
+            },
+            getData(){
+                 axios.get('/api/comments/'+this.collection_Id).then((response) =>  {
                 const comments = []
                 for(let comment in response.data ){
                 comments.push(response.data[comment])
@@ -38,17 +47,13 @@ import FormComponent from './FormComponent.vue'
                 this.comments = comments;
                 
             });
-        },
-        methods:{
-            addComment(comment){
-                this.comments.push(comment);
             },
             deleteComment(index) {
                 this.comments.splice(index, 1);
                 console.log(index)
             },
             updateComment(index, comment) {
-                this.comment[index] = comment;  
+                this.comment[index] = comment; 
             },
            
             
