@@ -1,5 +1,7 @@
 <template>
 <div>
+    
+   
     <div class="category-list">
 
         <div v-for="(category, id) in categories"
@@ -10,7 +12,7 @@
             />
         </div>
     </div>
-    <h3> {{categoryName}} </h3>
+    
 </div>
 </template>
 
@@ -53,12 +55,20 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 
     .category-list {
         display: flex;
-
+        /* flex-direction: column; */
+        /* max-width: 100%; */
+        
+        overflow-y: scroll;
+        overflow-x: scroll;
         justify-content: center;
+    }
+    h3 {
+       
+        
     }
 
 </style>

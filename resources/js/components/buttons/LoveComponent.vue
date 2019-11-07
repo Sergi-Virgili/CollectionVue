@@ -1,7 +1,7 @@
 <template>
-<div>
+<div class="icon">
   <i class="far fa-heart" v-on:click="iLove()"></i>
-  <span> 123</span>
+  <span class="number-likes">123</span>
 
   </div>
 </template>
@@ -19,11 +19,20 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
+
+    .icon {
+        
+        color: rgb(133, 0, 0);
+        padding: 1em;
+    }
 
     .fa-heart:hover {
         color: red;
+    }
+    .number-likes {
+        font-size: .8em;
     }
 
 </style>

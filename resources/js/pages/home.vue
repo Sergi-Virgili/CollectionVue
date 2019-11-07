@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- <h3> {{categoryName}} </h3> -->
   <CategoryList class="category-list"
         @categorySelect = 'selectCategory'
         />
@@ -51,8 +52,7 @@ export default {
          opacity: 0;
     }
   .category-list {
-    max-width: 100%;
-    overflow: hidden;
+    
     margin-bottom: 1em;
 
   }

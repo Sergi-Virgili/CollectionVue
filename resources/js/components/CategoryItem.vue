@@ -1,10 +1,10 @@
 <template>
-    <div class="card">
-    <div class="item">
+    <div class="">
+        <div class="item">
 
-       <img :src="category.icon">
+        <img :src="category.icon">
 
-    </div>
+        </div>
     </div>
 </template>
 
@@ -19,6 +19,8 @@ export default {
 <style scoped>
     .item {
         padding: .7em;
+        
+        
 
     }
 

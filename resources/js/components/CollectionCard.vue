@@ -7,7 +7,7 @@
         <router-link :to="{name:'collection', params:{collectionId: collection.id}}">
           <img    class = "card-img-top"
 
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTb2uP4V6vxSK235Y88V8C8nQSoe13BnzWzs_VIzNLW2ppA1KeN&s" alt="">
+                  src="https://fakeimg.pl/350x350/ffff00,128/000,255">
           </router-link>
             <div class="footer">
                 <div class="title">
@@ -18,24 +18,28 @@
 
                 </div>
         
-                <div class="likes">
-                    <LoveComponent :collection = 'collection'></LoveComponent>
-                </div>
-                <router-link :to="{name:'collectionEdit', params:{collectionId: collection.id}}">
-                <div
-                    v-if= "collection.author"
-                    class="likes">
-                    <EditButton :collection = 'collection' />
+                <div class="card-buttons">
+                    <div class="likes">
+                        <LoveComponent :collection = 'collection'></LoveComponent>
+                    </div>
+                    <router-link :to="{name:'collectionEdit', params:{collectionId: collection.id}}">
+                
+                
+                        <div
+                            v-if= "collection.author"
+                            class="edit-button">
+                            <EditButton :collection = 'collection' />
 
 
-                </div>
-                </router-link>
-                <div v-on:click="deleteOnClick()"
-                    v-if= "collection.author"
-                    class="">
-                    <TrashButton
-                        :collection = 'collection'
-                        />
+                        </div>
+                    </router-link>
+                    <div v-on:click="deleteOnClick()"
+                        v-if= "collection.author"
+                        class="">
+                        <TrashButton
+                            :collection = 'collection'
+                            />
+                    </div>
                 </div>
         </div>
     </div>
@@ -113,7 +117,7 @@ export default {
     .image {
         width: 160px;
         height: 160px;
-        background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTb2uP4V6vxSK235Y88V8C8nQSoe13BnzWzs_VIzNLW2ppA1KeN&s');
+        background-image: url("https://fakeimg.pl/350x200/ff0000,128/000,255");
 
         background-size: cover;
         background-position: center;
@@ -126,6 +130,21 @@ export default {
         padding: .8em;
          border-top: 1px solid black;
 
+    }
+    .card-buttons {
+        display: flex;
+        justify-content: space-between;
+        padding: 0;
+    }
+    .edit-button {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        border-radius: 50%;
+        background-color: white;
+        box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+        border: solid 1px rgba(222, 222, 222, 0.4
+        );
     }
 
 
