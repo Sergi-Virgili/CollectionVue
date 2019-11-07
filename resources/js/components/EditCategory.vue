@@ -5,8 +5,8 @@
             </div>
             <div class="col-sm-12 d-flex flex-nowrap">
                 <form enctype="multipart/form-data" v-on:submit.prevent="update()">
-                    <input id="{{category.name}}" class="form-control" type="text" value="category.name" v-model="category.name">
-                    <textarea id="description" class="form-control" type="text" value="{{category.description}}" v-model="description"></textarea>
+                    <input :id="category.name" class="form-control" type="text" value="category.name" v-model="category.name">
+                    <textarea id="description" class="form-control" type="text" value="category.description" v-model="description"></textarea>
                     <input id="file" class="form-control" type="file" accept="image/*" name="image">
                     <button class="btn btn-outline-success" type="submit">GUARDAR</button>
                     <button class="btn btn-outline-danger">CANCELAR</button>
@@ -21,17 +21,27 @@
 
     export default {
 
+        middleware: 'auth',
+
         props: ['category'],
 
         data(){
-
             return{
+                category: [],
             }
         },
 
         methods: {
 
             update(){
+
+                params = {
+                    name: this.category.name,
+                    description: this.category.description,
+                    icon: this.image
+                }
+
+                axios.put(`/api/category/${this.category.id}`, params).then((response) => console.log(response));
 
             }
         },
