@@ -1,6 +1,6 @@
 <template>
   <div>
-  <CategoryList
+  <CategoryList class="category-list"
         @categorySelect = 'selectCategory'
         />
   <transition name="fade" mode="out-in" >
@@ -50,5 +50,11 @@ export default {
   .fade-enter, .fade-leave-to .fade-leave-active {
          opacity: 0;
     }
+  .category-list {
+    max-width: 100%;
+    overflow: hidden;
+    margin-bottom: 1em;
+
+  }
 
 </style>

@@ -2,41 +2,41 @@
 
 
     <div class="card ">
-       <div v-on:click="deleteOnClick()"
-                v-if= "collection.author"
-                class="">
-                <DeleteButton
-                    :collection = 'collection'
-                    />
+       
 
-
-        </div>
-        <div class="card-header title">
-
-            {{collection.name}}
-             {{collection.id}}
-
-
-        </div>
         <router-link :to="{name:'collection', params:{collectionId: collection.id}}">
           <img    class = "card-img-top"
 
                   src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTb2uP4V6vxSK235Y88V8C8nQSoe13BnzWzs_VIzNLW2ppA1KeN&s" alt="">
           </router-link>
-      <div class="footer">
+            <div class="footer">
+                <div class="title">
 
-            <div class="likes">
-                <LoveComponent :collection = 'collection'></LoveComponent>
-            </div>
-            <router-link :to="{name:'collectionEdit', params:{collectionId: collection.id}}">
-            <div
-                v-if= "collection.author"
-                class="likes">
-                <EditButton :collection = 'collection' />
+                {{collection.name}}
+            
 
 
-            </div>
-            </router-link>
+                </div>
+        
+                <div class="likes">
+                    <LoveComponent :collection = 'collection'></LoveComponent>
+                </div>
+                <router-link :to="{name:'collectionEdit', params:{collectionId: collection.id}}">
+                <div
+                    v-if= "collection.author"
+                    class="likes">
+                    <EditButton :collection = 'collection' />
+
+
+                </div>
+                </router-link>
+                <div v-on:click="deleteOnClick()"
+                    v-if= "collection.author"
+                    class="">
+                    <TrashButton
+                        :collection = 'collection'
+                        />
+                </div>
         </div>
     </div>
     <!-- <div class="card collection-card">
@@ -57,6 +57,7 @@ import axios from 'axios'
 import LoveComponent from './buttons/LoveComponent'
 import EditButton from './buttons/EditButton'
 import DeleteButton from './buttons/DeleteButton'
+import TrashButton from './buttons/TrashButton'
 
 
 
@@ -66,6 +67,7 @@ export default {
       LoveComponent,
       EditButton,
       DeleteButton,
+      TrashButton
 
     },
     props: ['collection'],
@@ -98,10 +100,15 @@ export default {
 
     }
 
+    .card {
+        box-shadow: 5px 4px 7px rgba(0, 0, 0, 0.2);
+    }
+
     .title {
         width: 100%;
         padding: .8em;
-        border-bottom: 1px solid black;
+        text-align: center;
+        
     }
     .image {
         width: 160px;
