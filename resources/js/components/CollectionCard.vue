@@ -5,7 +5,7 @@
        
 
         <router-link :to="{name:'collection', params:{collectionId: collection.id}}">
-          <img v-if:="!collection.img_url"   class = "card-img-top"
+          <img    class = "card-img-top"
 
                   src="https://fakeimg.pl/350x350/ffff00,128/000,255">
           </router-link>
@@ -76,7 +76,7 @@ export default {
     },
     props: ['collection'],
     mounted(){
-        console.log()
+        console.log(this.collection)
     },
     methods: {
 
