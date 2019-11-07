@@ -1,16 +1,24 @@
 <template>
 
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <form-component id="barraComment" @new="addComment" />
-                <comments-component id="comment" v-for="(comment, index) in comments" 
+        <div class="component">
+            <div class="comments-list">
+                <comments-component id="comment" v-for="(comment, index) in comments"
                 :key="comment.id"
                 :comment="comment"
                 @update="updateComment(index, arguments)"
                 @delete="deleteComment(index)" />
+
+
+
+
             </div>
+
+             <div class="barraComment">
+                <form-component  @new="addComment" />
+            </div>
+
         </div>
- 
+
 
 </template>
 <script>
@@ -18,7 +26,7 @@ import axios from 'axios'
 import commentsComponent from './commentsComponent.vue'
 import FormComponent from './FormComponent.vue'
     export default {
-       
+
         components:{
             FormComponent,
             commentsComponent
@@ -34,7 +42,7 @@ import FormComponent from './FormComponent.vue'
         },
         methods:{
             addComment(comment){
-                
+
                // this.comments.isAuthor=true;
                 this.comments.unshift(comment);
             },
@@ -45,34 +53,44 @@ import FormComponent from './FormComponent.vue'
                 comments.push(response.data[comment])
                 }
                 this.comments = comments;
-                
+
             });
             },
             deleteComment(index) {
-               
+
                 this.comments.splice(index, 1);
                 console.log(this.comments)
                 console.log(index)
             },
             updateComment(index, comment) {
-                this.comment[index] = comment; 
+                this.comment[index] = comment;
             },
-           
-            
+
+
         }
     }
 </script>
 
 <style scoped>
-    #barraComment {
-    position: fixed;
-    bottom:-3%;
-    z-index: 2;
-    width:101%;
-    margin-left:-5%;
+
+
+
+    .barraComment {
+      width: 100%;
+      position: fixed;
+      bottom: 0px;
+      left: 0px;
+      z-index: 100;
+      background-color: white;
+      box-shadow: 3px -1px 10px rgba(34, 34, 34, 0.16);
+      padding: .5em;
+
+
+
     }
-#comment{
-    z-index: 1;
-}
+    .comments-list {
+      margin-top: 1em;
+    }
+
 </style>
 

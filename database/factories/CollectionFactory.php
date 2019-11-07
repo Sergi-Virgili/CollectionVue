@@ -13,5 +13,7 @@ $factory->define(Collection::class, function (Faker $faker) {
         'description' => $faker->text,
         'user_id' => User::all()->random()->id,
         'category_id' => Category::all()->random()->id,
+        'img_url' => "https://fakeimg.pl/350x350/ff0000,128/000,255"
+
     ];
 });

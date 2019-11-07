@@ -52,6 +52,8 @@ class AppController extends Controller
                 $collection['author'] = false;
                 $collection['userLove'] = false;
 
+                ;
+
 
                 if($collection->user->id == auth()->user()->id){
 

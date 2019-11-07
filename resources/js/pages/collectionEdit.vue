@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="card"
-      >
+    <div class="card">
+
       <div class="card-header">
         <input
             v-model="collection.name"
@@ -48,7 +48,7 @@
       <button @click="$refs.fileInput.click()">Pick Image</button>
       <button @click="onUpload">Upload</button>
 
-      <div class="image-card"></div>
+      <div class="image-card" :style= "{ backgroundImage: 'url(' + collection.img_url + ')' }"> </div>
 
       <img v-if="url" :src="url" alt="">
 
@@ -84,24 +84,34 @@
     </div>
 
     <div class="item-list">
-    <div v-for="item in collection.items" :key="item.id" >
+      <div v-for="item in collection.items" :key="item.id" class="">
 
-      <router-link :to="'/collection/'+collection.id+'/item/'+item.id" class="card" >
+        <router-link :to="'/collection/'+collection.id+'/item/'+item.id" class="card new-item" >
 
-        <div class="card-header">{{item.name}}</div>
-        <img
-          class="card-img-top"
-          src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Amiga500_system.jpg"
-          alt="">
-        <div class="card-footer">
+          <div class="card-header">{{item.name}}</div>
+          <img
+            class="card-img-top"
+            src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Amiga500_system.jpg"
+            alt="">
+          <div class="card-footer">
 
+          </div>
+          <!-- <div class="card-body">{{collection.description}}</div> -->
+
+        </router-link>
+
+
+      </div>
+
+
+
+    <div class="card new-item">
+      <div class="card-body">
+          +
         </div>
-        <!-- <div class="card-body">{{collection.description}}</div> -->
-
-      </router-link>
-
-
     </div>
+
+
     </div>
     <!-- <div class="view_child"
 
@@ -110,6 +120,11 @@
       <router-view :key="this.$route.params.id+1"/>
 
     </div> -->
+
+
+
+          <!-- <div class="card-body">{{collection.description}}</div> -->
+
 
   </div>
 </template>
@@ -250,10 +265,11 @@ export default {
       display: grid;
       grid-template-columns:  1fr 1fr;
       gap:1em;
+      margin-top: 1em;
   }
 
   .image-card {
-    background-image: url("https://upload.wikimedia.org/wikipedia/commons/c/c3/Amiga500_system.jpg");
+
     height: 40vh;
     width: 100%;
     background-size: cover;
@@ -262,5 +278,8 @@ export default {
   .card-header {
     display: flex;
     justify-content: space-between;
+  }
+  .new-item {
+    min-height: 200px;
   }
 </style>

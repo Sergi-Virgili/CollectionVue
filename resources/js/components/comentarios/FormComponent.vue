@@ -1,16 +1,20 @@
 <template>
-<div class="panel panel-default">
-        <div class="panel-body">
-            <form action="" v-on:submit.prevent="newComment()">
-                <div class="form-group">
-                    <label for="comentario "></label>
-                    <input type="text" placeholder="comenta aqui" class="form-control" name="comentario" v-model="content">
-                    <button type="submit" id="buttonSubmit">
-                    <div><CheckButton/></div>
-                    </button>
+<div>
+        <div class="container">
+
+                <div class="comment-form">
+
+                    <input type="text" class="form-control" placeholder="comenta aqui" name="comentario" v-model="content">
+
+                    <div  @click="newComment()">
+
+                    <CheckButton/>
+
+                    </div>
+
                 </div>
 
-            </form>
+
        </div>
     </div>
 
@@ -59,15 +63,11 @@ import { mapGetters } from 'vuex'
     }
 </script>
 <style scoped>
-.form-group{
+
+  .comment-form{
+
+    width: 100%;
     display:flex;
-}
-#buttonSubmit{
-    background-color: rgb(92, 92, 219);
-    border: 0px;
-    height: 40px;
-}
-#buttonSubmit div{
-    margin-top: -3px;
-}
+
+  }
 </style>

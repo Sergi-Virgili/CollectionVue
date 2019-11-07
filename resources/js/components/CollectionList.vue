@@ -1,8 +1,8 @@
 <template>
 
-      <transition name="fade" mode="out-in" >  
+      <transition name="fade" mode="out-in" >
 <div>
-    
+
     <div class="collection-list">
         <CollectionCard
             v-for='(collection, index) in collections'
@@ -56,8 +56,8 @@ export default {
                 .then( (response) =>
                 {
 
-                    this.collections = response.data}
-                )
+                    this.collections = response.data
+                })
         },
         deleteCollection(index){
             this.collections.splice(index,1)

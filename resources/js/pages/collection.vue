@@ -23,7 +23,9 @@
       <router-view :key="this.$route.params.id+1"/>
     </transition>
     </div>
-    <CommentsList  />
+
+
+    <CommentsList  class="comments-list"/>
   </div>
 </template>
 
@@ -84,5 +86,8 @@ export default {
   .view_child {
     background-color:lightgrey;
     height: 50vh;
+  }
+  .comments-list {
+    margin-bottom: 6em;
   }
 </style>

@@ -64,13 +64,16 @@
           <router-link :to="{ name: 'home' }" class="dropdown-item pl-3">
               Home
           </router-link>
+
+           <router-link :to="{ name: 'myCollections' }" class="dropdown-item pl-3">
+              My Collections
+          </router-link>
+
           <router-link :to="{ name: 'home' }" class="dropdown-item pl-3">
               The Best
           </router-link>
-          <router-link :to="{ name: 'myCollections' }" class="dropdown-item pl-3">
-              My Collections
-          </router-link>
-          <router-link :to="{ name: 'myCollections' }" class="dropdown-item pl-3">
+
+          <router-link :to="{ name: 'favoriteCategories' }" class="dropdown-item pl-3">
               My Categories
           </router-link>
           <router-link :to="{ name: 'myCollections' }" class="dropdown-item pl-3">

@@ -2,29 +2,29 @@
 
 
     <div class="card ">
-       
+
 
         <router-link :to="{name:'collection', params:{collectionId: collection.id}}">
           <img    class = "card-img-top"
 
-                  src="https://fakeimg.pl/350x350/ffff00,128/000,255">
+                  :src="collection.img_url">
           </router-link>
             <div class="footer">
                 <div class="title">
 
                 {{collection.name}}
-            
+
 
 
                 </div>
-        
+
                 <div class="card-buttons">
                     <div class="likes">
                         <LoveComponent :collection = 'collection'></LoveComponent>
                     </div>
                     <router-link :to="{name:'collectionEdit', params:{collectionId: collection.id}}">
-                
-                
+
+
                         <div
                             v-if= "collection.author"
                             class="edit-button">
@@ -115,7 +115,7 @@ export default {
         width: 100%;
         padding: .8em;
         text-align: center;
-        
+
     }
     .image {
         width: 160px;
