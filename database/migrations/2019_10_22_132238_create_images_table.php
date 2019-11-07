@@ -21,6 +21,7 @@ class CreateImagesTable extends Migration
             $table->bigInteger('collection_id')->nullable();
             $table->bigInteger('item_id')->nullable();
             $table->bigInteger('certificate_id')->nullable();
+            $table->string('url')->nullable();
             $table->timestamps();
         });
     }
