@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Image;
+use Auth;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -17,16 +18,6 @@ class CategoryController extends Controller
     {
         $categories=Category::all();
         return view ('public.catalog', ['categories' => $categories]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('admin.createCategory');
     }
 
     /**
@@ -58,17 +49,6 @@ class CategoryController extends Controller
     {
         $collections = $category->collections();
         return view('public.showCategory',['collections' => $collections]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Category $category)
-    {
-        //
     }
 
     /**
@@ -105,6 +85,33 @@ class CategoryController extends Controller
         $categories=Category::all();
         return view ('admin.categories', ['categories' => $categories]);
     }
+
+    public function returnCategoriesDataJSON()
+    {
+        $categories=Category::all();
+        return response()->json($categories);
+    }
+
+    public function returnUserCategoryDataJSON()
+    {
+        $user = Auth::user();
+        $userCategories = $user->categories;
+        return response()->json($userCategories);
+    }
+
+    public function attachCategoryUser(Request $request)
+    {
+        $user = Auth::user();
+        $category = Category::find($request);
+        $category[0]->users()->attach($user->id);
+   }
+
+   public function detachCategoryUser(Request $request)
+   {
+       $user = Auth::user();
+       $category = Category::find($request);
+       $category[0]->users()->detach($user->id);
+   }
 
 
 

@@ -55,7 +55,19 @@ Route::get('/collection/item/{item}', 'ItemController@show');
 
 Route::delete('/collection/{collection}', 'AppController@destroy');
 
-
 Route::put('/collection/{id}', 'CollectionController@update');
+
+// ----------!!
+
+Route::get('/register/data', 'CategoryController@returnCategoriesDataJSON');
+Route::get('/categoryUser/data', 'CategoryController@returnUserCategoryDataJSON');
+Route::post('/register/attach', 'CategoryController@attachCategoryUser');
+Route::delete('/register/detach', 'CategoryController@detachCategoryUser');
+
+// -----------!!
+
+Route::post('/category', 'CategoryController@store');
+Route::put('/category/{id}', 'CategoryController@update');
+Route::delete('/category/{id}', 'CategoryController@destory');
 
 
