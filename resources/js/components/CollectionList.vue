@@ -1,9 +1,9 @@
 <template>
 
+      <transition name="fade" mode="out-in" >  
 <div>
     
     <div class="collection-list">
-        
         <CollectionCard
             v-for='(collection, index) in collections'
             :key="collection.id"
@@ -12,8 +12,8 @@
             @delete = "deleteCollection(index)" />
 
     </div>
-        
 </div>
+    </transition>
     <!-- <CollectionCard /> -->
 
 </template>
@@ -75,6 +75,12 @@ export default {
         display: grid;
         grid-template-columns:  1fr 1fr;
         gap:1em;
+    }
+    fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+    }
+    .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+         opacity: 0;
     }
 
 </style>

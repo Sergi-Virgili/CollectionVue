@@ -16,7 +16,7 @@ class Collection extends Model implements Searchable
     }
     public function comments()
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Comment::class)->orderBy('created_at', 'desc');
     }
     public function certificate()
     {

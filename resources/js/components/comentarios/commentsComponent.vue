@@ -6,7 +6,7 @@
             <div class="panel-body">
 
             <input v-if="editMode" type="text" class="form-control" v-model="comment.content">
-            <p  v-else id="reves">{{comment.content}}</p>
+            <p  v-if="!editMode">{{comment.content}}</p>
 
             </div>
 
@@ -54,10 +54,7 @@ import axios from 'axios'
     }
 </script>
 <style>
-#reves{
-    display: flex;
-    flex-direction: column-reverse;
-}
+
 
     #delete {
         color: grey;

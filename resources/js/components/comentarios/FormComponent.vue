@@ -49,7 +49,7 @@ import { mapGetters } from 'vuex'
                         const comment = response.data;
                         comment.isAuthor = true;
                         comment.authorName = this.user.name
-                        console.log(this.user.name)
+                        console.log(response)
                         this.$emit('new', comment);
             });
 

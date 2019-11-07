@@ -24,6 +24,7 @@ public function index($id){
     
     $collection= Collection::all()->find($id);
     $comments= $collection->comments;
+   
 
     foreach ($comments as $comment){
         $comment['isAuthor']=false;
@@ -43,6 +44,7 @@ public function index($id){
  */
 public function store(Request $request)
 {
+    //dd($request->content);
     $comment = new Comment;
     $comment->content = $request->content;
     $comment->user_id = auth()->id();

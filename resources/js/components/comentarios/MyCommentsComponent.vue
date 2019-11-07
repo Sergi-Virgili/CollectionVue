@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <form-component @new="addComment" />
-                <comments-component  v-for="(comment, index) in comments.slice().reverse()" 
+                <comments-component  v-for="(comment, index) in comments" 
                 :key="comment.id"
                 :comment="comment"
                 @update="updateComment(index, arguments)"
@@ -36,7 +36,7 @@ import FormComponent from './FormComponent.vue'
             addComment(comment){
                 
                // this.comments.isAuthor=true;
-                this.comments.push(comment);
+                this.comments.unshift(comment);
             },
             getData(){
                  axios.get('/api/comments/'+this.collection_Id).then((response) =>  {
@@ -49,7 +49,9 @@ import FormComponent from './FormComponent.vue'
             });
             },
             deleteComment(index) {
+               
                 this.comments.splice(index, 1);
+                console.log(this.comments)
                 console.log(index)
             },
             updateComment(index, comment) {
