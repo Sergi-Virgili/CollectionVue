@@ -105,10 +105,19 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
     {
         return [];
     }
-    public function collections() {
+
+    public function collections() 
+    {
         return $this->hasMany(Collection::class);
     }
-    public function comments(){
+
+    public function comments()
+    {
         return $this->hasMany(Comment::class);
+    }
+
+    public function categories() 
+    {
+        return $this->belongsToMany(Category::class);
     }
 }

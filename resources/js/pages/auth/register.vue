@@ -104,8 +104,8 @@ export default {
         // Update the user.
         await this.$store.dispatch('auth/updateUser', { user: data })
 
-        // Redirect home.
-        this.$router.push({ name: 'home' })
+        // Redirect to the interest form.
+        this.$router.push({ name: 'favoriteCategories' })
       }
     }
   }
