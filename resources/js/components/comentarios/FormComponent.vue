@@ -1,15 +1,12 @@
 <template>
 <div class="panel panel-default">
-      <div class="panel-heading">   </div>
-
         <div class="panel-body">
-          
             <form action="" v-on:submit.prevent="newComment()">
                 <div class="form-group">
                     <label for="comentario "></label>
                     <input type="text" placeholder="comenta aqui" class="form-control" name="comentario" v-model="content">
-                    <button type="submit" class="btn btn-primary">
-                    Enviar Comentario
+                    <button type="submit" id="buttonSubmit">
+                    <div><CheckButton/></div>
                     </button>
                 </div>
 
@@ -20,10 +17,14 @@
 </template>
 
 <script>
+import CheckButton from '../buttons/CheckButton'
 import axios from 'axios'
 import { mapGetters } from 'vuex'
 
     export default {
+        components:{
+            CheckButton
+        },
         data(){
             return {
                 content:'',
@@ -57,3 +58,16 @@ import { mapGetters } from 'vuex'
         }
     }
 </script>
+<style scoped>
+.form-group{
+    display:flex;
+}
+#buttonSubmit{
+    background-color: rgb(92, 92, 219);
+    border: 0px;
+    height: 40px;
+}
+#buttonSubmit div{
+    margin-top: -3px;
+}
+</style>

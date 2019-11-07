@@ -2,8 +2,8 @@
 
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                <form-component @new="addComment" />
-                <comments-component  v-for="(comment, index) in comments" 
+                <form-component id="barraComment" @new="addComment" />
+                <comments-component id="comment" v-for="(comment, index) in comments" 
                 :key="comment.id"
                 :comment="comment"
                 @update="updateComment(index, arguments)"
@@ -62,3 +62,17 @@ import FormComponent from './FormComponent.vue'
         }
     }
 </script>
+
+<style scoped>
+    #barraComment {
+    position: fixed;
+    bottom:-3%;
+    z-index: 2;
+    width:101%;
+    margin-left:-5%;
+    }
+#comment{
+    z-index: 1;
+}
+</style>
+
