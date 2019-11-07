@@ -1,27 +1,41 @@
 <template>
-<div id="coment" class="panel panel-default">
-            <div id="authorName"><a href="">{{comment.authorName}}</a></div>
-            <div id="fecha" class="panel-heading">{{comment.created_at}}</div>
-
-            <div class="panel-body">
-
+<div id="coment" class="card">
+        <div class="card-header">
+            <div>
+                <div id="authorName"><a href="">{{comment.authorName}}</a></div>
+                <div id="fecha" class="panel-heading">{{comment.created_at}}</div>
+            </div>
+            
+            <div v-if="comment.isAuthor" v-on:click="onClickDelete()">
+                <TrashButton />
+            </div>
+        </div>
+        <div class="card-body">
             <input v-if="editMode" type="text" class="form-control" v-model="comment.content">
             <p  v-if="!editMode">{{comment.content}}</p>
-
+        </div>
+        <div class="card-footer" v-if="comment.isAuthor">
+            <div v-if="editMode" v-on:click="onClickUpdate()">
+                <CheckButton/>
             </div>
-
-            <button v-if="editMode && comment.isAuthor" id="save" class="btn btn-success" v-on:click="onClickUpdate()">
-                Guardar Cambios
-            </button>
-            <i v-if="!editMode && comment.isAuthor" id="edit" class="fas fa-pen" v-on:click="onClickEdit()"/>
-            <i v-if="comment.isAuthor" id="delete" class="fas fa-times-circle" v-on:click="onClickDelete()" />
-
+            <div id="editButton" v-if="!editMode" v-on:click="onClickEdit()">
+                <EditButton/>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
+import EditButton from '../buttons/EditButton'
+import CheckButton from '../buttons/CheckButton'
+import TrashButton from '../buttons/TrashButton'
 import axios from 'axios'
     export default {
+        components:{
+            TrashButton,
+            CheckButton,
+            EditButton
+        },
         props: ['comment'],
         data(){
             return{
@@ -54,66 +68,33 @@ import axios from 'axios'
     }
 </script>
 <style>
+.card{
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.26);
+    margin-bottom: 1em;
+}
+.card-header{
+    display: flex;
+    justify-content: space-between;
+}
+.card-body{
+    display: flex;
+    justify-content: space-between;
+}
+.card-footer{
+    display: flex;
+    height: 40px;
+}
 
-
-    #delete {
-        color: grey;
-        grid-row: 2/3;
-        grid-column: 5/6;
-    }
-    #delete:hover {
-        color: red;
-    }
-    #edit {
-        color: grey;
-        grid-column: 2/3;
-        grid-row: 4/5;   
-            }
-    #edit:hover {
-        color: darkgreen;
-        cursor: pointer;
-    }
-    #save{
-        grid-row: 4/6;
-        grid-column: 1/3;
-        border-radius: 0px 9px 0px 9px;
-    }
-    #coment {
-        width: 100%;
-        display: grid;
-        grid-template-columns: 23px 25%  40% 25% 3%;
-        grid-template-rows: 5px 20px auto 30px 2px;
-        column-gap: 5px;
-        row-gap: 15px;
-        border: 2px solid black;
-        border-radius: 10px;
-        margin-bottom: 10px;
-}
-#authorName{
-    grid-column: 2/3;
-    grid-row: 2/3;
-
-}
-a { 
-    color: black;
-    text-decoration: none;
-    font-size: 20px;
-}
-a:hover{
-    text-decoration: none;
-}
-a:visited{
-    text-decoration: none;
-    color:black;
-}
 #fecha{
-    grid-column: 4/5;
-    grid-row: 4/5;
-
+    font-size: 12px;
 }
-.panel-body{
-    grid-row: 3/4;
-    grid-column: 2/5;
+#authorName a{
+    text-decoration: none;
+    color: rgb(66, 66, 66);
+    font-weight: 700;
 }
-
+#editButton{
+    margin-top: -13px;
+    margin-left: -15px;
+}
 </style>
