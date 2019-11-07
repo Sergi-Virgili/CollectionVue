@@ -50,7 +50,6 @@
 
             axios.get('/api/register/data').then((response) => {this.categories = response.data;});
 
-            
         },
 
     }
