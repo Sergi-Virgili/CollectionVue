@@ -28,6 +28,11 @@ export default [
       ]
   },
 
+  // ------------- CATEGORIES
+
+  { path: '/form', name: 'favoriteCategories', component: page('favoriteCategoriesForm.vue') },
+  { path: '/categories', name: 'categories', component: page('categories.vue') },
+
 
   // { path: '/collection/item/:id', name: 'item', component: page('item.vue') },
 
