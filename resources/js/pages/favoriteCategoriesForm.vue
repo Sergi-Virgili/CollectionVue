@@ -19,6 +19,11 @@
                     <button class="btn btn-outline-secondary" :id="userCategory.id" @click="removeCategory()">{{userCategory.name}}</button>
                 </div>
             </div>
+            <div id="homeButton" class="justify-content-center row">
+                <router-link :to="{name:'home'}">
+                <button class="btn btn-success">HOME</button>
+                </router-link>
+            </div>
     </div>
 </template>
 
@@ -42,6 +47,7 @@
         },
         
         methods: {
+
             onChange() {
                 this.isOpen = true;
                 this.filterResults();
@@ -126,5 +132,10 @@
   .autocomplete-result:hover {
     background-color: #4AAE9B;
     color: white;
+  }
+  #homeButton {
+      position: fixed;
+      bottom: 5%;
+      left: 45%;
   }
 </style>

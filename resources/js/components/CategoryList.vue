@@ -25,7 +25,7 @@ export default {
     data() {
         return {
             categories: [],
-            categoryId: 6,
+            categoryId: '',
             categoryName: ''
         }
     },
@@ -37,10 +37,12 @@ export default {
     methods: {
 
         getCategories() {
-            axios.get('/api')
-                .then(
-                    (res) => this.categories = res.data
-                )
+            axios.get('/api/categoryUser/data')
+            .then((response) => {
+                this.categories = response.data;
+                this.categoryId = this.categories[0].id;
+                this.$emit('categorySelect', this.categoryId);
+                });
         },
         onClickCategorySelect(id, categoryName) {
 
@@ -48,6 +50,7 @@ export default {
             this.categoryName = categoryName
         },
     }
+    
 }
 
 

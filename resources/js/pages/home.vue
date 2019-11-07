@@ -25,7 +25,7 @@ export default {
 
   data()  {
         return {
-            categoryId: 3
+            categoryId: 1
         }
     },
   methods: {

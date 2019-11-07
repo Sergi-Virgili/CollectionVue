@@ -4,12 +4,19 @@
             <h2>Categorias</h2>
         </div>
         <div class="col-sm-12 d-flex flex-wrap">
-            <div v-for="category in categories" :key="category.id" :category="category">
-                <h3>{{category.name}}</h3>
-            </div>
+            <category v-for="category in categories" :key="category.id" :category='category'/>
         </div>
         <div class="col-sm-12 justify-content-center">
-            <button class="btn btn-outline-success">CREAR</button>
+            <form id="crear" action="/admin/category/store" method="POST" class="hidden" accept-charset="UTF-8" enctype="multipart/form-data">
+                <label>Name</label>
+                <input type="text" name="name">
+                <label>Description</label>
+                <textarea name="description"></textarea>
+                <label>Image</label>
+                <input type="file" name="image">
+                <input type="submit" value="CREAR" class = "btn btn-outline-success">
+            </form>
+            <button id="" @click="toggleHide(['crear'])">CREAR</button>
         </div>
     </div>
 </template>
@@ -53,3 +60,4 @@
         },
 
     }
+</script>

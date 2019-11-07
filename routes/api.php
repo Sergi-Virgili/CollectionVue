@@ -72,6 +72,7 @@ Route::post('/category', 'CategoryController@store');
 Route::put('/category/{id}', 'CategoryController@update');
 Route::delete('/category/{id}', 'CategoryController@destory');
 
+//------------!!
 
 Route::get('/comments/{comment}', 'CommentController@index');
 Route::get('/comments/{comment}/edit', 'CommentController@edit');
