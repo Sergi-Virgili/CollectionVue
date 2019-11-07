@@ -1,6 +1,6 @@
 <template>
 <div>
-  <h2>myCollections</h2>
+  <h4>myCollections</h4>
     <div class="collection-list">
         <CollectionCard
             v-for='(collection, index) in collections'
@@ -23,7 +23,7 @@ import CollectionCard from '../components/CollectionCard'
 
 export default {
     middleware: 'auth',
-    
+
     components: {
       CollectionCard,
     },
@@ -41,8 +41,8 @@ export default {
     },
 
 
-    
-    
+
+
     methods: {
 
         importCollectionsData(id){
@@ -70,6 +70,7 @@ export default {
         display: grid;
         grid-template-columns:  1fr 1fr;
         gap:1em;
+        margin-top: 1.5em;
     }
 
 </style>
