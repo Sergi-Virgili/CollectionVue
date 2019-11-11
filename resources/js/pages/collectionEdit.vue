@@ -1,5 +1,8 @@
 <template>
   <div>
+    <NewItem 
+      v-if="newItem"
+      @closeItem ="closeItem" />
     <div class="card">
 
       <div class="card-header">
@@ -105,7 +108,10 @@
 
 
 
-    <div class="card new-item">
+    <div 
+      class="card new-item" 
+      @click="openItem()"
+      >
       <div class="card-body">
           +
         </div>
@@ -135,6 +141,7 @@ import axios from 'axios'
 import EditButton from '../components/buttons/EditButton'
 import CheckButton from '../components/buttons/CheckButton'
 import TrashButton from '../components/buttons/TrashButton'
+import NewItem from '../components/items/NewItem'
 
 
 export default {
@@ -144,7 +151,8 @@ export default {
   components: {
     CheckButton,
     EditButton,
-    TrashButton
+    TrashButton,
+    NewItem
   },
 
   data()  {
@@ -159,7 +167,8 @@ export default {
           edit: {
             title: false,
             description: false
-          }
+          },
+          newItem : false
         }
   },
   beforeMount() {
@@ -176,6 +185,14 @@ export default {
 
   methods: {
     //TODO CANCEL EDIT FUNCTION
+    closeItem() {
+      
+      this.newItem = false
+    },
+    openItem() {
+      this.newItem = true
+    },
+
     CancelEdit() {
       this.edit.title = false
       this.collection = this.lastCollection

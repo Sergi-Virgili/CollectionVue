@@ -15,7 +15,7 @@
             <p  v-if="!editMode">{{comment.content}}</p>
         </div>
         <div class="card-footer" v-if="comment.isAuthor">
-            <div v-if="editMode" v-on:click="onClickUpdate()">
+            <div v-if="editMode" v-on:click="onClickUpdate">
                 <CheckButton/>
             </div>
             <div id="editButton" v-if="!editMode" v-on:click="onClickEdit()">
@@ -55,12 +55,19 @@ import axios from 'axios'
                 this.editMode = true;
             },
             onClickUpdate() {
+
+                if (!this.comment.content) {
+                    return 
+                }
+
                 const params = {
                     content: this.comment.content
                 };
+
                 axios.put(`/api/comments/${this.comment.id}`,params).then((response) => {
                 this.editMode = false;
                 const comment = response.data;
+                
                 this.$emit('update', comment);
                 });
             }
