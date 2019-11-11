@@ -87,10 +87,15 @@
     </div>
 
     <div class="item-list">
-      <div v-for="item in collection.items" :key="item.id" class="">
+      <div v-for="item in collection.items" :key="item.id" >
 
-        <router-link :to="'/collection/'+collection.id+'/item/'+item.id" class="card new-item" >
-
+        <!-- <router-link :to="'/collection/'+collection.id+'/item/'+item.id" class="card new-item" > -->
+          <div 
+            class="card new-item" 
+            @click="openItem()"
+            :item="item"
+            >
+          
           <div class="card-header">{{item.name}}</div>
           <img
             class="card-img-top"
@@ -99,9 +104,10 @@
           <div class="card-footer">
 
           </div>
+          </div>
           <!-- <div class="card-body">{{collection.description}}</div> -->
 
-        </router-link>
+        <!-- </router-link> -->
 
 
       </div>
@@ -159,6 +165,7 @@ export default {
 
         return {
           collection: {},
+          item: '',
           lastCollection: {},
           params: {},
           fileSelected : null,
@@ -224,6 +231,7 @@ export default {
         .then((response) => {
           this.collection = response.data
           this.lastCollection = this.collection
+
 
         })
     },

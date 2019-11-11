@@ -78,3 +78,8 @@ Route::get('/comments/{comment}', 'CommentController@index');
 Route::get('/comments/{comment}/edit', 'CommentController@edit');
 Route::put('/comments/{comment}', 'CommentController@update');
 //Route::apiResource('comments', 'CommentController');
+
+//------------------------
+// ITEM ROUTES
+Route::post('/item', 'ItemController@store');
+Route::put('/item/{item}', 'ItemController@update');

@@ -1,14 +1,30 @@
 <template>
     <div class="card">   
     <div class="card-header">
-        <h3 class="card-title">{{newItem.name}}</h3>
+        <h3 class="card-title">{{newItem.name}}
+        </h3>
+        <input 
+            class="form-control" 
+            type="text" 
+            name="name"
+            v-model="newItem.name">
         <div
             @click="closeItem()">
+            
             <CloseButton />
         </div>
+        <button @click="modifyItem">ok</button>
+    </div>
+    <div class="image">
+        <div class="camIcon"><CamButton /></div>
     </div>
     <div class="card-body">
         {{newItem.description}}
+        <textarea
+          rows="5"
+          name="description"  
+          class="form-control area-input"
+          v-model="newItem.description"></textarea>
     </div>
     
     </div>
@@ -16,8 +32,14 @@
 
 <script>
 import CloseButton from '../buttons/DeleteButton'
+import CamButton from '../buttons/CamButton' 
+import axios from 'axios'
 
 export default {
+    components: {
+        CloseButton,
+        CamButton
+    },
     props: [
         'collection',
         'item'
@@ -30,22 +52,46 @@ export default {
                 image: '',
                 description: 'Explain Why you collect this item'
             },
+            collectionId: 1,
+            isNew : true,
+            editMode: false
         }
     },
 
-    components: {
-        CloseButton
-    },
-    mounted: {
+    mounted() {
+        console.log(item)
         if (item) {
-            this.newItem = item
+            this.newItem = this.item
         }
     },
     methods: {
         closeItem() {
           
             this.$emit('closeItem')
+        },
+        saveItem(){
+
+        },
+        createItem(){
+            const params = {
+                name: this.newItem.name,
+                description: this.newItem.description,
+                collection_id: this.collectionId
+            }
+            axios.post('/api/item', params).then((Response) => {
+                this.isNew = false
+            })
+        },
+        modifyItem(){
+            
+            if (this.isNew) {
+                this.createItem()
+            }
+            if (!this.isNew) {
+                this.saveItem()
+            }
         }
+
     }
 
 }
@@ -65,6 +111,12 @@ export default {
         display: flex;
         justify-content: space-between;
     }
+    .image {
+        
+        background-color: grey;
+        height: 500px;
+    }
+    
 
 </style>>
 

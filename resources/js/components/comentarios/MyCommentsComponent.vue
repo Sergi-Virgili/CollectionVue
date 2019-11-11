@@ -14,7 +14,7 @@
             </div>
 
              <div class="barraComment">
-                <form-component  @new="addComment" />
+                <form-component @new="addComment" />
             </div>
 
         </div>
@@ -34,7 +34,8 @@ import FormComponent from './FormComponent.vue'
         data(){
             return {
                 comments:[],
-                collection_Id : this.$route.params.collectionId
+                collection_Id : this.$route.params.collectionId,
+               
             }
         },
         mounted() {

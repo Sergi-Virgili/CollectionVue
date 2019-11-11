@@ -36,9 +36,9 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-
+       // dd($request);
         Item::create($request->all());
-        return redirect()->back();
+        //return redirect()->back();
     }
 
     /**
