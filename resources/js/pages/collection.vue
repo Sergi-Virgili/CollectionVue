@@ -16,7 +16,7 @@
 
     </div> -->
 
-    <div class="view_child"
+    <div class="view_child card" :style="{ backgroundImage: `url('${collection.img_url}')` }"
 
       v-touch:swipe.left="swipeHandler">
     <transition name="fade" mode="out-in">
@@ -49,7 +49,7 @@ export default {
   },
   beforeMount() {
 
-    //alert(this.collection.id)
+    
   },
 
   mounted() {
@@ -84,8 +84,11 @@ export default {
 
 <style lang="scss" scoped>
   .view_child {
-    background-color:lightgrey;
+    // background-color:lightgrey;
+    background-position: center;
+    background-size: cover;
     height: 50vh;
+
   }
   .comments-list {
     margin-bottom: 6em;

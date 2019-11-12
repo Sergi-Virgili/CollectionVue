@@ -3,6 +3,7 @@
     <NewItem 
       v-if="newItem"
       @closeItem ="closeItem" />
+    <div v-if="!newItem">
     <div class="card">
 
       <div class="card-header">
@@ -137,7 +138,7 @@
 
           <!-- <div class="card-body">{{collection.description}}</div> -->
 
-
+    </div>
   </div>
 </template>
 

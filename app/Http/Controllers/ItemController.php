@@ -23,17 +23,7 @@ class ItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    
     public function store(Request $request)
     {
        // dd($request);
@@ -53,7 +43,7 @@ class ItemController extends Controller
 
         return response()->json($item);
 
-        //return view ('public.itemShow',['item' => $item]);
+       
     }
 
     /**
