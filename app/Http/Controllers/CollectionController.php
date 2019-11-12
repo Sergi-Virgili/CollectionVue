@@ -100,7 +100,7 @@ class CollectionController extends Controller
     public function update(Request $request, $id)
     {
         $collection = Collection::find($id);
-
+        dd($request->image);
 
         if($request->image){
 

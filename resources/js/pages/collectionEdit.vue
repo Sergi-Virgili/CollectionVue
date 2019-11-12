@@ -240,32 +240,42 @@ export default {
        console.log(direction, this.$route)
 
     },
-    OnFileSelected(evente) {
+    OnFileSelected(event) {
 
 
       this.fileSelected = event.target.files[0]
-     // this.url = URL.createObjectURL(this.fileSelected);
+      this.collection.img_url = URL.createObjectURL(this.fileSelected);
       let reader = new FileReader
       reader.readAsDataURL(this.fileSelected)
       reader.onload = e => {
         console.log(e.target.result)
         this.image = e.target.result
+        
       }
 
     },
     onUpload() {
 
-      let params = new FormData();
-      params = {
-        name: this.collection.name,
-        description: this.collection.description,
-        image: this.image
+      let formData = new FormData();
+      // params = {
+      //   id: this.collection.id,
+      //   name: this.collection.name,
+      //   description: this.collection.description,
+      //   image: ''
 
-        }
+      //   }
+      formData.append('file', this.image);
+      let config = {headers: {
+          'Content-Type': 'multipart/form-data'
+        } }
 
+      axios.put( `/api/collection/${this.collection.id}` ,
+        formData,
+        config 
+      )
       //axios.put(`/api/collection/${this.collection.id}`, {'image' : this.image})
-      axios.put(`/api/collection/${this.collection.id}`, params)
-
+      //axios.put(`/api/collection/${this.collection.id}`, params)
+      
       .then((res)=>{
         this.lastCollection = this.collection
       })
