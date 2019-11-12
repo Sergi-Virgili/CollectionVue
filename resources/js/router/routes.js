@@ -32,7 +32,6 @@ export default [
 
   { path: '/form', name: 'favoriteCategories', component: page('favoriteCategoriesForm.vue') },
   { path: '/categories', name: 'categories', component: page('categories.vue') },
-  { path: '/category/edit', name: 'editCategory', component: page('EditCategory.vue') },
 
   // { path: '/collection/item/:id', name: 'item', component: page('item.vue') },
 

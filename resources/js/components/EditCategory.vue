@@ -21,13 +21,14 @@
 
     export default {
 
+        name: 'EditCategory',
+
         middleware: 'auth',
 
         props: ['category'],
 
         data(){
             return{
-                category: [],
             }
         },
 
