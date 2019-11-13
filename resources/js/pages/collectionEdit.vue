@@ -1,159 +1,100 @@
 <template>
   <div>
-    <NewItem 
-      v-if="newItem"
-      @closeItem ="closeItem" />
+    <NewItem v-if="newItem" @closeItem="closeItem" />
     <div v-if="!newItem">
-    <div class="card">
-
-      <div class="card-header">
-        <input
+      <div class="card">
+        <div class="card-header">
+          <input
             v-model="collection.name"
-            class = "form-control"
+            class="form-control"
             type="text"
-            name = 'name'
-
-            v-if='edit.title'
-            >
-        <h3
-          v-if="!edit.title"
-         @click="editTitle()"
-          >
-
-
-          {{collection.name}}
-
-        </h3>
-          <div
-            v-if="!edit.title"
-            @click="editTitle()">
-            <EditButton
-              />
-
-          </div>
-          <div
+            name="name"
             v-if="edit.title"
-            @click="editTitle()">
+          />
+          <h3 v-if="!edit.title" @click="editTitle()">{{collection.name}}</h3>
+          <div v-if="!edit.title" @click="editTitle()">
+            <EditButton />
+          </div>
+          <div v-if="edit.title" @click="editTitle()">
             <CheckButton />
           </div>
           <!-- <div
             v-if="edit.title"
             @click="CancelEdit()">
             <TrashButton />
-          </div> -->
-
+          </div>-->
         </div>
-      <input
-        type="file"
-        @change="OnFileSelected"
-        style = "display:none"
-        ref ="fileInput">
+        <input type="file" @change="OnFileSelected" style="display:none" ref="fileInput" />
 
-      <button @click="$refs.fileInput.click()">Pick Image</button>
-      <button @click="onUpload">Upload</button>
+        <button @click="$refs.fileInput.click()">Pick Image</button>
+        <button @click="onUpload">Upload</button>
 
-      <div class="image-card" :style= "{ backgroundImage: 'url(' + collection.img_url + ')' }"> </div>
+        <div class="image-card" :style="{ backgroundImage: 'url(' + collection.img_url + ')' }"></div>
 
-      <img v-if="url" :src="url" alt="">
+        <img v-if="url" :src="url" alt />
 
-      <div class="card-body">
+        <div class="card-body">
+          <p v-if="!edit.description">{{collection.description}}</p>
 
-        <p
-          v-if="!edit.description">
-        {{collection.description}}
-        </p>
-
-        <textarea
-          rows="5"
-          v-if="edit.description"
-          class="form-group area-input"
-          v-model="collection.description"></textarea>
-        <div
-
-
-            v-if="!edit.description"
-            @click="editDescription()">
-            <EditButton
-              />
-
-          </div>
-          <div
+          <textarea
+            rows="5"
             v-if="edit.description"
-            @click="editDescription()">
+            class="form-group area-input"
+            v-model="collection.description"
+          ></textarea>
+          <div v-if="!edit.description" @click="editDescription()">
+            <EditButton />
+          </div>
+          <div v-if="edit.description" @click="editDescription()">
             <CheckButton />
-
           </div>
         </div>
+      </div>
 
-    </div>
-
-    <div class="item-list">
-      <div v-for="item in collection.items" :key="item.id" >
-
-        <!-- <router-link :to="'/collection/'+collection.id+'/item/'+item.id" class="card new-item" > -->
-          <div 
-            class="card new-item" 
-            @click="openItem()"
-            :item="item"
-            >
-          
-          <div class="card-header">{{item.name}}</div>
-          <img
-            class="card-img-top"
-            src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Amiga500_system.jpg"
-            alt="">
-          <div class="card-footer">
-
-          </div>
+      <div class="item-list">
+        <div v-for="item in collection.items" :key="item.id">
+          <!-- <router-link :to="'/collection/'+collection.id+'/item/'+item.id" class="card new-item" > -->
+          <div class="card new-item" @click="openItem()" :item="item">
+            <div class="card-header">{{item.name}}</div>
+            <img
+              class="card-img-top"
+              src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Amiga500_system.jpg"
+              alt
+            />
+            <div class="card-footer"></div>
           </div>
           <!-- <div class="card-body">{{collection.description}}</div> -->
 
-        <!-- </router-link> -->
-
-
-      </div>
-
-
-
-    <div 
-      class="card new-item" 
-      @click="openItem()"
-      >
-      <div class="card-body">
-          +
+          <!-- </router-link> -->
         </div>
-    </div>
 
-
-    </div>
-    <!-- <div class="view_child"
+        <div class="card new-item" @click="openItem()">
+          <div class="card-body">+</div>
+        </div>
+      </div>
+      <!-- <div class="view_child"
 
       v-touch:swipe.left="swipeHandler">
 
       <router-view :key="this.$route.params.id+1"/>
 
-    </div> -->
+      </div>-->
 
-
-
-          <!-- <div class="card-body">{{collection.description}}</div> -->
-
+      <!-- <div class="card-body">{{collection.description}}</div> -->
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 //import LoveComponent from './LoveComponent'
-import EditButton from '../components/buttons/EditButton'
-import CheckButton from '../components/buttons/CheckButton'
-import TrashButton from '../components/buttons/TrashButton'
-import NewItem from '../components/items/NewItem'
-
+import EditButton from "../components/buttons/EditButton";
+import CheckButton from "../components/buttons/CheckButton";
+import TrashButton from "../components/buttons/TrashButton";
+import NewItem from "../components/items/NewItem";
 
 export default {
-
-  middleware: 'auth',
+  middleware: "auth",
 
   components: {
     CheckButton,
@@ -162,160 +103,146 @@ export default {
     NewItem
   },
 
-  data()  {
-
-        return {
-          collection: {},
-          item: '',
-          lastCollection: {},
-          params: {},
-          fileSelected : null,
-          url: null,
-          image: '',
-          edit: {
-            title: false,
-            description: false
-          },
-          newItem : false
-        }
+  data() {
+    return {
+      collection: {},
+      item: "",
+      lastCollection: {},
+      params: {},
+      fileSelected: null,
+      url: null,
+      image: "",
+      edit: {
+        title: false,
+        description: false
+      },
+      newItem: false
+    };
   },
   beforeMount() {
-
     //alert(this.collection.id)
   },
 
   mounted() {
-    this.collection.id = this.$route.params.collectionId
+    this.collection.id = this.$route.params.collectionId;
 
-    this.getData()
-    this.params = this.$route.params
+    this.getData();
+    this.params = this.$route.params;
   },
 
   methods: {
     //TODO CANCEL EDIT FUNCTION
     closeItem() {
-      
-      this.newItem = false
+      this.newItem = false;
     },
     openItem() {
-      this.newItem = true
+      this.newItem = true;
     },
 
     CancelEdit() {
-      this.edit.title = false
-      this.collection = this.lastCollection
-      console.log(this.lastCollection.name)
-      console.log(this.collection.name)
+      this.edit.title = false;
+      this.collection = this.lastCollection;
+      console.log(this.lastCollection.name);
+      console.log(this.collection.name);
     },
 
     editTitle() {
-      if (this.edit.title ) {
-        this.onUpload()
-        this.edit.title = false
-        return null
+      if (this.edit.title) {
+        this.onUpload();
+        this.edit.title = false;
+        return null;
       }
-      this.edit.title = true
-
+      this.edit.title = true;
     },
-    editDescription(){
-      if (this.edit.description ) {
-        this.onUpload()
-        this.edit.description = false
-        return null
+    editDescription() {
+      if (this.edit.description) {
+        this.onUpload();
+        this.edit.description = false;
+        return null;
       }
-      this.edit.description = true
-
+      this.edit.description = true;
     },
 
     getData() {
-      axios.get(`/api/collection/${this.collection.id }`)
-        .then((response) => {
-          this.collection = response.data
-          this.lastCollection = this.collection
-
-
-        })
+      axios.get(`/api/collection/${this.collection.id}`).then(response => {
+        this.collection = response.data;
+        this.lastCollection = this.collection;
+      });
     },
     swipeHandler(direction) {
-       console.log(direction, this.$route)
-
+      console.log(direction, this.$route);
     },
     OnFileSelected(event) {
-
-
-      this.fileSelected = event.target.files[0]
+      this.fileSelected = event.target.files[0];
       this.collection.img_url = URL.createObjectURL(this.fileSelected);
-      let reader = new FileReader
-      reader.readAsDataURL(this.fileSelected)
+      let reader = new FileReader();
+      reader.readAsDataURL(this.fileSelected);
       reader.onload = e => {
-        console.log(e.target.result)
-        this.image = e.target.result
-        
-      }
-
+        this.image = e.target.result;
+      };
     },
     onUpload() {
-
       let formData = new FormData();
-      // params = {
+      // formData = {
       //   id: this.collection.id,
       //   name: this.collection.name,
-      //   description: this.collection.description,
-      //   image: ''
+      //   description: this.collection.description
+      // };
 
-      //   }
-      formData.append('file', this.image);
-      let config = {headers: {
-          'Content-Type': 'multipart/form-data'
-        } }
+      formData.append("name", this.collection.name);
+      formData.append("description", this.collection.description);
+      formData.append("image", this.image);
+      formData.append("category_id", 1);
+      let config = {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      };
 
-      axios.put( `/api/collection/${this.collection.id}` ,
-        formData,
-        config 
-      )
-      //axios.put(`/api/collection/${this.collection.id}`, {'image' : this.image})
-      //axios.put(`/api/collection/${this.collection.id}`, params)
-      
-      .then((res)=>{
-        this.lastCollection = this.collection
-      })
+      axios
+        .post(`/api/collection`, formData, config)
+        //axios.put(`/api/collection/${this.collection.id}`, {'image' : this.image})
+        //axios.put(`/api/collection/${this.collection.id}`, params)
+
+        .then(res => {
+          console.log(res);
+          this.lastCollection = this.collection;
+        });
     }
   }
 
   // metaInfo () {
   //   return { title: this.$t('home') }
   // }
-}
+};
 </script>
 
 <style lang="scss" scoped>
-  .area-input {
+.area-input {
+  width: 100%;
+}
 
-    width: 100%;
-  }
+.item-list {
+  width: 100%;
 
-  .item-list {
-    width: 100%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1em;
+  margin-top: 1em;
+}
 
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns:  1fr 1fr;
-      gap:1em;
-      margin-top: 1em;
-  }
-
-  .image-card {
-
-    height: 40vh;
-    width: 100%;
-    background-size: cover;
-    background-position: center;
-  }
-  .card-header {
-    display: flex;
-    justify-content: space-between;
-  }
-  .new-item {
-    min-height: 200px;
-  }
+.image-card {
+  height: 40vh;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+}
+.card-header {
+  display: flex;
+  justify-content: space-between;
+}
+.new-item {
+  min-height: 200px;
+}
 </style>

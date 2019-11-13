@@ -40,18 +40,22 @@ class CollectionController extends Controller
      */
     public function store(Request $request)
     {
+
         $collection = new Collection();
         $collection->name = $request->name;
         $collection->category_id = $request->category_id;
         $collection->description = $request->description;
-        $collection->user_id = Auth::user()->id;
+        $collection->user_id = auth()->user()->id;
         $collection->save();
+
+
         if($request->image){
         $newimage = new Image();
         $newimage->storeImageCollection($request, $collection->id);
         }
 
-        return redirect('home/collections');
+
+
     }
 
     /**
@@ -100,7 +104,7 @@ class CollectionController extends Controller
     public function update(Request $request, $id)
     {
         $collection = Collection::find($id);
-        dd($request->image);
+        dd($request->name);
 
         if($request->image){
 

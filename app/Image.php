@@ -71,43 +71,45 @@ class Image extends Model
     }
 
     public function storeImageCollection($request, $id){
-        dd($request);
 
-        DB::beginTransaction();
-        try{
+
+        // DB::beginTransaction();
+        // try{
             //save image
 
         $newimage = new Image();
 
         //obtenemos el campo file definido en el formulario
-       // $image = $request->file('image');
-        $image = $request->image;
-        
+        $base64_image = $request->image;
+
+
         //obtenemos el nombre del archivo
-        $nombrearchivo = $image->getClientOriginalName();
-        
-      
-        $nombrearchivo = 'file';
+        $nombrearchivo = 'archivonuevo.jpg';
+        $image = substr($base64_image, strpos($base64_image, ',') + 1);
+        $image = base64_decode($image);
+        //$nombrearchivo = $image->getClientOriginalName();
+
+        //$nombrearchivo = 'file';
 
         //indicamos que queremos guardar un nuevo archivo en el disco local
-        Storage::disk('local')->put($nombrearchivo,  \File::get($image));
+        Storage::disk('local')->put($nombrearchivo,  $image);
 
-        $newimage->name = $nombrearchivo;
-        $newimage->collection_id = $id;
-        $newimage->save();
+        // $newimage->name = $nombrearchivo;
+        // $newimage->collection_id = $id;
+        // $newimage->save();
 
-        DB::commit();
+        //DB::commit();
 
         //return redirect()->back();
 
-        }
+        // }
 
-        catch(\Exception $e)
-        {
-            DB::rollback();
-            return redirect()->back()
-                ->with('warning', $e);
-        }
+        // catch(\Exception $e)
+        // {
+        //     DB::rollback();
+        //     return redirect()->back()
+        //         ->with('warning', $e);
+        // }
     }
 
     public function storeImageItem($request, $id){
