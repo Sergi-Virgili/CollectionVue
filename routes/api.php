@@ -69,7 +69,7 @@ Route::delete('/register/detach', 'CategoryController@detachCategoryUser');
 // -----------!!
 
 Route::post('/category', 'CategoryController@store');
-Route::put('/category/{id}/update', 'CategoryController@update');
+Route::put('/category/{id}/update', 'CategoryController@updateCategory');
 Route::delete('/category/{id}/destroy', 'CategoryController@deleteCategory');
 
 //------------!!

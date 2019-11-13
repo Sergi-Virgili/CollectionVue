@@ -6,7 +6,7 @@
             <div class="col-sm-12 d-flex flex-nowrap">
                 <input type="hidden" v-model="resultdata">
                 <input class="form-control" type="text" value="result.name" v-model="search" @input="onChange" @keydown.down="onArrowDown" @keydown.up="onArrowUp" @keydown.enter="onEnter">
-                <button class="btn btn-outline-primary order-2" @click="onEnter()">Add</button>
+                <button class="btn btn-outline-primary order-2" @click="onEnter">Add</button>
             </div>
             <div id="relative" class="justify-content-center">
                 <ul id="absolute" class="autocomplete-results" v-show="isOpen">
@@ -65,8 +65,10 @@
                 }
             },
             onEnter() {
-                const selfdata = resultdata
-                if(this.selfdata.id!==null){
+                const selfdata = this.resultdata;
+                const id = selfdata.id
+                if(id!=null){
+                    console.log(selfdata)
                     return this.attachCategories(selfdata);
                 }
                 return this.empty();
@@ -76,7 +78,7 @@
                 this.resultdata='';
             },
             attachCategories(selfdata){
-                const searchid = this.selfdata;
+                const searchid = selfdata;
                 this.isOpen = false;
                 this.arrowCounter = -1;
 
@@ -106,7 +108,7 @@
                 });
             },
             setResult(result) {
-                this.resultdata = result
+                this.resultdata = result;
                 this.search = result.name;
                 this.isOpen = false;
                 return result;

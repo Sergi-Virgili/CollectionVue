@@ -5,7 +5,10 @@
                 <input type="text" v-model="categoryItem.name">
                 <textarea v-model="categoryItem.description"></textarea>
             </div>
-            <input class="btn btn-outline-primary" type="file" name="icon">
+            <figure>
+                <img id="image" :src="categoryItem.icon">
+            </figure>
+            <input class="btn btn-outline-primary" type="file" name="icon" @change="getImage">
             <div class="d-flex flex-nowrap">
                 <button type="submit" class="btn btn-outline-success">GUARDAR</button>
                 <button class="btn btn-outline-danger" @click="cancelEdit()">CANCELAR</button>
@@ -32,7 +35,7 @@
         data(){
 
             return{
-                category: [],
+                preImage: '',
                 editMode: false,
             }
         },
@@ -40,16 +43,17 @@
         methods: {
 
             updateCategory(){
-                const params = {
-                    name: this.name,
-                    description: this.description,
-                    icon: this.icon,
-                }
+                const self = this;
                 const id = this.categoryItem.id;
-                axios.put(`/api/category/${id}/update`, params).then((response) => {
+                const params = {
+                    name: this.categoryItem.name,
+                    cription: this.categoryItem.description,
+                    icon: this.categoryItem.icon,
+                }
+                axios.put(`api/category/${id}/update`, params).then((response) => {
                 this.editMode = false;
-                const category = response.data;
-                this.$emit('updateCategory', category)});
+                const categoryItem = response.data;
+                this.$emit('updateCategory', categoryItem)});
             },
             editCategory(){
                 this.editMode = true;
@@ -62,6 +66,24 @@
                 const id = this.categoryItem.id;
                 axios.delete(`/api/category/${id}/destroy`).then(this.$emit('deleteCategory'));
             },
+            getImage(event){
+            let file = event.target.files[0];
+            this.categoryItem.icon = file;
+            this.preUploadImage(file);
+            },
+            preUploadImage(file){
+                let reader = new FileReader();
+                reader.onload = (event) => {
+                    this.preImage = event.target.result;
+                }
+                reader.readAsDataURL(file);
+            },
+
+        },
+        computed:{
+            imagen(){
+                return this.preImage;
+            }
         },
 
         mounted() {
@@ -75,6 +97,9 @@
 
     #categoryIcon{
         max-width: 50px;
+    }
+    #image{
+        max-width: 80px;
     }
 
 </style>
