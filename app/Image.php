@@ -44,7 +44,7 @@ class Image extends Model
         $newimage = new Image();
 
         //obtenemos el campo file definido en el formulario
-        $image = $request->file('image');
+        $image = $request->file('icon');
 
         //obtenemos el nombre del archivo
         $nombrearchivo = $image->getClientOriginalName();
@@ -85,7 +85,6 @@ class Image extends Model
 
         //obtenemos el nombre del archivo
        // $nombrearchivo = $image->getClientOriginalName();
-        dd($nombrearchivo);
         $nombrearchivo = 'file';
         //indicamos que queremos guardar un nuevo archivo en el disco local
         Storage::disk('local')->put($nombrearchivo,  \File::get($image));

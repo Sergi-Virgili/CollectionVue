@@ -32,11 +32,10 @@ class CategoryController extends Controller
         $category->name = $request->name;
         $category->description = $request->description;
         $category->save();
-        if($request->image){
+        if($request->icon){
         $newimage = new Image();
         $newimage->storeImageCategory($request, $category->id);
-        }
-        return back();
+        };
     }
 
     /**
@@ -60,12 +59,16 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        if($request->image){
-        $newimage = new Image();
-        $newimage->storeImageCategory($request, $category->id);
-        }
-        $category->update($request->all());
-        return back();
+        
+    }
+    public function updateCategory(Request $request, $category)
+    {
+        $category = Category::find($category);
+        if($request->icon){
+            $newimage = new Image();
+            $newimage->storeImageCategory($request, $category->id);
+            }
+            $category->update($request->all());
     }
 
     /**
@@ -74,10 +77,10 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function deleteCategory(Int $id)
     {
+        $category = Category::find($id);
         $category->delete();
-        return back();
     }
 
     public function adminIndex()
