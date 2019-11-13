@@ -72,6 +72,7 @@ class Image extends Model
 
     public function storeImageCollection($request, $id){
 
+        //TODO REFACTOR
 
         // DB::beginTransaction();
         // try{
@@ -84,7 +85,8 @@ class Image extends Model
 
 
         //obtenemos el nombre del archivo
-        $nombrearchivo = 'archivonuevo.jpg';
+        $fileName = 'collect-' . $request->collection_id . '-' . rand( 0, 100000) . '.jpg';
+
         $image = substr($base64_image, strpos($base64_image, ',') + 1);
         $image = base64_decode($image);
         //$nombrearchivo = $image->getClientOriginalName();
@@ -92,7 +94,7 @@ class Image extends Model
         //$nombrearchivo = 'file';
 
         //indicamos que queremos guardar un nuevo archivo en el disco local
-        Storage::disk('local')->put($nombrearchivo,  $image);
+        Storage::disk('public')->put($fileName,  $image);
 
         // $newimage->name = $nombrearchivo;
         // $newimage->collection_id = $id;

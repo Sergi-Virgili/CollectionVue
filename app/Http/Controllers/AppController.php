@@ -85,7 +85,9 @@ class AppController extends Controller
 
         $collection = Collection::all()->find($collection);
         $items = $collection->items;
+        $category = $collection->category;
         $collection['items'] = $items;
+        $collection['category'] = $category;
 
         return response()->json($collection);
 

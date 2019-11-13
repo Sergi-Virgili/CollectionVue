@@ -28,7 +28,7 @@
 
         <button @click="$refs.fileInput.click()">Pick Image</button>
         <button @click="onUpload">Upload</button>
-
+        <img class="categoryItem" :src="collection.category.icon" />
         <div class="image-card" :style="{ backgroundImage: 'url(' + collection.img_url + ')' }"></div>
 
         <img v-if="url" :src="url" alt />
@@ -192,7 +192,9 @@ export default {
       formData.append("name", this.collection.name);
       formData.append("description", this.collection.description);
       formData.append("image", this.image);
-      formData.append("category_id", 1);
+      formData.append("category_id", this.collection.category.id);
+      formData.append("collection_id", this.collection.id);
+
       let config = {
         headers: {
           "Content-Type": "multipart/form-data"
@@ -244,5 +246,8 @@ export default {
 }
 .new-item {
   min-height: 200px;
+}
+.categoryItem {
+  width: 2em;
 }
 </style>
