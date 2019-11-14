@@ -51,8 +51,8 @@ class AppController extends Controller
 
                 $collection['author'] = false;
                 $collection['userLove'] = false;
-
-                ;
+              //  $collection['image'] = $collection->image->url;
+                
 
 
                 if($collection->user->id == auth()->user()->id){
@@ -85,10 +85,12 @@ class AppController extends Controller
 
         $collection = Collection::all()->find($collection);
         $items = $collection->items;
+        $image = 'Storage/collect-125-79003.png';
         $category = $collection->category;
         $collection['items'] = $items;
         $collection['category'] = $category;
-
+        $collection['image'] = $image;
+        
         return response()->json($collection);
 
     }

@@ -5,9 +5,13 @@
 
 
         <router-link :to="{name:'collection', params:{collectionId: collection.id}}">
-          <img    class = "card-img-top"
+          <!-- <img    class = "card-img-top"
 
-                  :src="collection.img_url">
+                  :src="collection.img_url"> -->
+          <div class = "image-card"
+
+                  :style="{ backgroundImage: 'url(' + collection.image + ')' }">
+          </div>
           </router-link>
             <div class="footer">
                 <div class="title">
@@ -117,13 +121,14 @@ export default {
         text-align: center;
 
     }
-    .image {
-        width: 160px;
-        height: 160px;
-        background-image: url("https://fakeimg.pl/350x200/ff0000,128/000,255");
+    .image-card {
 
-        background-size: cover;
+        /* width: 250px; */
+        height: 200px;
         background-position: center;
+        background-size: cover;
+
+        
 
 
 

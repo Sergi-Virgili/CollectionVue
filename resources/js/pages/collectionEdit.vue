@@ -179,6 +179,7 @@ export default {
       reader.readAsDataURL(this.fileSelected);
       reader.onload = e => {
         this.image = e.target.result;
+        
       };
     },
     onUpload() {
@@ -207,7 +208,7 @@ export default {
         //axios.put(`/api/collection/${this.collection.id}`, params)
 
         .then(res => {
-          console.log(res);
+         
           this.lastCollection = this.collection;
         });
     }

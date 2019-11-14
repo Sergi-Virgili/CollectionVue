@@ -66,7 +66,7 @@ class CollectionController extends Controller
      */
     public function show(Collection $collection)
     {
-
+       
         $items = $collection->items;
         return view('public.itemsList',['collection' => $collection,
                                         'items' => $items]);

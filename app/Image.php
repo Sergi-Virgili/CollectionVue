@@ -85,20 +85,27 @@ class Image extends Model
 
 
         //obtenemos el nombre del archivo
-        $fileName = 'collect-' . $request->collection_id . '-' . rand( 0, 100000) . '.jpg';
+        $pos  = strpos($base64_image, ';');
+        
+        $type = explode('/', substr($base64_image, 0, $pos))[1];
+        if ($type == 'jpeg') {$type = 'jpg';};
+        $fileName = 'collect-' . $request->collection_id . '-' . rand( 0, 100000) . '.' . $type;
 
         $image = substr($base64_image, strpos($base64_image, ',') + 1);
         $image = base64_decode($image);
-        //$nombrearchivo = $image->getClientOriginalName();
+        
+      
 
-        //$nombrearchivo = 'file';
+        
 
         //indicamos que queremos guardar un nuevo archivo en el disco local
         Storage::disk('public')->put($fileName,  $image);
 
-        // $newimage->name = $nombrearchivo;
-        // $newimage->collection_id = $id;
-        // $newimage->save();
+         $newimage->name = $fileName;
+         $newimage->collection_id = $id;
+         $newimage->url = 'Storage/public/' . $fileName;
+         
+         $newimage->save();
 
         //DB::commit();
 
