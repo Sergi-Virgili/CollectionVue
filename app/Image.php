@@ -83,7 +83,6 @@ class Image extends Model
         //obtenemos el campo file definido en el formulario
         $base64_image = $request->image;
 
-
         //obtenemos el nombre del archivo
         $pos  = strpos($base64_image, ';');
         
@@ -94,17 +93,12 @@ class Image extends Model
         $image = substr($base64_image, strpos($base64_image, ',') + 1);
         $image = base64_decode($image);
         
-      
-
-        
-
         //indicamos que queremos guardar un nuevo archivo en el disco local
         Storage::disk('public')->put($fileName,  $image);
 
          $newimage->name = $fileName;
          $newimage->collection_id = $id;
-         $newimage->url = 'Storage/public/' . $fileName;
-         
+         $newimage->url = "/storage/" . $fileName;
          $newimage->save();
 
         //DB::commit();

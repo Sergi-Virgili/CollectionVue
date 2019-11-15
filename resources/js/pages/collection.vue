@@ -16,8 +16,8 @@
 
     <div
       class="view_child card"
-      :style="{ backgroundImage: `url('${collection.image}')` }"
       v-touch:swipe.left="swipeHandler"
+      :style="{ backgroundImage: 'url(' + image + ')' }"
     >
       <transition name="fade" mode="out-in">
         <router-view :key="this.$route.params.id + 1" />
@@ -41,7 +41,8 @@ export default {
   data() {
     return {
       collection: {},
-      params: {}
+      params: {},
+      image: ""
     };
   },
   beforeMount() {},
@@ -51,16 +52,16 @@ export default {
     this.collectionIdprop = this.collection.id;
 
     this.getData();
-    this.getData();
+
     this.params = this.$route.params;
   },
 
   methods: {
     getData() {
       axios.get(`/api/collection/${this.collection.id}`).then(response => {
-        this.collection = response.data;
-
-        console.log(this.collection);
+        this.collection = response.data.collection;
+        this.image = response.data.image;
+        console.log(this.image);
       });
     },
     swipeHandler(direction) {

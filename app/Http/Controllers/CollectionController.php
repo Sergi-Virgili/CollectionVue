@@ -167,7 +167,9 @@ class CollectionController extends Controller
             foreach ($collections as $collection) {
 
                 $collection['author'] = true;
-
+                if ($collection->image) {
+                $collection['image'] = $collection->image;
+            }
 
             }
             return $collections;

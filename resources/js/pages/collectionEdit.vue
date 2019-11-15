@@ -165,7 +165,8 @@ export default {
 
     getData() {
       axios.get(`/api/collection/${this.collection.id}`).then(response => {
-        this.collection = response.data;
+        this.collection = response.data.collection;
+        this.url = response.data.image
         this.lastCollection = this.collection;
       });
     },
