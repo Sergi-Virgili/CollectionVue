@@ -34,6 +34,10 @@ class Collection extends Model implements Searchable
     {
         return $this->belongsTo(User::class);
     }
+    public function lovedByUser() 
+    {
+        return $this->belongsToMany(User::class);
+    }
     public function getSearchResult(): SearchResult
     {
         $url = route('collection.show', $this->id);

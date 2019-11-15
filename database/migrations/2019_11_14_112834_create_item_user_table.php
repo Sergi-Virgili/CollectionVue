@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLoveitUserTable extends Migration
+class CreateItemUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateLoveitUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('loveit_user', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('loveit_id');
-            $table->bigInteger('user_id');
-            $table->primary(['loveit_id', 'user_id']);
+        Schema::create('item_user', function (Blueprint $table) {
+            $table->bigInteger('item_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned();
+            $table->primary(['item_id','user_id']);
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateLoveitUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('loveit_user');
+        Schema::dropIfExists('item_user');
     }
 }

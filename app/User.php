@@ -120,4 +120,14 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
     {
         return $this->belongsToMany(Category::class);
     }
+
+    public function loveCollections() 
+    {
+        return $this->belongsToMany(Collection::class);
+    }
+
+    public function loveItems() 
+    {
+        return $this->belongsToMany(Item::class);
+    }
 }

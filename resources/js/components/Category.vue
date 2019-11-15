@@ -14,7 +14,7 @@
                 <button class="btn btn-outline-danger" @click="cancelEdit()">CANCELAR</button>
             </div>
         </form>
-        <div v-else>
+        <div v-if="!editMode">
             <h3>{{categoryItem.name}}</h3>
             <img id="categoryIcon" :src="categoryItem.icon"/>
             <p>{{categoryItem.description}}</p>

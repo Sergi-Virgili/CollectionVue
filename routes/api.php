@@ -83,3 +83,9 @@ Route::put('/comments/{comment}', 'CommentController@update');
 // ITEM ROUTES
 Route::post('/item', 'ItemController@store');
 Route::put('/item/{item}', 'ItemController@update');
+
+// LIKES ROUTES
+
+Route::get('/user/lovedCollections/{id}', 'LoveItController@isLovedByUser');
+Route::post('/user/{id}/attach', 'LoveItController@attachLoveCollectionUser');
+Route::delete('/user/{id}/detach', 'LoveItController@detachLoveCollectionUser');

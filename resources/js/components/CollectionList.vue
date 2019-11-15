@@ -32,7 +32,7 @@ export default {
 
     data()  {
         return {
-            collections: []
+            collections: [],
         }
     },
     mounted() {
@@ -61,7 +61,7 @@ export default {
         },
         deleteCollection(index){
             this.collections.splice(index,1)
-        }
+        },
     }
 
 }

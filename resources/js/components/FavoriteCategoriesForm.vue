@@ -59,24 +59,7 @@
                 };
 
                 axios.post('/register/attach', parameters).then((response) => console.log(response));
-
-                // this.addCategory();
-
             },
-            // addCategory() {
-            //     let selectedCategoryBtn = document.createElement("button");
-            //     let value = this.search;
-            //     let id = this.search.id;
-            //     let textnode = document.createTextNode(value.name);
-            //     selectedCategoryBtn.appendChild(textnode);
-            //     selectedCategoryBtn.setAttribute("name", "category");
-            //     selectedCategoryBtn.setAttribute("value", value.name);
-            //     selectedCategoryBtn.setAttribute("id", id);
-            //     selectedCategoryBtn.addEventListener("click", this.removeCategory, false);
-            //     let insert = document.getElementById("categoriesAttached");
-            //     insert.insertBefore(selectedCategoryBtn, insert.childNodes[0]);
-            //     this.search = '';
-            // },
             removeCategory() {
                 let selectedCategoryButton = event.target.id
                 let toDelete = document.getElementById(selectedCategoryButton);

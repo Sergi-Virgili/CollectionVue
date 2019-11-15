@@ -14,10 +14,9 @@ class CollectionUser extends Migration
     public function up()
     {
         Schema::create('collection_user', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('collection_id'); 
-            $table->bigInteger('user_id'); 
-            
+            $table->bigInteger('collection_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned();
+            $table->primary(['collection_id', 'user_id']);
             $table->timestamps();
 
         });

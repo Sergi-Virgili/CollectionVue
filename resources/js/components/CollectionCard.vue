@@ -20,7 +20,7 @@
 
                 <div class="card-buttons">
                     <div class="likes">
-                        <LoveComponent :collection = 'collection'></LoveComponent>
+                        <LoveComponent :collection = 'collection' @loveIt="loveIt()" @dontLove="dontLove()" :loved="loved"></LoveComponent>
                     </div>
                     <router-link :to="{name:'collectionEdit', params:{collectionId: collection.id}}">
 
@@ -67,6 +67,12 @@ import TrashButton from './buttons/TrashButton'
 
 export default {
 
+    data(){
+        return {
+            loved: false,
+            lovedCollections: [],
+        }
+    },
     components: {
       LoveComponent,
       EditButton,
@@ -76,16 +82,44 @@ export default {
     },
     props: ['collection'],
     mounted(){
-        console.log(this.collection)
+        this.isLoved();
     },
     methods: {
-
-
 
         deleteOnClick() {
 
             axios.delete(`/api/collection/${this.collection.id}`)
                     .then(this.$emit('delete'));
+        },
+        isLoved(){
+            const collectionId = this.collection.id
+            const params = {
+                id: collectionId
+            }
+            axios.get(`/api/user/lovedCollections/${this.collection.id}`, params)
+            .then((response) => {this.lovedCollections = response.data;
+            console.log(this.lovedCollections);});
+        },
+        loveIt(){
+            const collectionId = this.collection.id
+            const params = {
+                id: collectionId
+            }
+            axios.post(`/api/user/${this.collection.id}/attach`, params)
+            .then((response) => {
+                this.loved = true;
+                });          
+        },
+        dontLove(){
+            const collectionId = this.collection.id
+            const params = {
+                id: collectionId
+            }
+            axios.delete(`/api/user/${this.collection.id}/detach`, {data:{params}})
+            .then((response) => {
+                this.loved = false;
+                console.log(this.loved);
+                });
         }
 
     }
