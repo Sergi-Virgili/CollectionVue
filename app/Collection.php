@@ -34,9 +34,16 @@ class Collection extends Model implements Searchable
     {
         return $this->belongsTo(User::class);
     }
-    public function lovedByUser() 
+    public function lovedByUsers()
     {
         return $this->belongsToMany(User::class);
+    }
+    public function collectionLovedByUser($collection)
+    {
+        $user = auth()->user();
+        $lovedCollections = $user->loveCollections()->get();
+        $result = $lovedCollections->contains($collection);
+        return $result;
     }
     public function getSearchResult(): SearchResult
     {

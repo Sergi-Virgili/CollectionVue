@@ -2,7 +2,7 @@
     <div class="icon">
         <i v-if="!checked" class="far fa-heart" v-on:click="loveIt()"></i>
         <i v-if="checked" id="red" class="far fa-heart" v-on:click="dontLove()"></i>
-        <span class="number-likes">123</span>
+        <span class="number-likes">{{this.likes}}</span>
 
     </div>
 </template>
@@ -15,7 +15,7 @@ export default {
             checked: false,
         }
     },
-    props: ['loved'],
+    props: ['loved', 'likes'],
 
     methods: {
 
@@ -35,6 +35,7 @@ export default {
             return this.checked = false;
         }
         },
+        likes: function(){}
     }
 }
 </script>

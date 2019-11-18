@@ -14,18 +14,12 @@ class LoveItController extends Controller
     {
         $user = Auth::user();
         $collection = Collection::find($request);
-        $collection[0]->lovedByUser()->attach($user->id);
+        $collection[0]->lovedByUsers()->attach($user->id);
    }
    public function detachLoveCollectionUser(Request $request)
    {
         $user = Auth::user();
         $collection = Collection::find($request);
-        $collection[0]->lovedByUser()->detach($user->id);
-   }
-   public function isLovedByUser(Int $id)
-   {
-        $user = Auth::user();
-        $lovedCollections = $user->loveCollections()->where('collection_id', $id)->get();
-
+        $collection[0]->lovedByUsers()->detach($user->id);
    }
 }

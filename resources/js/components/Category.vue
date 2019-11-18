@@ -87,7 +87,6 @@
         },
 
         mounted() {
-            console.log('Category Component mounted.')
         },
 
     }

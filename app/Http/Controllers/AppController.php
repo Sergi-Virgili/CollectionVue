@@ -50,26 +50,21 @@ class AppController extends Controller
             foreach ($collections as $collection) {
 
                 $collection['author'] = false;
-                $collection['userLove'] = false;
-
-                ;
-
+                $collection['loved'] = false;
+                $collection['likes'] = 0;
 
                 if($collection->user->id == auth()->user()->id){
 
                     $collection['author'] = true;
 
                 }
-
-                // if($collection->isCollectionLoveByUser(auth()->user())){
-
-                //      $collection['userLove'] = true;
-                //  }
-
-
+                if($collection->collectionLovedByUser($collection)){
+                    $collection['loved'] = true;
+                }
+                if($collection->lovedByUsers()){
+                    $collection['likes'] = $collection->lovedByUsers()->count();
+                }
             }
-
-
         }
         return response()->json($collections);
     }

@@ -1,8 +1,6 @@
 <template>
 
-
     <div class="card ">
-
 
         <router-link :to="{name:'collection', params:{collectionId: collection.id}}">
           <img    class = "card-img-top"
@@ -14,13 +12,11 @@
 
                 {{collection.name}}
 
-
-
                 </div>
 
                 <div class="card-buttons">
                     <div class="likes">
-                        <LoveComponent :collection = 'collection' @loveIt="loveIt()" @dontLove="dontLove()" :loved="loved"></LoveComponent>
+                        <LoveComponent :collection = 'collection' @loveIt="loveIt()" @dontLove="dontLove()" :loved= "loved" :likes= "likes"></LoveComponent>
                     </div>
                     <router-link :to="{name:'collectionEdit', params:{collectionId: collection.id}}">
 
@@ -43,17 +39,6 @@
                 </div>
         </div>
     </div>
-    <!-- <div class="card collection-card">
-        <div class="title">{{collection.name}}</div>
-        <div class = "image"
-        v-on:click="goToCollection()"
-        src="" alt=""></div>
-        <div class="footer">
-
-            <div class="likes"><love-button :collection = 'collection'></love-button></div>
-
-        </div>
-    </div> -->
 </template>
 
 <script>
@@ -70,8 +55,11 @@ export default {
     data(){
         return {
             loved: false,
-            lovedCollections: [],
+            likes: 0,
         }
+    },
+    mounted(){
+        this.isLovedOrLiked();
     },
     components: {
       LoveComponent,
@@ -81,24 +69,13 @@ export default {
 
     },
     props: ['collection'],
-    mounted(){
-        this.isLoved();
-    },
+
     methods: {
 
         deleteOnClick() {
 
             axios.delete(`/api/collection/${this.collection.id}`)
                     .then(this.$emit('delete'));
-        },
-        isLoved(){
-            const collectionId = this.collection.id
-            const params = {
-                id: collectionId
-            }
-            axios.get(`/api/user/lovedCollections/${this.collection.id}`, params)
-            .then((response) => {this.lovedCollections = response.data;
-            console.log(this.lovedCollections);});
         },
         loveIt(){
             const collectionId = this.collection.id
@@ -108,7 +85,8 @@ export default {
             axios.post(`/api/user/${this.collection.id}/attach`, params)
             .then((response) => {
                 this.loved = true;
-                });          
+                this.likes = this.likes + 1;
+                });
         },
         dontLove(){
             const collectionId = this.collection.id
@@ -118,10 +96,13 @@ export default {
             axios.delete(`/api/user/${this.collection.id}/detach`, {data:{params}})
             .then((response) => {
                 this.loved = false;
-                console.log(this.loved);
+                this.likes = this.likes - 1;
                 });
+        },
+        isLovedOrLiked(){
+            this.loved = this.collection.loved;
+            this.likes = this.collection.likes;
         }
-
     }
 }
 

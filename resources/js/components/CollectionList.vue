@@ -9,13 +9,11 @@
             :key="collection.id"
             :collection='collection'
             class=""
-            @delete = "deleteCollection(index)" />
+            @delete = "deleteCollection(index)"/>
 
     </div>
 </div>
     </transition>
-    <!-- <CollectionCard /> -->
-
 </template>
 
 <script>
@@ -39,7 +37,6 @@ export default {
 
         this.importCategoryData(this.categoryId);
 
-
     },
 
 
@@ -56,7 +53,7 @@ export default {
                 .then( (response) =>
                 {
 
-                    this.collections = response.data
+                    this.collections = response.data;
                 })
         },
         deleteCollection(index){
