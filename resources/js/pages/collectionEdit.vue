@@ -1,7 +1,7 @@
 <template>
   <div>
-    <NewItem v-if="newItem" @closeItem="closeItem" />
-    <div v-if="!newItem">
+    <NewItem v-if="openEdit" @closeItem="closeItem" :isNew="isNew" :selectedItem="selectedItem" />
+    <div v-if="!openEdit">
       <div class="card">
         <div class="card-header">
           <input
@@ -54,7 +54,7 @@
       <div class="item-list">
         <div v-for="item in collection.items" :key="item.id">
           <!-- <router-link :to="'/collection/'+collection.id+'/item/'+item.id" class="card new-item" > -->
-          <div class="card new-item" @click="openItem()" :item="item">
+          <div class="card new-item" @click="editItem(item)">
             <div class="card-header">{{item.name}}</div>
             <img
               class="card-img-top"
@@ -106,7 +106,7 @@ export default {
   data() {
     return {
       collection: {},
-      item: "",
+      selectedItem: {},
       lastCollection: {},
       params: {},
       fileSelected: null,
@@ -116,7 +116,9 @@ export default {
         title: false,
         description: false
       },
-      newItem: false
+      isNew: false,
+      openEdit: false,
+      newCollection: false
     };
   },
   beforeMount() {
@@ -132,18 +134,23 @@ export default {
 
   methods: {
     //TODO CANCEL EDIT FUNCTION
+    editItem(item) {
+      this.isNew = false;
+      this.openEdit = true;
+      this.selectedItem = item;
+    },
     closeItem() {
-      this.newItem = false;
+      this.isNew = false;
+      this.openEdit = false;
     },
     openItem() {
-      this.newItem = true;
+      this.isNew = true;
+      this.openEdit = true;
     },
 
     CancelEdit() {
       this.edit.title = false;
       this.collection = this.lastCollection;
-      console.log(this.lastCollection.name);
-      console.log(this.collection.name);
     },
 
     editTitle() {
@@ -166,13 +173,11 @@ export default {
     getData() {
       axios.get(`/api/collection/${this.collection.id}`).then(response => {
         this.collection = response.data.collection;
-        this.url = response.data.image
+        this.collection.img_url = response.data.image;
         this.lastCollection = this.collection;
       });
     },
-    swipeHandler(direction) {
-      console.log(direction, this.$route);
-    },
+    swipeHandler(direction) {},
     OnFileSelected(event) {
       this.fileSelected = event.target.files[0];
       this.collection.img_url = URL.createObjectURL(this.fileSelected);
@@ -180,20 +185,19 @@ export default {
       reader.readAsDataURL(this.fileSelected);
       reader.onload = e => {
         this.image = e.target.result;
-        
+        this.onUpload();
       };
     },
     onUpload() {
       let formData = new FormData();
-      // formData = {
-      //   id: this.collection.id,
-      //   name: this.collection.name,
-      //   description: this.collection.description
-      // };
 
       formData.append("name", this.collection.name);
       formData.append("description", this.collection.description);
-      formData.append("image", this.image);
+
+      if (this.image) {
+        formData.append("image", this.image);
+      }
+
       formData.append("category_id", this.collection.category.id);
       formData.append("collection_id", this.collection.id);
 
@@ -202,16 +206,26 @@ export default {
           "Content-Type": "multipart/form-data"
         }
       };
+      if (this.newCollection) {
+        axios
+          .post(`/api/collection`, formData, config)
+          //axios.put(`/api/collection/${this.collection.id}`, {'image' : this.image})
+          //axios.put(`/api/collection/${this.collection.id}`, params)
 
-      axios
-        .post(`/api/collection`, formData, config)
-        //axios.put(`/api/collection/${this.collection.id}`, {'image' : this.image})
-        //axios.put(`/api/collection/${this.collection.id}`, params)
+          .then(res => {
+            this.lastCollection = this.collection;
+          });
+      }
+      if (!this.newCollection) {
+        axios
+          .patch(`/api/collection`, formData, config)
+          //axios.put(`/api/collection/${this.collection.id}`, {'image' : this.image})
+          //axios.put(`/api/collection/${this.collection.id}`, params)
 
-        .then(res => {
-         
-          this.lastCollection = this.collection;
-        });
+          .then(res => {
+            this.lastCollection = this.collection;
+          });
+      }
     }
   }
 

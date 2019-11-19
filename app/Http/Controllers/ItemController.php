@@ -27,7 +27,12 @@ class ItemController extends Controller
     public function store(Request $request)
     {
        // dd($request);
-        Item::create($request->all());
+        $item = new Item;
+        $item->name = $request->name;
+        $item->description = $request->description;
+        $item->collection_id = $request->collection_id;
+
+        $item->save();
         //return redirect()->back();
     }
 

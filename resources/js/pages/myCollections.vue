@@ -6,7 +6,7 @@
         v-for="(collection, index) in collections"
         :key="collection.id"
         :collection="collection"
-        class=""
+        class
         @delete="deleteCollection(index)"
       />
     </div>
@@ -30,7 +30,7 @@ export default {
       collections: []
     };
   },
-  mounted() {
+  beforeMount() {
     this.importCollectionsData();
   },
 
@@ -38,7 +38,7 @@ export default {
     importCollectionsData(id) {
       axios.get("/api/mycollections").then(response => {
         this.collections = response.data;
-       
+        console.log(response.data);
       });
     },
     deleteCollection(index) {

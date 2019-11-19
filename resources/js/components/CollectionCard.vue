@@ -1,20 +1,13 @@
 <template>
-  <div class="card ">
-    <router-link
-      :to="{ name: 'collection', params: { collectionId: collection.id } }"
-    >
+  <div class="card">
+    <router-link :to="{ name: 'collection', params: { collectionId: collection.id } }">
       <!-- <img    class = "card-img-top"
 
-                  :src="collection.img_url"> -->
-      <div
-        class="image-card"
-        :style="{ backgroundImage: 'url(' + collection.image['url'] + ')' }"
-      ></div>
+      :src="collection.img_url">-->
+      <div class="image-card" :style="{ backgroundImage: 'url(' + collection.image['url'] + ')' }"></div>
     </router-link>
     <div class="footer">
-      <div class="title">
-        {{ collection.name }}
-      </div>
+      <div class="title">{{ collection.name }}</div>
 
       <div class="card-buttons">
         <div class="likes">
@@ -30,7 +23,7 @@
             <EditButton :collection="collection" />
           </div>
         </router-link>
-        <div v-on:click="deleteOnClick()" v-if="collection.author" class="">
+        <div v-on:click="deleteOnClick()" v-if="collection.author" class>
           <TrashButton :collection="collection" />
         </div>
       </div>
@@ -46,7 +39,7 @@
             <div class="likes"><love-button :collection = 'collection'></love-button></div>
 
         </div>
-    </div> -->
+  </div>-->
 </template>
 
 <script>
@@ -64,9 +57,7 @@ export default {
     TrashButton
   },
   props: ["collection"],
-  mounted() {
-    console.log(this.collection);
-  },
+  mounted() {},
   methods: {
     deleteOnClick() {
       axios

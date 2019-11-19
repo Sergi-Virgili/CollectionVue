@@ -40,18 +40,19 @@ class CollectionController extends Controller
      */
     public function store(Request $request)
     {
-
+        
         $collection = new Collection();
         $collection->name = $request->name;
         $collection->category_id = $request->category_id;
         $collection->description = $request->description;
         $collection->user_id = auth()->user()->id;
         $collection->save();
+        
 
 
         if($request->image){
-        $newimage = new Image();
-        $newimage->storeImageCollection($request, $collection->id);
+            $newimage = new Image();
+            $newimage->storeImageCollection($request, $collection->id);
         }
 
 
@@ -101,11 +102,11 @@ class CollectionController extends Controller
 
     //     return redirect('home/'.'Collections');
     // }
-    public function update(Request $request, $id)
+    public function updateCollection(Request $request)
     {
-        $collection = Collection::find($id);
+        //$collection = Collection::find($id);
+        
         dd($request->name);
-
         if($request->image){
 
             $newimage = new Image();
@@ -113,6 +114,7 @@ class CollectionController extends Controller
             $newimage->storeImageCollection($request, $collection->id);
 
             }
+
             $collection->update($request->all());
 
         //return redirect('home/'.'Collections');
@@ -128,7 +130,7 @@ class CollectionController extends Controller
     {
 
         $collection->delete();
-        return redirect()->back();
+        
     }
 
     //API ROUTES FUNCTIONS
@@ -165,13 +167,15 @@ class CollectionController extends Controller
             $collections = auth()->user()->collections;
 
             foreach ($collections as $collection) {
-
+                // $collection['image'] = 'https://fakeimg.pl/350x200/ff0000,128/000,255';
                 $collection['author'] = true;
                 if ($collection->image) {
                 $collection['image'] = $collection->image;
+               
             }
 
             }
+            
             return $collections;
         }
     }
