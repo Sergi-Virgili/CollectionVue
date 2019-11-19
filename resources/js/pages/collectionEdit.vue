@@ -196,6 +196,7 @@ export default {
 
       if (this.image) {
         formData.append("image", this.image);
+        this.image = "";
       }
 
       formData.append("category_id", this.collection.category.id);
@@ -216,13 +217,18 @@ export default {
             this.lastCollection = this.collection;
           });
       }
+
       if (!this.newCollection) {
+        
+        formData.append("_method", "PUT");
+        formData.append("id", this.collection.id);
         axios
-          .patch(`/api/collection`, formData, config)
+          .post(`/api/collection`, formData, config)
           //axios.put(`/api/collection/${this.collection.id}`, {'image' : this.image})
           //axios.put(`/api/collection/${this.collection.id}`, params)
 
           .then(res => {
+            console.log(res);
             this.lastCollection = this.collection;
           });
       }

@@ -104,16 +104,19 @@ class CollectionController extends Controller
     // }
     public function updateCollection(Request $request)
     {
-        //$collection = Collection::find($id);
+        // dd($request->id);
+        $collection = Collection::find($request->id);
         
-        dd($request->name);
+       
+        // $collection->image->destroy();
         if($request->image){
 
             $newimage = new Image();
 
             $newimage->storeImageCollection($request, $collection->id);
-
+            
             }
+            
 
             $collection->update($request->all());
 

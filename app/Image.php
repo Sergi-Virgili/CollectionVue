@@ -70,20 +70,43 @@ class Image extends Model
         }
     }
 
-    public function storeImageCollection($request, $id){
+    // public function storeImageCollection($request, $id){
 
-        //TODO REFACTOR
+    //     DB::beginTransaction();
+    //     try{
+    //         //save image
 
-        // DB::beginTransaction();
-        // try{
-            //save image
+    //     $newimage = new Image();
 
-        $newimage = new Image();
+    //     //obtenemos el campo file definido en el formulario
+    //     $image = $request->file('image');
+    //     return $request;
+    //     //obtenemos el nombre del archivo
+    //     $nombrearchivo = $image->getClientOriginalName();
 
-        //obtenemos el campo file definido en el formulario
-        $base64_image = $request->image;
+    //     //indicamos que queremos guardar un nuevo archivo en el disco local
+    //     Storage::disk('local')->put($nombrearchivo,  \File::get($image));
 
-        //obtenemos el nombre del archivo
+    //     $newimage->name = $nombrearchivo;
+    //     $newimage->category_id = $id;
+    //     $newimage->save();
+
+    //     DB::commit();
+
+       
+
+    //     }
+
+    //     catch(\Exception $e)
+    //     {
+    //         DB::rollback();
+    //         // return redirect()->back()
+    //         //     ->with('warning', $e);
+    //     }
+    // }
+
+    function saveImageDisk($request, $base64_image){
+
         $pos  = strpos($base64_image, ';');
         
         $type = explode('/', substr($base64_image, 0, $pos))[1];
@@ -93,26 +116,42 @@ class Image extends Model
         $image = substr($base64_image, strpos($base64_image, ',') + 1);
         $image = base64_decode($image);
         
-        //indicamos que queremos guardar un nuevo archivo en el disco local
         Storage::disk('public')->put($fileName,  $image);
+
+        return $fileName;
+    }
+
+ 
+    public function storeImageCollection($request, $id){
+
+       
+
+        $newimage = new Image();
+
+        $collection = Collection::find($id);
+
+        $prevImage = $collection->image;
+        
+        // dd($prevImage);
+        
+        // $url = $prevImage->url;
+        // unlink("public" . $url);
+
+        $prevImage->delete();
+
+        
+
+        $base64_image = $request->image;
+
+
+
+        $fileName = $newimage->saveImageDisk($request, $base64_image);
 
          $newimage->name = $fileName;
          $newimage->collection_id = $id;
          $newimage->url = "/storage/" . $fileName;
-         $newimage->save();
+         $newimage->save();        
 
-        //DB::commit();
-
-        //return redirect()->back();
-
-        // }
-
-        // catch(\Exception $e)
-        // {
-        //     DB::rollback();
-        //     return redirect()->back()
-        //         ->with('warning', $e);
-        // }
     }
 
     public function storeImageItem($request, $id){
