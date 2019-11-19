@@ -248,7 +248,7 @@ export default {
       let reader = new FileReader
       reader.readAsDataURL(this.fileSelected)
       reader.onload = e => {
-        console.log(e.target.result)
+        
         this.image = e.target.result
       }
 
