@@ -40,18 +40,23 @@ class CollectionController extends Controller
      */
     public function store(Request $request)
     {
+        
         $collection = new Collection();
         $collection->name = $request->name;
         $collection->category_id = $request->category_id;
         $collection->description = $request->description;
-        $collection->user_id = Auth::user()->id;
+        $collection->user_id = auth()->user()->id;
         $collection->save();
+        
+
+
         if($request->image){
-        $newimage = new Image();
-        $newimage->storeImageCollection($request, $collection->id);
+            $newimage = new Image();
+            $newimage->storeImageCollection($request, $collection->id);
         }
 
-        return redirect('home/collections');
+
+
     }
 
     /**
@@ -62,7 +67,7 @@ class CollectionController extends Controller
      */
     public function show(Collection $collection)
     {
-
+       
         $items = $collection->items;
         return view('public.itemsList',['collection' => $collection,
                                         'items' => $items]);
@@ -97,18 +102,22 @@ class CollectionController extends Controller
 
     //     return redirect('home/'.'Collections');
     // }
-    public function update(Request $request, $id)
+    public function updateCollection(Request $request)
     {
-        $collection = Collection::find($id);
-
-
+        // dd($request->id);
+        $collection = Collection::find($request->id);
+        
+       
+        // $collection->image->destroy();
         if($request->image){
 
             $newimage = new Image();
 
             $newimage->storeImageCollection($request, $collection->id);
-
+            
             }
+            
+
             $collection->update($request->all());
 
         //return redirect('home/'.'Collections');
@@ -124,7 +133,7 @@ class CollectionController extends Controller
     {
 
         $collection->delete();
-        return redirect()->back();
+        
     }
 
     //API ROUTES FUNCTIONS
@@ -157,16 +166,36 @@ class CollectionController extends Controller
     }
 
     public function myCollections() {
+
+        $collection['author'] = true;
+        $collection['loved'] = false;
+        $collection['likes'] = 0;
+
         if (auth()->user()) {
             $collections = auth()->user()->collections;
 
             foreach ($collections as $collection) {
-
+                
+                $collection['loved'] = false;
+                $collection['likes'] = 0;
+                // $collection['image'] = 'https://fakeimg.pl/350x200/ff0000,128/000,255';
                 $collection['author'] = true;
 
+                if ($collection->image) {
+                $collection['image'] = $collection->image;
+                }
+                if($collection->collectionLovedByUser($collection)){
+                    $collection['loved'] = true;
+                }
+                if($collection->lovedByUsers()){
+                    $collection['likes'] = $collection->lovedByUsers()->count();
+                }
+               
+            }
 
             }
+            
             return $collections;
-        }
+        
     }
 }

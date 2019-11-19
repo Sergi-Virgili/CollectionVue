@@ -52,6 +52,13 @@ class AppController extends Controller
                 $collection['author'] = false;
                 $collection['loved'] = false;
                 $collection['likes'] = 0;
+                
+                $collection['image'] = '';
+
+                if($collection->image) {
+                  $collection['image'] = $collection->image;
+                }
+
 
                 if($collection->user->id == auth()->user()->id){
 
@@ -79,10 +86,25 @@ class AppController extends Controller
     public function Show($collection) {
 
         $collection = Collection::all()->find($collection);
-        $items = $collection->items;
-        $collection['items'] = $items;
-
-        return response()->json($collection);
+        $items = '';
+            if ($collection->items) {
+             $items = $collection->items;
+            }
+        // $image = '/storage/collect-125-79003.png';
+        $image = '';
+        if ($collection->image) {
+            $image = $collection->image->url;
+        // dd($image);
+        }
+        $category = $collection->category;
+       // $collection['items'] = $items;
+        $collection['category'] = $category;
+       
+        
+        return response()->json([
+            'collection' => $collection,
+            'image' => $image,
+            ]);
 
     }
 
