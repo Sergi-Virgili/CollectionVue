@@ -79,7 +79,7 @@
           <router-link :to="{ name: 'myCollections' }" class="dropdown-item pl-3">
               Add Collection
           </router-link>
-          <router-link :to="{ name: 'myFavorites' }" class="dropdown-item pl-3">
+          <router-link :to="{ name: 'myCollections' }" class="dropdown-item pl-3">
               My Favorites
           </router-link>
         </ul>

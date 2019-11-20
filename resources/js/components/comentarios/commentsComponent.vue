@@ -36,7 +36,7 @@ import axios from 'axios'
             CheckButton,
             EditButton
         },
-        props: ['comment'],
+        props: ['comment'],         
         data(){
             return{
                 editMode: false

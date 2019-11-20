@@ -169,4 +169,19 @@ class CollectionController extends Controller
             return $collections;
         }
     }
+    public function myFavorites(){
+        if (auth()->user()) {
+            $user = auth()->user();
+            $collections = $user->loveCollections;
+            foreach ($collections as $collection) {
+                $collection['loved'] = true;
+               // $collection['likes'] = 0;
+               
+                
+                  $collection['likes'] = $collection->lovedByUsers()->count();
+                
+            return $collections;
+        }
+    }
+}
 }
