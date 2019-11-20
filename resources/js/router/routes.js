@@ -18,6 +18,8 @@ export default [
   { path: '/my-collections', name: 'myCollections', component: page('myCollections.vue') },
   { path: '/edit_collection/:collectionId', name: 'collectionEdit', component: page('collectionEdit.vue') },
   { path: '/new_collection/:collectionId', name: 'collectionNew', component: page('collectionNew.vue') },
+  { path: '/user/:id/collections', name: 'userCollections', component: page('userCollections.vue') },
+
 
   { path: '/collection/:collectionId',
     name: 'collection',
@@ -33,10 +35,11 @@ export default [
   { path: '/form', name: 'favoriteCategories', component: page('favoriteCategoriesForm.vue') },
   { path: '/categories', name: 'categories', component: page('categories.vue') },
 
-  // { path: '/collection/item/:id', name: 'item', component: page('item.vue') },
+  // -------------- PROFILE
 
+  { path: '/user/:id', name: 'profile', component: page('profile.vue') },
 
-  // --------------- / OUR ROUTES
+  // --------------- OUR ROUTES
 
 
 

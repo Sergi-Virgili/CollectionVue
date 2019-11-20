@@ -169,4 +169,23 @@ class CollectionController extends Controller
             return $collections;
         }
     }
+
+    public function userCollections(Int $id) {
+        $user = User::find($id);
+        $collections = $user->collections;
+
+        foreach ($collections as $collection) {
+
+            $collection['loved'] = false;
+            $collection['likes'] = 0;
+
+            if($collection->collectionLovedByUser($collection)){
+                $collection['loved'] = true;
+            }
+            if($collection->lovedByUsers()){
+                $collection['likes'] = $collection->lovedByUsers()->count();
+            }
+        }
+        return $collections;
+    }
 }

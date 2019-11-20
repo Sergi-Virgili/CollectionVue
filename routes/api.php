@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CollectionController;
 use Illuminate\Http\Request;
 
 /*
@@ -48,14 +49,11 @@ Route::get('/', 'AppController@apiHome');
 Route::get('/category/collections/{category}', 'AppController@apiCollectionsByCotegory');
 
 Route::get('/collection/{callection}', 'AppController@show');
-
 Route::get('/mycollections', 'CollectionController@myCollections');
-
 Route::get('/collection/item/{item}', 'ItemController@show');
-
 Route::delete('/collection/{collection}', 'AppController@destroy');
-
 Route::put('/collection/{id}', 'CollectionController@update');
+Route::get('/userCollections/{id}', 'CollectionController@userCollections');
 
 Route::post('/comments', 'CommentController@store');
 Route::delete('/comments/{comment}', 'CommentController@destroy');
@@ -90,3 +88,8 @@ Route::get('/user/lovedCollections/{id}', 'LoveItController@isLovedByUser');
 Route::get('/collection/totalLikes/{id}', 'LoveItController@getTotalLikes');
 Route::post('/user/{id}/attach', 'LoveItController@attachLoveCollectionUser');
 Route::delete('/user/{id}/detach', 'LoveItController@detachLoveCollectionUser');
+
+// PROFILE
+
+Route::get('/user/profile/{id}', 'UserController@user');
+Route::put('/user/{id}/update', 'UserController@updateUser');

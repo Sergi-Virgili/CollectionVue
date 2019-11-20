@@ -69,8 +69,6 @@
           class="form-group area-input"
           v-model="collection.description"></textarea>
         <div
-
-
             v-if="!edit.description"
             @click="editDescription()">
             <EditButton
@@ -90,7 +88,6 @@
     <div class="item-list">
       <div v-for="item in collection.items" :key="item.id" >
 
-        <!-- <router-link :to="'/collection/'+collection.id+'/item/'+item.id" class="card new-item" > -->
           <div 
             class="card new-item" 
             @click="openItem()"
@@ -106,10 +103,6 @@
 
           </div>
           </div>
-          <!-- <div class="card-body">{{collection.description}}</div> -->
-
-        <!-- </router-link> -->
-
 
       </div>
 
@@ -126,17 +119,6 @@
 
 
     </div>
-    <!-- <div class="view_child"
-
-      v-touch:swipe.left="swipeHandler">
-
-      <router-view :key="this.$route.params.id+1"/>
-
-    </div> -->
-
-
-
-          <!-- <div class="card-body">{{collection.description}}</div> -->
 
     </div>
   </div>
@@ -178,10 +160,6 @@ export default {
           },
           newItem : false
         }
-  },
-  beforeMount() {
-
-    //alert(this.collection.id)
   },
 
   mounted() {
@@ -232,8 +210,6 @@ export default {
         .then((response) => {
           this.collection = response.data
           this.lastCollection = this.collection
-
-
         })
     },
     swipeHandler(direction) {
@@ -242,9 +218,7 @@ export default {
     },
     OnFileSelected(evente) {
 
-
       this.fileSelected = event.target.files[0]
-     // this.url = URL.createObjectURL(this.fileSelected);
       let reader = new FileReader
       reader.readAsDataURL(this.fileSelected)
       reader.onload = e => {
@@ -260,10 +234,8 @@ export default {
         name: this.collection.name,
         description: this.collection.description,
         image: this.image
-
         }
 
-      //axios.put(`/api/collection/${this.collection.id}`, {'image' : this.image})
       axios.put(`/api/collection/${this.collection.id}`, params)
 
       .then((res)=>{

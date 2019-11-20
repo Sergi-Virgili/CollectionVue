@@ -9,13 +9,6 @@
        => {{ collection.name}}
       </h3>
 
-    <!-- <div v-for="item in collection.items" :key="item.id">
-
-      <router-link :to="'/collection/'+collection.id+'/item/'+item.id" >link</router-link>
-
-
-    </div> -->
-
     <div class="view_child card" :style="{ backgroundImage: `url('${collection.img_url}')` }"
 
       v-touch:swipe.left="swipeHandler">
@@ -23,7 +16,6 @@
       <router-view :key="this.$route.params.id+1"/>
     </transition>
     </div>
-
 
     <CommentsList  class="comments-list"/>
   </div>

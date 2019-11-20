@@ -2,7 +2,7 @@
 <div id="coment" class="card">
         <div class="card-header">
             <div>
-                <div id="authorName"><a href="">{{comment.authorName}}</a></div>
+                <router-link :to="{name:'profile', params:{id: comment.user_id}}">{{comment.authorName}}</router-link>
                 <div id="fecha" class="panel-heading">{{comment.created_at}}</div>
             </div>
             

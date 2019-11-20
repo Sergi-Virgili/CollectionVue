@@ -57,10 +57,6 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
-    {
-        
-    }
     public function updateCategory(Request $request, $category)
     {
         $category = Category::find($category);
