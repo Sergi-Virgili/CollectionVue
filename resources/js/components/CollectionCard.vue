@@ -1,7 +1,11 @@
 <template>
   <div class="card">
     <router-link :to="{name:'collection', params:{collectionId: collection.id}}">
+<<<<<<< HEAD
       <img class="card-img-top" :src="collection.img_url" />
+=======
+      <img class="card-img-top" :src="collection.image.url" />
+>>>>>>> aac44e2745895019453030d198adab5c7e207b4d
     </router-link>
     <div class="footer">
       <div class="title">{{collection.name}}</div>
@@ -27,7 +31,11 @@
       </div>
     </div>
   </div>
+<<<<<<< HEAD
 </template>
+=======
+</template> 
+>>>>>>> aac44e2745895019453030d198adab5c7e207b4d
 
 <script>
 import axios from "axios";
@@ -82,7 +90,10 @@ export default {
         .then(response => {
           this.loved = false;
           this.likes = this.likes - 1;
+<<<<<<< HEAD
           this.$emit("deleteFavorite");
+=======
+>>>>>>> aac44e2745895019453030d198adab5c7e207b4d
         });
     },
     isLovedOrLiked() {
@@ -107,6 +118,7 @@ export default {
 .card {
   box-shadow: 5px 4px 7px rgba(0, 0, 0, 0.2);
 }
+<<<<<<< HEAD
 
 .title {
   width: 100%;
@@ -120,6 +132,19 @@ export default {
 
   background-size: cover;
   background-position: center;
+=======
+
+.title {
+  width: 100%;
+  padding: 0.8em;
+  text-align: center;
+}
+.image-card {
+  /* width: 250px; */
+  height: 200px;
+  background-position: center;
+  background-size: cover;
+>>>>>>> aac44e2745895019453030d198adab5c7e207b4d
 }
 .footer {
   width: 100%;

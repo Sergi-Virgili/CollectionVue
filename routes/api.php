@@ -55,7 +55,8 @@ Route::get('/collection/item/{item}', 'ItemController@show');
 
 Route::delete('/collection/{collection}', 'AppController@destroy');
 
-Route::put('/collection/{id}', 'CollectionController@update');
+Route::put('/collection/', 'CollectionController@updateCollection');
+Route::post('/collection', 'CollectionController@store');
 
 Route::post('/comments', 'CommentController@store');
 Route::delete('/comments/{comment}', 'CommentController@destroy');
