@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Item;
+use App\Image;
 use Illuminate\Http\Request;
 
 class ItemController extends Controller
@@ -33,10 +34,10 @@ class ItemController extends Controller
         $item->collection_id = $request->collection_id;
        // dd($item);
         $item->save();
-
-        if ($item->image) {
-            
-            Item::storeImageItem($request, $item->id);
+       // return $item->id;
+        if ($request->image) {
+            $image = new Image;
+            $image->storeImageItem($request, $item->id);
         }
 
 

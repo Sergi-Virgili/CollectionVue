@@ -13,6 +13,10 @@ class Item extends Model
     {
         return $this->belongsTo(Collection::class);
     }
+    public function image()
+    {
+        return $this->hasOne(Image::class);
+    }
     public function lovedByUsers() 
     {
         return $this->belongsToMany(User::class);

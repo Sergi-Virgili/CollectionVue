@@ -35,7 +35,9 @@
         <!-- <button @click="onUpload">Upload</button> -->
         <!-- / <img class="categoryItem" :src="collection.category.icon" /> -->
         <div class="image-card" :style="{ backgroundImage: 'url(' + collection.img_url + ')' }">
-          <CamButton class="cam-button" @click="$refs.fileInput.click()" />
+          <div @click="$refs.fileInput.click()">
+            <CamButton class="cam-button" />
+          </div>
         </div>
 
         <img v-if="url" :src="url" alt />
@@ -63,11 +65,7 @@
           <!-- <router-link :to="'/collection/'+collection.id+'/item/'+item.id" class="card new-item" > -->
           <div class="card new-item" @click="editItem(item)">
             <div class="card-header">{{item.name}}</div>
-            <img
-              class="card-img-top"
-              src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Amiga500_system.jpg"
-              alt
-            />
+            <div class="item-image" :style="{ backgroundImage: 'url(' + item.img_url + ')' }"></div>
             <div class="card-footer"></div>
           </div>
           <!-- <div class="card-body">{{collection.description}}</div> -->
@@ -184,6 +182,7 @@ export default {
         this.collection = response.data.collection;
         this.collection.img_url = response.data.image;
         this.lastCollection = this.collection;
+        console.log(response.data.collection);
       });
     },
     swipeHandler(direction) {},
@@ -283,5 +282,10 @@ export default {
 .cam-button {
   position: absolute;
   bottom: 0;
+}
+.item-image {
+  height: 200px;
+  background-size: cover;
+  background-position: center;
 }
 </style>

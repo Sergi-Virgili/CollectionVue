@@ -8,7 +8,13 @@ use Illuminate\Support\Facades\Storage;
 
 class Image extends Model
 {
+    
+    static $imageCollectionDefault = 'https://cdn.pixabay.com/photo/2016/07/29/04/21/web-1550385_960_720.png';
+    static $imageItemDefault = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbsxrJfwV-P-F2-ZW9f6-PmB9sBI-UCkv8Cl02sQXR5KBzANDEDA&s';
+
     protected $fillable = ['name','user_id','category_id' ,'collection_id','item_id' ,'certificate_id',];
+
+    
 
     public function getUrlPathAtribute(){
 
@@ -111,7 +117,7 @@ class Image extends Model
 
     }
 
-    static function storeImageItem($request, $id){
+    function storeImageItem($request, $id){
 
         $newimage = new Image();
 
@@ -128,7 +134,7 @@ class Image extends Model
 
          $newimage->name = $fileName;
          $newimage->item_id = $id;
-         $newimage->url = "/storage/" . 'item-' . $fileName;
+         $newimage->url = "/storage/" . $fileName;
          $newimage->save();        
 
     }

@@ -8,11 +8,11 @@
       </div>
       <button @click="modifyItem">ok</button>
     </div>
-    <input type="file" @change="OnFileSelected" style="display:none" ref="fileInput" />
-
-    <div class="image" :style="{ backgroundImage: 'url(' + collection.img_url + ')' }">
-      <CamButton class="cam-button" @click="$refs.fileInput.click()" />
+    <input type="file" @change="OnFileSelected" style="display:none" ref="fileInputItem" />
+    <div @click="$refs.fileInputItem.click()">
+      <CamButton class="cam-button" />
     </div>
+    <div class="image" :style="{ backgroundImage: 'url(' + newItem.img_url + ')' }"></div>
 
     <div class="card-body">
       {{newItem.description}}
@@ -43,7 +43,7 @@ export default {
       newItem: {
         name: "New Item",
         img_url: "",
-        description: "asdasd"
+        description: "New Description"
       },
 
       image: "",
@@ -63,16 +63,16 @@ export default {
   //   },
 
   methods: {
-    // OnFileSelected(event) {
-    //   this.fileSelected = event.target.files[0];
-    //   this.item.img_url = URL.createObjectURL(this.fileSelected);
-    //   let reader = new FileReader();
-    //   reader.readAsDataURL(this.fileSelected);
-    //   reader.onload = e => {
-    //     this.image = e.target.result;
-    //     this.onUpload();
-    //   };
-    // },
+    OnFileSelected(event) {
+      this.fileSelected = event.target.files[0];
+      this.newItem.img_url = URL.createObjectURL(this.fileSelected);
+      let reader = new FileReader();
+      reader.readAsDataURL(this.fileSelected);
+      reader.onload = e => {
+        this.image = e.target.result;
+        this.createItem();
+      };
+    },
     closeItem() {
       this.$emit("closeItem");
     },
@@ -95,14 +95,15 @@ export default {
         }
       };
 
-      if (this.isNew) {
-        axios.post("/api/item", formData, config).then(Response => {});
-      }
-      if (!this.isNew) {
-        formData.append("type", "PUT");
+      axios.post("/api/item", formData, config).then(response => {
+        console.log(response.data);
+      });
 
-        axios.post("/api/item", formData, config).then(Response => {});
-      }
+      // if (!this.isNew) {
+      //   formData.append("type", "PUT");
+
+      //   axios.post("/api/item", formData, config).then(Response => {});
+      // }
     },
     modifyItem() {
       if (this.isNew) {
@@ -132,6 +133,8 @@ export default {
 .image {
   background-color: grey;
   height: 500px;
+  background-size: cover;
+  background-position: center;
 }
 </style>>
 

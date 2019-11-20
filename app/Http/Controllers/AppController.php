@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Category;
 use App\User;
 use App\Collection;
+use App\Image;
 
 class AppController extends Controller
 {
@@ -53,10 +54,10 @@ class AppController extends Controller
                 $collection['loved'] = false;
                 $collection['likes'] = 0;
                 
-                $collection['image'] = '';
+                $collection['img_url'] = Image::$imageCollectionDefault ;
 
                 if($collection->image) {
-                  $collection['image'] = $collection->image;
+                  $collection['img_url'] = $collection->image->url;
                 }
 
 
@@ -89,6 +90,12 @@ class AppController extends Controller
         $items = '';
             if ($collection->items) {
              $items = $collection->items;
+             foreach ($items as $item) {
+                $item['img_url'] = Image::$imageItemDefault;
+                 if($item->image){
+                 $item['img_url'] = $item->image->url;
+                }
+             }
             }
         // $image = '/storage/collect-125-79003.png';
         $image = '';

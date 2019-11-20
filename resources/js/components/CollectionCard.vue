@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <router-link :to="{name:'collection', params:{collectionId: collection.id}}">
-      <img class="card-img-top" :src="collection.image.url" />
+      <div class="collection-image" :style="{ backgroundImage: 'url(' + collection.img_url + ')' }"></div>
     </router-link>
     <div class="footer">
       <div class="title">{{collection.name}}</div>
@@ -112,7 +112,7 @@ export default {
   padding: 0.8em;
   text-align: center;
 }
-.image-card {
+.collection-image {
   /* width: 250px; */
   height: 200px;
   background-position: center;
