@@ -1,4 +1,6 @@
-# CollectionVue
+# CoLeCT
+
+Free Social App MVP for your Collections.
 
 ## Clone Repository
 
