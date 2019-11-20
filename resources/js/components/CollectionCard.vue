@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <router-link :to="{name:'collection', params:{collectionId: collection.id}}">
-      <img class="card-img-top" :src="collection.img_url" />
+      <img class="card-img-top" :src="collection.image.url" />
     </router-link>
     <div class="footer">
       <div class="title">{{collection.name}}</div>
@@ -37,61 +37,59 @@ import DeleteButton from "./buttons/DeleteButton";
 import TrashButton from "./buttons/TrashButton";
 
 export default {
+  data() {
+    return {
+      loved: false,
+      likes: 0
+    };
+  },
+  mounted() {
+    this.isLovedOrLiked();
+  },
+  components: {
+    LoveComponent,
+    EditButton,
+    DeleteButton,
+    TrashButton
+  },
+  props: ["collection"],
 
-    data(){
-        return {
-            loved: false,
-            likes: 0,
-        }
+  methods: {
+    deleteOnClick() {
+      axios
+        .delete(`/api/collection/${this.collection.id}`)
+        .then(this.$emit("delete"));
     },
-    mounted(){
-        this.isLovedOrLiked();
+    loveIt() {
+      const collectionId = this.collection.id;
+      const params = {
+        id: collectionId
+      };
+      axios
+        .post(`/api/user/${this.collection.id}/attach`, params)
+        .then(response => {
+          this.loved = true;
+          this.likes = this.likes + 1;
+        });
     },
-    components: {
-      LoveComponent,
-      EditButton,
-      DeleteButton,
-      TrashButton
-
+    dontLove() {
+      const collectionId = this.collection.id;
+      const params = {
+        id: collectionId
+      };
+      axios
+        .delete(`/api/user/${this.collection.id}/detach`, { data: { params } })
+        .then(response => {
+          this.loved = false;
+          this.likes = this.likes - 1;
+        });
     },
-    props: ['collection'],
-
-    methods: {
-
-        deleteOnClick() {
-
-            axios.delete(`/api/collection/${this.collection.id}`)
-                    .then(this.$emit('delete'));
-        },
-        loveIt(){
-            const collectionId = this.collection.id
-            const params = {
-                id: collectionId
-            }
-            axios.post(`/api/user/${this.collection.id}/attach`, params)
-            .then((response) => {
-                this.loved = true;
-                this.likes = this.likes + 1;
-                });
-        },
-        dontLove(){
-            const collectionId = this.collection.id
-            const params = {
-                id: collectionId
-            }
-            axios.delete(`/api/user/${this.collection.id}/detach`, {data:{params}})
-            .then((response) => {
-                this.loved = false;
-                this.likes = this.likes - 1;
-                });
-        },
-        isLovedOrLiked(){
-            this.loved = this.collection.loved;
-            this.likes = this.collection.likes;
-        }
+    isLovedOrLiked() {
+      this.loved = this.collection.loved;
+      this.likes = this.collection.likes;
     }
   }
-
+};
 </script>
 
 <style scoped>

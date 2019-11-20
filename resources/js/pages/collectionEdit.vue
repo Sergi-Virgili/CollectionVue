@@ -1,6 +1,12 @@
 <template>
   <div>
-    <NewItem v-if="openEdit" @closeItem="closeItem" :isNew="isNew" :selectedItem="selectedItem" />
+    <NewItem
+      v-if="openEdit"
+      @closeItem="closeItem"
+      :collection="collection"
+      :isNew="isNew"
+      :selectedItem="selectedItem"
+    />
     <div v-if="!openEdit">
       <div class="card">
         <div class="card-header">
@@ -26,10 +32,11 @@
         </div>
         <input type="file" @change="OnFileSelected" style="display:none" ref="fileInput" />
 
-        <button @click="$refs.fileInput.click()">Pick Image</button>
-        <button @click="onUpload">Upload</button>
-        <img class="categoryItem" :src="collection.category.icon" />
-        <div class="image-card" :style="{ backgroundImage: 'url(' + collection.img_url + ')' }"></div>
+        <!-- <button @click="onUpload">Upload</button> -->
+        <!-- / <img class="categoryItem" :src="collection.category.icon" /> -->
+        <div class="image-card" :style="{ backgroundImage: 'url(' + collection.img_url + ')' }">
+          <CamButton class="cam-button" @click="$refs.fileInput.click()" />
+        </div>
 
         <img v-if="url" :src="url" alt />
 
@@ -92,6 +99,7 @@ import EditButton from "../components/buttons/EditButton";
 import CheckButton from "../components/buttons/CheckButton";
 import TrashButton from "../components/buttons/TrashButton";
 import NewItem from "../components/items/NewItem";
+import CamButton from "../components/buttons/CamButton";
 
 export default {
   middleware: "auth",
@@ -100,7 +108,8 @@ export default {
     CheckButton,
     EditButton,
     TrashButton,
-    NewItem
+    NewItem,
+    CamButton
   },
 
   data() {
@@ -270,5 +279,9 @@ export default {
 }
 .categoryItem {
   width: 2em;
+}
+.cam-button {
+  position: absolute;
+  bottom: 0;
 }
 </style>

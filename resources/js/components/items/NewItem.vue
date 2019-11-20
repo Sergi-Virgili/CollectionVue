@@ -8,11 +8,12 @@
       </div>
       <button @click="modifyItem">ok</button>
     </div>
-    <div class="image">
-      <div class="camIcon">
-        <CamButton />
-      </div>
+    <input type="file" @change="OnFileSelected" style="display:none" ref="fileInput" />
+
+    <div class="image" :style="{ backgroundImage: 'url(' + collection.img_url + ')' }">
+      <CamButton class="cam-button" @click="$refs.fileInput.click()" />
     </div>
+
     <div class="card-body">
       {{newItem.description}}
       <textarea
@@ -40,10 +41,14 @@ export default {
   data() {
     return {
       newItem: {
-        name: "NewItem",
-        image: "",
-        description: "Explain Why you collect this item"
+        name: "New Item",
+        img_url: "",
+        description: "asdasd"
       },
+
+      image: "",
+      fileSelected: "",
+
       // collectionId: 1,
       //isNew: true,
       editMode: false
@@ -56,25 +61,32 @@ export default {
   //       console.log("hoal");
   //     }
   //   },
-  mounted() {
-    this.newItem = this.selectedItem;
-  },
+
   methods: {
+    // OnFileSelected(event) {
+    //   this.fileSelected = event.target.files[0];
+    //   this.item.img_url = URL.createObjectURL(this.fileSelected);
+    //   let reader = new FileReader();
+    //   reader.readAsDataURL(this.fileSelected);
+    //   reader.onload = e => {
+    //     this.image = e.target.result;
+    //     this.onUpload();
+    //   };
+    // },
     closeItem() {
       this.$emit("closeItem");
     },
     saveItem() {},
+
     createItem() {
       let formData = new FormData();
-
       formData.append("name", this.newItem.name);
       formData.append("description", this.newItem.description);
 
-      //   if (this.image) {
-      //     formData.append("image", this.image);
-      //   }
+      if (this.image) {
+        formData.append("image", this.image);
+      }
 
-      //   formData.append("category_id", this.newItem.category.id);
       formData.append("collection_id", this.collection.id);
 
       let config = {
@@ -82,6 +94,7 @@ export default {
           "Content-Type": "multipart/form-data"
         }
       };
+
       if (this.isNew) {
         axios.post("/api/item", formData, config).then(Response => {});
       }

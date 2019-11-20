@@ -1,6 +1,7 @@
 <template>
   <div>
     <h4>myCollections</h4>
+
     <div class="collection-list">
       <CollectionCard
         v-for="(collection, index) in collections"

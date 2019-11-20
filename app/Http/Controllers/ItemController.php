@@ -26,13 +26,20 @@ class ItemController extends Controller
     
     public function store(Request $request)
     {
-       // dd($request);
+        
         $item = new Item;
         $item->name = $request->name;
         $item->description = $request->description;
         $item->collection_id = $request->collection_id;
-
+       // dd($item);
         $item->save();
+
+        if ($item->image) {
+            
+            Item::storeImageItem($request, $item->id);
+        }
+
+
         //return redirect()->back();
     }
 
