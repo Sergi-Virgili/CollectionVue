@@ -41,7 +41,7 @@ class ItemController extends Controller
         }
 
 
-        //return redirect()->back();
+        return $item;
     }
 
     /**
@@ -77,10 +77,26 @@ class ItemController extends Controller
      * @param  \App\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Item $item)
+    public function updateItem(Request $request)
     {
-        //
-    }
+         
+         $item = Item::find($request->id);
+        
+         // $collection->image->destroy();
+         if($request->image){
+ 
+             $newimage = new Image();
+ 
+             $newimage->storeImageItem($request, $request->id);
+             
+             }
+             
+ 
+             $item->update($request->all());
+ 
+         //return redirect('home/'.'Collections');
+     }
+    
 
     /**
      * Remove the specified resource from storage.
@@ -88,9 +104,9 @@ class ItemController extends Controller
      * @param  \App\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Item $item)
+    function destroy(Item $item)
     {
         $item->delete();
-        return redirect()->back();
+        return 'item deleted';
     }
 }

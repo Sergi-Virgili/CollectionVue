@@ -55,7 +55,7 @@ Route::get('/collection/item/{item}', 'ItemController@show');
 
 Route::delete('/collection/{collection}', 'AppController@destroy');
 
-Route::put('/collection/', 'CollectionController@updateCollection');
+Route::put('/collection', 'CollectionController@updateCollection');
 Route::post('/collection', 'CollectionController@store');
 
 Route::post('/comments', 'CommentController@store');
@@ -83,7 +83,8 @@ Route::put('/comments/{comment}', 'CommentController@update');
 //------------------------
 // ITEM ROUTES
 Route::post('/item', 'ItemController@store');
-Route::put('/item/{item}', 'ItemController@update');
+Route::put('/item', 'ItemController@updateItem');
+Route::delete('/item/{item}', 'ItemController@destroy');
 
 // LIKES ROUTES
 
