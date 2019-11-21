@@ -1,6 +1,6 @@
 <template>
-  <transition name="fade" mode="out-in">
-    <div>
+  <div>
+    <transition name="fade" mode="out-in">
       <div class="collection-list">
         <CollectionCard
           v-for="(collection, index) in collections"
@@ -9,8 +9,8 @@
           @delete="deleteCollection(index)"
         />
       </div>
-    </div>
-  </transition>
+    </transition>
+  </div>
 </template>
 
 <script>
