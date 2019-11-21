@@ -47,36 +47,37 @@
             class="form-group area-input"
             v-model="collection.description"
           ></textarea>
+        </div>
+        <div class="card-footer">
+          <div v-if="!edit.description" @click="editDescription()">
+            <EditButton class="edit-button" />
           </div>
+          <div v-if="edit.description" @click="editDescription()">
+            <CheckButton class="edit-button" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item-list">
+      <div v-for="(item, index) in collection.items" :key="index">
+        <div class="card new-item">
+          <div class="card-header">{{ item.name }}</div>
+          <div
+            class="item-image"
+            :style="{ backgroundImage: 'url(' + item.img_url + ')' }"
+            @click="editItem(item)"
+          ></div>
           <div class="card-footer">
-            <div v-if="!edit.description" @click="editDescription()">
-              <EditButton class="edit-button" />
-            </div>
-            <div v-if="edit.description" @click="editDescription()">
-              <CheckButton class="edit-button" />
+            <div @click="deleteItem(item.id, index)">
+              <TrashButton class="trash" />
             </div>
           </div>
         </div>
       </div>
 
-      <div class="item-list">
-        <div v-for="(item, index) in collection.items" :key="index">
-          <div class="card new-item">
-            <div class="card-header">{{ item.name }}</div>
-            <div
-              class="item-image"
-              :style="{ backgroundImage: 'url(' + item.img_url + ')' }"
-              @click="editItem(item)"
-            ></div>
-            <div class="card-footer">
-              <p @click="deleteItem(item.id, index)">delete</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="card new-item" @click="openItem()">
-          <div class="card-body">+</div>
-        </div>
+      <div class="card new-item" @click="openItem()">
+        <div class="card-body">+</div>
       </div>
     </div>
   </div>
