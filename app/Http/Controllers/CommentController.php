@@ -9,8 +9,8 @@ use App\Collection;
 class CommentController extends Controller
 {
     /**
-     * 
-     * 
+     *
+     *
      * @return \Illuminate\Http\Comment
     */
 
@@ -21,10 +21,10 @@ public function __construct()
 
 public function index($id){
 
-    
+
     $collection= Collection::all()->find($id);
     $comments= $collection->comments;
-   
+
 
     foreach ($comments as $comment){
         $comment['isAuthor']=false;
@@ -32,10 +32,10 @@ public function index($id){
             $comment['isAuthor']=true;
         }
         $userName = $comment->user->name;
-        $comment['authorName'] = $userName; 
+        $comment['authorName'] = $userName;
     }
     return $comments;
-    
+
 }
 
 /**
@@ -45,12 +45,16 @@ public function index($id){
 public function store(Request $request)
 {
     //dd($request->content);
+    if($request->content) {
+
+
     $comment = new Comment;
     $comment->content = $request->content;
     $comment->user_id = auth()->id();
     $comment->collection_id = $request->collection_id;
     $comment->save();
     return $comment;
+}
 }
 
 /**
@@ -69,7 +73,7 @@ public function edit(Comment $comment)
  */
 public function update(Request $request, $id)
 {
-    
+
     $comment = Comment::find($id);
     $comment->content = $request->content;
     $comment->save();

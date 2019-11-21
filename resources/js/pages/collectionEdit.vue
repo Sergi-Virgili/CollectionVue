@@ -26,19 +26,11 @@
             <CheckButton />
           </div>
         </div>
-        <input
-          type="file"
-          @change="OnFileSelected"
-          style="display:none"
-          ref="fileInput"
-        />
+        <input type="file" @change="OnFileSelected" style="display:none" ref="fileInput" />
         <!-- TODO: CATEGORY UPLOAD AND NEW -->
         <!-- <button @click="onUpload">Upload</button> -->
         <!-- / <img class="categoryItem" :src="collection.category.icon" /> -->
-        <div
-          class="image-card"
-          :style="{ backgroundImage: 'url(' + collection.img_url + ')' }"
-        >
+        <div class="image-card" :style="{ backgroundImage: 'url(' + collection.img_url + ')' }">
           <div @click="$refs.fileInput.click()">
             <CamButton class="cam-button" />
           </div>
@@ -47,7 +39,7 @@
         <img v-if="url" :src="url" alt />
 
         <div class="card-body">
-          <p v-if="!edit.description">{{ collection.description }}</p>
+          <p v-if="!edit.description" @click="editDescription()">{{ collection.description }}</p>
 
           <textarea
             rows="5"
