@@ -11,34 +11,19 @@ use App\Image;
 class AppController extends Controller
 {
 
-    // HOME PUBLIC VIEW APP
-    // public function vueHome()
-    // {
-    //     return view ('app.public.home');
-    // }
-    public function collectionShow()
-    {
-        return view ('app.public.collection');
-    }
 
 
     public function apiHome() {
 
-        //TODO IF AUTH ONLY USER CATEGORIES
-
+        
         $categories = Category::all();
 
-        // foreach ($categories as $category) {
-        //     $category['collections'] = $category->collections;
-
-        // }
+        
 
         return $categories;
     }
-    // TODO AT MODEL
-    public function apiCategoriesFromUser(User $user) {
 
-    }
+   
 
     public function apiCollectionsByCotegory(Category $category) {
         $collections = $category->collections;
@@ -97,8 +82,8 @@ class AppController extends Controller
                 }
              }
             }
-        // $image = '/storage/collect-125-79003.png';
-        $image = '';
+        
+        $image = Image::$imageCollectionDefault;
         if ($collection->image) {
             $image = $collection->image->url;
         // dd($image);

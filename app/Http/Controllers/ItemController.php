@@ -32,15 +32,16 @@ class ItemController extends Controller
         $item->name = $request->name;
         $item->description = $request->description;
         $item->collection_id = $request->collection_id;
-       // dd($item);
+        // dd($item);
         $item->save();
-       // return $item->id;
+        // return $item->id;
+        $item['img_url'] = Image::$imageItemDefault;
+        
         if ($request->image) {
             $image = new Image;
             $image->storeImageItem($request, $item->id);
         }
-
-
+        
         return $item;
     }
 

@@ -59,56 +59,14 @@ class CollectionController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Collection  $collection
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Collection $collection)
-    {
-       
-        $items = $collection->items;
-        return view('public.itemsList',['collection' => $collection,
-                                        'items' => $items]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Collection  $collection
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Collection $collection)
-    {
-        $categories = Category::all();
-        return view('self.updateCollection', ['collection' => $collection,'categories' => $categories]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Collection  $collection
-     * @return \Illuminate\Http\Response
-     */
-    // public function update(Request $request, Collection $collection)
-    // {
-    //     if($request->image){
-    //         $newimage = new Image();
-    //         $newimage->storeImageCollection($request, $collection->id);
-    //         }
-    //         $collection->update($request->all());
-
-    //     return redirect('home/'.'Collections');
-    // }
+    
     public function updateCollection(Request $request)
     {
-        // dd($request->id);
+        
         $collection = Collection::find($request->id);
         
        
-        // $collection->image->destroy();
+        // TODO $collection->image->destroy();
         if($request->image){
 
             $newimage = new Image();
@@ -120,15 +78,10 @@ class CollectionController extends Controller
 
             $collection->update($request->all());
 
-        //return redirect('home/'.'Collections');
+        
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Collection  $collection
-     * @return \Illuminate\Http\Response
-     */
+    
     public function destroy(Collection $collection)
     {
 
@@ -167,22 +120,20 @@ class CollectionController extends Controller
 
     public function myCollections() {
 
-        $collection['author'] = true;
-        $collection['loved'] = false;
-        $collection['likes'] = 0;
+        
 
         if (auth()->user()) {
             $collections = auth()->user()->collections;
 
             foreach ($collections as $collection) {
-                
+                $collection['img_url'] = Image::$imageCollectionDefault;
                 $collection['loved'] = false;
                 $collection['likes'] = 0;
                 // $collection['image'] = 'https://fakeimg.pl/350x200/ff0000,128/000,255';
                 $collection['author'] = true;
 
                 if ($collection->image) {
-                $collection['image'] = $collection->image;
+                $collection['img_url'] = $collection->image->url;
                 }
                 if($collection->collectionLovedByUser($collection)){
                     $collection['loved'] = true;
