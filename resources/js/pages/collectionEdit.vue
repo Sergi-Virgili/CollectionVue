@@ -158,6 +158,10 @@ export default {
     openItem() {
       this.isNew = true;
       this.openEdit = true;
+      if (this.newCollection) {
+        this.newCollection = true;
+        this.onUpload();
+      }
     },
     updateItems(newItem) {
       this.collection.items.push(newItem);
