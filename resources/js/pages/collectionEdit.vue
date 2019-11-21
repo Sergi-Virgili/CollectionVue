@@ -59,7 +59,7 @@
       </div>
     </div>
 
-    <div class="item-list">
+    <div class="item-list mb-5">
       <div v-for="(item, index) in collection.items" :key="index">
         <div class="card new-item">
           <div class="card-header">{{ item.name }}</div>
@@ -79,6 +79,9 @@
       <div class="card new-item" @click="openItem()">
         <div class="card-body">+</div>
       </div>
+    </div>
+    <div class="bottom">
+      <router-link :to="{ name: 'myCollections' }">MyCoLeCT</router-link>
     </div>
   </div>
 </template>
@@ -288,5 +291,17 @@ export default {
   position: absolute;
   left: 0px;
   bottom: 0px;
+}
+.bottom {
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  padding: 0.2em;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: white;
+  box-shadow: -5px -5px 5px rgba(162, 162, 162, 0.243);
+  font-size: 1.3em;
 }
 </style>
