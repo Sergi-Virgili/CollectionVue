@@ -92,5 +92,11 @@ export default [
     ]
   },
 
-  { path: "*", component: page("errors/404.vue") }
+  { path: "*", component: page("errors/404.vue") },
+  //---------------- Favorites
+  {
+    path: "/favorites",
+    name: "myFavorites",
+    component: page("myFavorites.vue")
+  }
 ];
