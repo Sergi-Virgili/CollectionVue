@@ -185,13 +185,17 @@ class CollectionController extends Controller
             $user = auth()->user();
             $collections = $user->loveCollections;
             foreach ($collections as $collection) {
+                $collection['img_url'] = Image::$imageCollectionDefault;
                 $collection['loved'] = true;
-               // $collection['likes'] = 0;
-               
+                $collection['likes'] = 0;
+               if ($collection->image) {
+                $collection['img_url'] = $collection->image->url;
+                }
                 
-                  $collection['likes'] = $collection->lovedByUsers()->count();
+                $collection['likes'] = $collection->lovedByUsers()->count();
                 
-            return $collections;
+            }
+            return response()->json($collections);
+        }
+    }
 }
-}
-    }}

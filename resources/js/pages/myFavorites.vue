@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Mis colecciones favoritas</h1>
+    <h2>my favorites</h2>
     <div class="collection-list">
       <CollectionCard
         v-for="(collection, index) in collections"
@@ -8,7 +8,7 @@
         :collection="collection"
         class
         @delete="deleteCollection(index)"
-        @deleteFavorite="deleteFavorite(index)"
+        @deleteFavorite="deleteFavorites(index)"
       />
     </div>
   </div>
@@ -30,15 +30,21 @@ export default {
   mounted() {
     axios.get("/api/myFavorites").then(response => {
       this.collections = response.data;
-      console.log(this.collections);
     });
   },
   methods: {
     deleteFavorites(index) {
+      console.log(index);
       this.collections.splice(index, 1);
     }
   }
 };
 </script>
 <style>
+.collection-list {
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1em;
+}
 </style>

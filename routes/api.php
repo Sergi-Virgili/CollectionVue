@@ -74,6 +74,6 @@ Route::delete('/item/{item}', 'ItemController@destroy');
 
 Route::get('/user/lovedCollections/{id}', 'LoveItController@isLovedByUser');
 Route::get('/collection/totalLikes/{id}', 'LoveItController@getTotalLikes');
-Route::get('/myFavorites', 'CollectionController@MyFavorites');
+Route::get('/myFavorites', 'CollectionController@myFavorites');
 Route::post('/user/{id}/attach', 'LoveItController@attachLoveCollectionUser');
 Route::delete('/user/{id}/detach', 'LoveItController@detachLoveCollectionUser');

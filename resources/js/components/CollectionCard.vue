@@ -1,10 +1,15 @@
 <template>
   <div class="card">
-    <router-link :to="{name:'collection', params:{collectionId: collection.id}}">
-      <div class="collection-image" :style="{ backgroundImage: 'url(' + collection.img_url + ')' }"></div>
+    <router-link
+      :to="{ name: 'collection', params: { collectionId: collection.id } }"
+    >
+      <div
+        class="collection-image"
+        :style="{ backgroundImage: 'url(' + collection.img_url + ')' }"
+      ></div>
     </router-link>
     <div class="footer">
-      <div class="title">{{collection.name}}</div>
+      <div class="title">{{ collection.name }}</div>
 
       <div class="card-buttons">
         <div class="likes">
@@ -16,7 +21,12 @@
             :likes="likes"
           ></LoveComponent>
         </div>
-        <router-link :to="{name:'collectionEdit', params:{collectionId: collection.id}}">
+        <router-link
+          :to="{
+            name: 'collectionEdit',
+            params: { collectionId: collection.id }
+          }"
+        >
           <div v-if="collection.author" class="edit-button">
             <EditButton :collection="collection" />
           </div>
@@ -27,7 +37,7 @@
       </div>
     </div>
   </div>
-</template> 
+</template>
 
 <script>
 import axios from "axios";
@@ -82,6 +92,7 @@ export default {
         .then(response => {
           this.loved = false;
           this.likes = this.likes - 1;
+          this.$emit("deleteFavorite");
         });
     },
     isLovedOrLiked() {
