@@ -3,41 +3,83 @@
 namespace App\Http\Controllers;
 
 use App\Collection;
+use App\Item;
+use App\Category;
 use App\User;
 use App\Image;
 use Illuminate\Http\Request;
 
 class CollectionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function indexAuthor()
-    {
+    public function apiCollectionsByCotegory(Category $category) {
+        $collections = $category->collections;
 
-        //$collections = Collection::all();
-        return view('self.Collections');
+        //TODO IF AUTH ONLY USER CATEGORIES
+        if (auth()->user()){
+
+            foreach ($collections as $collection) {
+
+                $collection['author'] = false;
+                $collection['loved'] = false;
+                $collection['likes'] = 0;
+                
+                $collection['img_url'] = Image::$imageCollectionDefault ;
+
+                if($collection->image) {
+                  $collection['img_url'] = $collection->image->url;
+                }
+
+
+                if($collection->user->id == auth()->user()->id){
+
+                    $collection['author'] = true;
+
+                }
+                if($collection->collectionLovedByUser($collection)){
+                    $collection['loved'] = true;
+                }
+                if($collection->lovedByUsers()){
+                    $collection['likes'] = $collection->lovedByUsers()->count();
+                }
+            }
+        }
+        return response()->json($collections);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('self.NewCollection');
+    public function Show($collection) {
+
+        $collection = Collection::all()->find($collection);
+        if(!$collection) { 
+            return null;
+        }
+        $items = '';
+            if ($collection->items) {
+             $items = $collection->items;
+             foreach ($items as $item) {
+                $item['img_url'] = Image::$imageItemDefault;
+                 if($item->image){
+                 $item['img_url'] = $item->image->url;
+                }
+             }
+            }
+        
+        $image = Image::$imageCollectionDefault;
+        if ($collection->image) {
+            $image = $collection->image->url;
+       
+        }
+        $category = $collection->category;
+       
+        $collection['category'] = $category;
+       
+        
+        return response()->json([
+            'collection' => $collection,
+            'image' => $image,
+            ]);
 
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         
@@ -48,17 +90,12 @@ class CollectionController extends Controller
         $collection->user_id = auth()->user()->id;
         $collection->save();
         
-
-
         if($request->image){
             $newimage = new Image();
             $newimage->storeImageCollection($request, $collection->id);
         }
-
         return $collection;
-
     }
-
     
     public function updateCollection(Request $request)
     {
@@ -86,41 +123,35 @@ class CollectionController extends Controller
     {
 
         $collection->delete();
-        
-    }
-
-    //API ROUTES FUNCTIONS
-    public function apiStore (Request $request) {
-        dd($request);
-    }
-    public function apiIndexAuth () {
-
-        $collections = auth()->user()->collections;
-
-        foreach ($collections as $collection){
-            $collection['items'] = $collection->items;
-
-        }
-        return $collections;
-    }
-
-    public function apiShow(Collection $collection){
-        $collection['items'] = $collection->items;
-
-        return $collection;
 
     }
 
-    public function apiDelete (Collection $collection) {
+    // public function apiIndexAuth () {
 
-        return $collection;
+    //     $collections = auth()->user()->collections;
+
+    //     foreach ($collections as $collection){
+    //         $collection['items'] = $collection->items;
+
+    //     }
+    //     return $collections;
+    // }
+
+    // public function apiShow(Collection $collection){
+    //     $collection['items'] = $collection->items;
+
+    //     return $collection;
+
+    // }
+
+    // public function apiDelete (Collection $collection) {
+
+    //     return $collection;
 
 
-    }
+    // }
 
     public function myCollections() {
-
-        
 
         if (auth()->user()) {
             $collections = auth()->user()->collections;
@@ -129,7 +160,7 @@ class CollectionController extends Controller
                 $collection['img_url'] = Image::$imageCollectionDefault;
                 $collection['loved'] = false;
                 $collection['likes'] = 0;
-                // $collection['image'] = 'https://fakeimg.pl/350x200/ff0000,128/000,255';
+                
                 $collection['author'] = true;
 
                 if ($collection->image) {

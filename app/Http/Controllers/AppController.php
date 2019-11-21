@@ -13,95 +13,93 @@ class AppController extends Controller
 
 
 
-    public function apiHome() {
+    // public function apiHome() {
 
         
-        $categories = Category::all();
+    //     $categories = Category::all();
 
         
 
-        return $categories;
-    }
+    //     return $categories;
+    // }
 
    
 
-    public function apiCollectionsByCotegory(Category $category) {
-        $collections = $category->collections;
+    // public function apiCollectionsByCotegory(Category $category) {
+    //     $collections = $category->collections;
 
-        //TODO IF AUTH ONLY USER CATEGORIES
-        if (auth()->user()){
+    //     //TODO IF AUTH ONLY USER CATEGORIES
+    //     if (auth()->user()){
 
 
 
-            foreach ($collections as $collection) {
+    //         foreach ($collections as $collection) {
 
-                $collection['author'] = false;
-                $collection['loved'] = false;
-                $collection['likes'] = 0;
+    //             $collection['author'] = false;
+    //             $collection['loved'] = false;
+    //             $collection['likes'] = 0;
                 
-                $collection['img_url'] = Image::$imageCollectionDefault ;
+    //             $collection['img_url'] = Image::$imageCollectionDefault ;
 
-                if($collection->image) {
-                  $collection['img_url'] = $collection->image->url;
-                }
+    //             if($collection->image) {
+    //               $collection['img_url'] = $collection->image->url;
+    //             }
 
 
-                if($collection->user->id == auth()->user()->id){
+    //             if($collection->user->id == auth()->user()->id){
 
-                    $collection['author'] = true;
+    //                 $collection['author'] = true;
 
-                }
-                if($collection->collectionLovedByUser($collection)){
-                    $collection['loved'] = true;
-                }
-                if($collection->lovedByUsers()){
-                    $collection['likes'] = $collection->lovedByUsers()->count();
-                }
-            }
-        }
-        return response()->json($collections);
-    }
+    //             }
+    //             if($collection->collectionLovedByUser($collection)){
+    //                 $collection['loved'] = true;
+    //             }
+    //             if($collection->lovedByUsers()){
+    //                 $collection['likes'] = $collection->lovedByUsers()->count();
+    //             }
+    //         }
+    //     }
+    //     return response()->json($collections);
+    // }
 
-    public function destroy(Collection $collection)
-    {
+    // public function destroy(Collection $collection)
+    // {
 
-        $collection->delete();
+    //     $collection->delete();
 
-    }
+    // }
 
-    public function Show($collection) {
+    // public function Show($collection) {
 
-        $collection = Collection::all()->find($collection);
-        $items = '';
-            if ($collection->items) {
-             $items = $collection->items;
-             foreach ($items as $item) {
-                $item['img_url'] = Image::$imageItemDefault;
-                 if($item->image){
-                 $item['img_url'] = $item->image->url;
-                }
-             }
-            }
+    //     $collection = Collection::all()->find($collection);
+    //     $items = '';
+    //         if ($collection->items) {
+    //          $items = $collection->items;
+    //          foreach ($items as $item) {
+    //             $item['img_url'] = Image::$imageItemDefault;
+    //              if($item->image){
+    //              $item['img_url'] = $item->image->url;
+    //             }
+    //          }
+    //         }
         
-        $image = Image::$imageCollectionDefault;
-        if ($collection->image) {
-            $image = $collection->image->url;
-        // dd($image);
-        }
-        $category = $collection->category;
-       // $collection['items'] = $items;
-        $collection['category'] = $category;
+    //     $image = Image::$imageCollectionDefault;
+    //     if ($collection->image) {
+    //         $image = $collection->image->url;
+    //     // dd($image);
+    //     }
+    //     $category = $collection->category;
+    //    // $collection['items'] = $items;
+    //     $collection['category'] = $category;
        
         
-        return response()->json([
-            'collection' => $collection,
-            'image' => $image,
-            ]);
+    //     return response()->json([
+    //         'collection' => $collection,
+    //         'image' => $image,
+    //         ]);
 
-    }
+    // }
 
-    public function apiCollectionsFromCategories(Array $categories){
-
-    }
+   
 }
 

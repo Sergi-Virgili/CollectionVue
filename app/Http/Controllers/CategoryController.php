@@ -9,23 +9,14 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+   
     public function index()
     {
         $categories=Category::all();
         return view ('public.catalog', ['categories' => $categories]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+  
     public function store(Request $request)
     {
         $category = new Category();
@@ -38,25 +29,13 @@ class CategoryController extends Controller
         };
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
     public function show(Category $category)
     {
         $collections = $category->collections();
         return view('public.showCategory',['collections' => $collections]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
+   
     public function update(Request $request, Category $category)
     {
         
@@ -71,12 +50,7 @@ class CategoryController extends Controller
             $category->update($request->all());
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
+  
     public function deleteCategory(Int $id)
     {
         $category = Category::find($id);
@@ -115,6 +89,15 @@ class CategoryController extends Controller
        $category = Category::find($request);
        $category[0]->users()->detach($user->id);
    }
+
+   public function apiHome() {
+
+        
+    $categories = Category::all();
+  
+
+    return $categories;
+    }
 
 
 
