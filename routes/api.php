@@ -2,22 +2,6 @@
 
 use Illuminate\Http\Request;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
-
-
-// ------------
-
-
-
 Route::group(['middleware' => 'auth:api'], function () {
     Route::post('logout', 'Auth\LoginController@logout');
 
@@ -43,17 +27,17 @@ Route::group(['middleware' => 'guest:api'], function () {
     Route::get('oauth/{driver}/callback', 'Auth\OAuthController@handleProviderCallback')->name('oauth.callback');
 });
 
-Route::get('/', 'AppController@apiHome');
+Route::get('/', 'CategoryController@apiHome');
 
-Route::get('/category/collections/{category}', 'AppController@apiCollectionsByCotegory');
+Route::get('/category/collections/{category}', 'CollectionController@apiCollectionsByCotegory');
 
-Route::get('/collection/{callection}', 'AppController@show');
+Route::get('/collection/{callection}', 'CollectionController@show');
 
 Route::get('/mycollections', 'CollectionController@myCollections');
 
 Route::get('/collection/item/{item}', 'ItemController@show');
 
-Route::delete('/collection/{collection}', 'AppController@destroy');
+Route::delete('/collection/{collection}', 'CollectionController@destroy');
 
 Route::put('/collection', 'CollectionController@updateCollection');
 Route::post('/collection', 'CollectionController@store');
