@@ -18,7 +18,7 @@
             name="name"
             v-if="edit.title"
           />
-          <h3 v-if="!edit.title" @click="editTitle()">{{collection.name}}</h3>
+          <h3 v-if="!edit.title" @click="editTitle()">{{ collection.name }}</h3>
           <div v-if="!edit.title" @click="editTitle()">
             <EditButton />
           </div>
@@ -26,11 +26,19 @@
             <CheckButton />
           </div>
         </div>
-        <input type="file" @change="OnFileSelected" style="display:none" ref="fileInput" />
+        <input
+          type="file"
+          @change="OnFileSelected"
+          style="display:none"
+          ref="fileInput"
+        />
         <!-- TODO: CATEGORY UPLOAD AND NEW -->
         <!-- <button @click="onUpload">Upload</button> -->
         <!-- / <img class="categoryItem" :src="collection.category.icon" /> -->
-        <div class="image-card" :style="{ backgroundImage: 'url(' + collection.img_url + ')' }">
+        <div
+          class="image-card"
+          :style="{ backgroundImage: 'url(' + collection.img_url + ')' }"
+        >
           <div @click="$refs.fileInput.click()">
             <CamButton class="cam-button" />
           </div>
@@ -39,7 +47,7 @@
         <img v-if="url" :src="url" alt />
 
         <div class="card-body">
-          <p v-if="!edit.description">{{collection.description}}</p>
+          <p v-if="!edit.description">{{ collection.description }}</p>
 
           <textarea
             rows="5"
@@ -59,7 +67,7 @@
       <div class="item-list">
         <div v-for="(item, index) in collection.items" :key="index">
           <div class="card new-item">
-            <div class="card-header">{{item.name}}</div>
+            <div class="card-header">{{ item.name }}</div>
             <div
               class="item-image"
               :style="{ backgroundImage: 'url(' + item.img_url + ')' }"
@@ -106,7 +114,7 @@ export default {
         img_url: "",
         items: [],
         category: {
-          id: 6
+          id: 7
         }
       },
       selectedItem: {},
