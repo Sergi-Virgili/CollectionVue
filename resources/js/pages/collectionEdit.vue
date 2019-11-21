@@ -47,11 +47,14 @@
             class="form-group area-input"
             v-model="collection.description"
           ></textarea>
-          <div v-if="!edit.description" @click="editDescription()">
-            <EditButton />
           </div>
-          <div v-if="edit.description" @click="editDescription()">
-            <CheckButton />
+          <div class="card-footer">
+            <div v-if="!edit.description" @click="editDescription()">
+              <EditButton class="edit-button" />
+            </div>
+            <div v-if="edit.description" @click="editDescription()">
+              <CheckButton class="edit-button" />
+            </div>
           </div>
         </div>
       </div>
@@ -279,5 +282,10 @@ export default {
   height: 200px;
   background-size: cover;
   background-position: center;
+}
+.edit-button {
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
 }
 </style>
