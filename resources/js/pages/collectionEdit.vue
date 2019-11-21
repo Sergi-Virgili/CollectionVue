@@ -25,14 +25,9 @@
           <div v-if="edit.title" @click="editTitle()">
             <CheckButton />
           </div>
-          <!-- <div
-            v-if="edit.title"
-            @click="CancelEdit()">
-            <TrashButton />
-          </div>-->
         </div>
         <input type="file" @change="OnFileSelected" style="display:none" ref="fileInput" />
-
+        <!-- TODO: CATEGORY UPLOAD AND NEW -->
         <!-- <button @click="onUpload">Upload</button> -->
         <!-- / <img class="categoryItem" :src="collection.category.icon" /> -->
         <div class="image-card" :style="{ backgroundImage: 'url(' + collection.img_url + ')' }">
@@ -63,7 +58,6 @@
 
       <div class="item-list">
         <div v-for="(item, index) in collection.items" :key="index">
-          <!-- <router-link :to="'/collection/'+collection.id+'/item/'+item.id" class="card new-item" > -->
           <div class="card new-item">
             <div class="card-header">{{item.name}}</div>
             <div
@@ -75,31 +69,18 @@
               <p @click="deleteItem(item.id, index)">delete</p>
             </div>
           </div>
-          <!-- <div class="card-body">{{collection.description}}</div> -->
-
-          <!-- </router-link> -->
         </div>
 
         <div class="card new-item" @click="openItem()">
           <div class="card-body">+</div>
         </div>
       </div>
-      <!-- <div class="view_child"
-
-      v-touch:swipe.left="swipeHandler">
-
-      <router-view :key="this.$route.params.id+1"/>
-
-      </div>-->
-
-      <!-- <div class="card-body">{{collection.description}}</div> -->
     </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-//import LoveComponent from './LoveComponent'
 import EditButton from "../components/buttons/EditButton";
 import CheckButton from "../components/buttons/CheckButton";
 import TrashButton from "../components/buttons/TrashButton";
@@ -119,7 +100,15 @@ export default {
 
   data() {
     return {
-      collection: {},
+      collection: {
+        name: "Collection Title",
+        description: "Collection Description",
+        img_url: "",
+        items: [],
+        category: {
+          id: 6
+        }
+      },
       selectedItem: {},
       lastCollection: {},
       params: {},
@@ -135,15 +124,17 @@ export default {
       newCollection: false
     };
   },
-  beforeMount() {
-    //alert(this.collection.id)
-  },
 
   mounted() {
-    this.collection.id = this.$route.params.collectionId;
+    if (this.$route.params.collectionId) {
+      this.collection.id = this.$route.params.collectionId;
 
-    this.getData();
-    this.params = this.$route.params;
+      this.getData();
+      this.params = this.$route.params;
+    }
+    if (!this.$route.params.collectionId) {
+      this.newCollection = true;
+    }
   },
 
   methods: {
@@ -192,7 +183,6 @@ export default {
         this.collection = response.data.collection;
         this.collection.img_url = response.data.image;
         this.lastCollection = this.collection;
-        console.log(response.data.collection);
       });
     },
     deleteItem(id, index) {
@@ -203,6 +193,7 @@ export default {
     OnFileSelected(event) {
       this.fileSelected = event.target.files[0];
       this.collection.img_url = URL.createObjectURL(this.fileSelected);
+      console.log(this.collection);
       let reader = new FileReader();
       reader.readAsDataURL(this.fileSelected);
       reader.onload = e => {
@@ -213,6 +204,7 @@ export default {
     onUpload() {
       let formData = new FormData();
 
+      formData.append("category_id", this.collection.category.id);
       formData.append("name", this.collection.name);
       formData.append("description", this.collection.description);
 
@@ -221,37 +213,28 @@ export default {
         this.image = "";
       }
 
-      formData.append("category_id", this.collection.category.id);
-      formData.append("collection_id", this.collection.id);
-
       let config = {
         headers: {
           "Content-Type": "multipart/form-data"
         }
       };
       if (this.newCollection) {
-        axios
-          .post(`/api/collection`, formData, config)
-          //axios.put(`/api/collection/${this.collection.id}`, {'image' : this.image})
-          //axios.put(`/api/collection/${this.collection.id}`, params)
-
-          .then(res => {
-            this.lastCollection = this.collection;
-          });
+        axios.post(`/api/collection`, formData, config).then(res => {
+          this.lastCollection = this.collection;
+          this.newCollection = false;
+          this.collection.id = res.data.id;
+        });
       }
 
       if (!this.newCollection) {
+        formData.append("category_id", this.collection.category.id);
+        formData.append("collection_id", this.collection.id);
         formData.append("_method", "PUT");
         formData.append("id", this.collection.id);
-        axios
-          .post(`/api/collection`, formData, config)
-          //axios.put(`/api/collection/${this.collection.id}`, {'image' : this.image})
-          //axios.put(`/api/collection/${this.collection.id}`, params)
-
-          .then(res => {
-            console.log(res);
-            this.lastCollection = this.collection;
-          });
+        axios.post(`/api/collection`, formData, config).then(res => {
+          console.log(res);
+          this.lastCollection = this.collection;
+        });
       }
     }
   }
@@ -265,7 +248,6 @@ export default {
 
 .item-list {
   width: 100%;
-
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr;

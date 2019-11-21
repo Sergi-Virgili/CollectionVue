@@ -55,7 +55,7 @@ class CollectionController extends Controller
             $newimage->storeImageCollection($request, $collection->id);
         }
 
-
+        return $collection;
 
     }
 
