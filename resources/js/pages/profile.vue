@@ -1,9 +1,19 @@
 <template>
     <div class="container">
         <div class="card">
-            <figure>
-                <img :src="user.photo_url"/>
+            <figure v-if="!edit.image">
+                <img :src="image.url"/>
             </figure>
+            <figure v-if="edit.image">
+                <img id="image" :src="imagen">
+            </figure>
+            <input v-if="edit.image" class="btn btn-outline-primary" type="file" name="image" @change="getImage">
+            <div v-if="!edit.image" @click="editImage()">
+                <EditButton/>
+            </div>
+            <div v-if="edit.image" @click="editImage()">
+                <CheckButton />
+            </div>
         </div>
         <div class="card">
           <div class="d-flex flex-nowrap align-items-center justify-content-between">
@@ -60,11 +70,18 @@ export default {
 
     data() {
         return {
-            user: {},
+            user: {
+                name: '',
+                email: '',
+                image: ''
+            },
+            image: {},
+            preImage: "",
             edit: {
                 name: false,
-                email: false
-          },
+                email: false,
+                image: false,
+            },
         };
     },
 
@@ -76,6 +93,8 @@ export default {
         getUser(){
             axios.get(`/api/user/profile/${this.$route.params.id}`)
             .then((response) => {this.user = response.data;
+            this.image = response.data.usrimage;
+            console.log(response.data);
             })
         },
         editName() {
@@ -94,25 +113,52 @@ export default {
             }
             this.edit.email = true
         },
+        editImage(){
+            if (this.edit.image){
+                this.onUpload()
+                this.edit.image = false
+                return null
+            }
+            this.edit.image = true
+        },
         onUpload() {
             let params = new FormData();
-            params = {
-                name: this.user.name,
-                email: this.user.email,
-                }
+            params.append("_method", "PUT");
+            params.append("name", this.user.name);
+            params.append("email", this.user.email);
+            if (this.preImage) {
+                params.append("image", this.preImage);
+                this.preImage = "";
+            }
+            console.log(params);
 
-            axios.put(`/api/user/${this.user.id}/update`, params)
+            axios.post(`/api/user/${this.user.id}/update`, params)
             .then((response)=>{
             })
         },
-    }
+        getImage(event){
+            let file = event.target.files[0];
+            this.user.photo_url = file;
+            this.preUploadImage(file);
+        },
+        preUploadImage(file){
+            let reader = new FileReader();
+            reader.onload = (event) => {
+                this.preImage = event.target.result;
+            }
+            reader.readAsDataURL(file);
+        },
+    },
+    computed:{
+        imagen(){
+            return this.preImage;
+        }
+    },
 }
-        
-    
-    
-
 </script>
 
 <style scoped>
-
+    #image{
+        max-width: 80px;
+    }
 </style>
