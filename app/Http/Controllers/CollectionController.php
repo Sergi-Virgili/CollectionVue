@@ -22,7 +22,7 @@ class CollectionController extends Controller
                 $collection['author'] = false;
                 $collection['loved'] = false;
                 $collection['likes'] = 0;
-                
+
                 $collection['img_url'] = Image::$imageCollectionDefault ;
 
                 if($collection->image) {
@@ -49,7 +49,7 @@ class CollectionController extends Controller
     public function Show($collection) {
 
         $collection = Collection::all()->find($collection);
-        if(!$collection) { 
+        if(!$collection) {
             return null;
         }
         $items = '';
@@ -62,17 +62,17 @@ class CollectionController extends Controller
                 }
              }
             }
-        
+
         $image = Image::$imageCollectionDefault;
         if ($collection->image) {
             $image = $collection->image->url;
-       
+
         }
         $category = $collection->category;
-       
+
         $collection['category'] = $category;
-       
-        
+
+
         return response()->json([
             'collection' => $collection,
             'image' => $image,
@@ -82,43 +82,43 @@ class CollectionController extends Controller
 
     public function store(Request $request)
     {
-        
+
         $collection = new Collection();
         $collection->name = $request->name;
         $collection->category_id = $request->category_id;
         $collection->description = $request->description;
         $collection->user_id = auth()->user()->id;
         $collection->save();
-        
+
         if($request->image){
             $newimage = new Image();
             $newimage->storeImageCollection($request, $collection->id);
         }
         return $collection;
     }
-    
+
     public function updateCollection(Request $request)
     {
-        
+
         $collection = Collection::find($request->id);
-        
-       
+
+
         // TODO $collection->image->destroy();
         if($request->image){
 
             $newimage = new Image();
 
             $newimage->storeImageCollection($request, $collection->id);
-            
+
             }
-            
+
 
             $collection->update($request->all());
 
-        
+
     }
 
-    
+
     public function destroy(Collection $collection)
     {
 
@@ -135,7 +135,7 @@ class CollectionController extends Controller
                 $collection['img_url'] = Image::$imageCollectionDefault;
                 $collection['loved'] = false;
                 $collection['likes'] = 0;
-                
+
                 $collection['author'] = true;
 
                 if ($collection->image) {
@@ -147,13 +147,13 @@ class CollectionController extends Controller
                 if($collection->lovedByUsers()){
                     $collection['likes'] = $collection->lovedByUsers()->count();
                 }
-               
+
             }
 
             }
-            
+
             return $collections;
-        
+
     }
     public function myFavorites(){
         if (auth()->user()) {
@@ -163,12 +163,18 @@ class CollectionController extends Controller
                 $collection['img_url'] = Image::$imageCollectionDefault;
                 $collection['loved'] = true;
                 $collection['likes'] = 0;
-               if ($collection->image) {
-                $collection['img_url'] = $collection->image->url;
+                $collection['author'] = false;
+                if($collection->user->id == auth()->user()->id){
+
+                    $collection['author'] = true;
+
                 }
-                
+                if ($collection->image) {
+                    $collection['img_url'] = $collection->image->url;
+                }
+
                 $collection['likes'] = $collection->lovedByUsers()->count();
-                
+
             }
             return response()->json($collections);
         }
