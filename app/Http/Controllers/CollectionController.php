@@ -126,31 +126,6 @@ class CollectionController extends Controller
 
     }
 
-    // public function apiIndexAuth () {
-
-    //     $collections = auth()->user()->collections;
-
-    //     foreach ($collections as $collection){
-    //         $collection['items'] = $collection->items;
-
-    //     }
-    //     return $collections;
-    // }
-
-    // public function apiShow(Collection $collection){
-    //     $collection['items'] = $collection->items;
-
-    //     return $collection;
-
-    // }
-
-    // public function apiDelete (Collection $collection) {
-
-    //     return $collection;
-
-
-    // }
-
     public function myCollections() {
 
         if (auth()->user()) {
