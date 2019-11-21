@@ -1,12 +1,19 @@
 <template>
   <div class="card">
     <div class="card-header">
-      <h3 class="card-title">{{newItem.name}}</h3>
-      <input class="form-control" type="text" name="name" v-model="newItem.name" />
       <div @click="closeItem()">
         <CloseButton />
       </div>
-      <button @click="modifyItem">ok</button>
+      <h3 v-if="!edit.title" class="card-title" @click="editTitle()">{{ newItem.name }}</h3>
+      <!-- <h3 v-if="!editMode" class="card-title">{{newItem.name}}</h3> -->
+      <input v-if="edit.title" class="form-control" type="text" name="name" v-model="newItem.name" />
+      <div v-if="!edit.title" @click="editTitle()">
+        <EditButton />
+      </div>
+      <div v-if="edit.title" @click="editTitle()">
+        <CheckButton />
+      </div>
+      <!-- <button @click="modifyItem">ok</button> -->
     </div>
     <input type="file" @change="OnFileSelected" style="display:none" ref="fileInputItem" />
     <div @click="$refs.fileInputItem.click()">
@@ -14,14 +21,23 @@
     </div>
     <div class="image" :style="{ backgroundImage: 'url(' + newItem.img_url + ')' }"></div>
 
-    <div class="card-body">
-      {{newItem.description}}
-      <textarea
-        rows="5"
-        name="description"
-        class="form-control area-input"
-        v-model="newItem.description"
-      ></textarea>
+    <div
+      class="card-body"
+      v-if="!edit.description"
+      @click="editDescription()"
+    >{{newItem.description}}</div>
+    <textarea
+      v-if="edit.description"
+      rows="5"
+      name="description"
+      class="form-control area-input"
+      v-model="newItem.description"
+    ></textarea>
+    <div v-if="!edit.description" @click="editDescription()">
+      <EditButton />
+    </div>
+    <div v-if="edit.description" @click="editDescription()">
+      <CheckButton />
     </div>
   </div>
 </template>
@@ -30,11 +46,15 @@
 import CloseButton from "../buttons/DeleteButton";
 import CamButton from "../buttons/CamButton";
 import axios from "axios";
+import EditButton from "../buttons/EditButton";
+import CheckButton from "../buttons/CheckButton";
 
 export default {
   components: {
     CloseButton,
-    CamButton
+    CamButton,
+    EditButton,
+    CheckButton
   },
   props: ["collection", "selectedItem", "isNew"],
 
@@ -48,10 +68,10 @@ export default {
 
       image: "",
       fileSelected: "",
-
-      // collectionId: 1,
-      // isNew: true,
-      editMode: false
+      edit: {
+        title: false,
+        description: false
+      }
     };
   },
 
@@ -67,6 +87,22 @@ export default {
     }
   },
   methods: {
+    editTitle() {
+      if (this.edit.title) {
+        this.modifyItem();
+        this.edit.title = false;
+        return null;
+      }
+      this.edit.title = true;
+    },
+    editDescription() {
+      if (this.edit.description) {
+        this.modifyItem();
+        this.edit.description = false;
+        return null;
+      }
+      this.edit.description = true;
+    },
     OnFileSelected(event) {
       this.fileSelected = event.target.files[0];
       this.newItem.img_url = URL.createObjectURL(this.fileSelected);
@@ -151,4 +187,3 @@ export default {
 }
 </style>>
 
-   
