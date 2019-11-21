@@ -122,7 +122,7 @@ class Image extends Model
         $newimage = new Image();
 
         $item = Item::find($id);
-
+        
         if($item->image) {
             $prevImage = $item->image;
             $prevImage->delete();

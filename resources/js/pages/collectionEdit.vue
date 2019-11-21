@@ -3,6 +3,7 @@
     <NewItem
       v-if="openEdit"
       @closeItem="closeItem"
+      @updateItems="updateItems"
       :collection="collection"
       :isNew="isNew"
       :selectedItem="selectedItem"
@@ -61,12 +62,18 @@
       </div>
 
       <div class="item-list">
-        <div v-for="item in collection.items" :key="item.id">
+        <div v-for="(item, index) in collection.items" :key="index">
           <!-- <router-link :to="'/collection/'+collection.id+'/item/'+item.id" class="card new-item" > -->
-          <div class="card new-item" @click="editItem(item)">
+          <div class="card new-item">
             <div class="card-header">{{item.name}}</div>
-            <div class="item-image" :style="{ backgroundImage: 'url(' + item.img_url + ')' }"></div>
-            <div class="card-footer"></div>
+            <div
+              class="item-image"
+              :style="{ backgroundImage: 'url(' + item.img_url + ')' }"
+              @click="editItem(item)"
+            ></div>
+            <div class="card-footer">
+              <p @click="deleteItem(item.id, index)">delete</p>
+            </div>
           </div>
           <!-- <div class="card-body">{{collection.description}}</div> -->
 
@@ -154,6 +161,9 @@ export default {
       this.isNew = true;
       this.openEdit = true;
     },
+    updateItems(newItem) {
+      this.collection.items.push(newItem);
+    },
 
     CancelEdit() {
       this.edit.title = false;
@@ -185,7 +195,11 @@ export default {
         console.log(response.data.collection);
       });
     },
-    swipeHandler(direction) {},
+    deleteItem(id, index) {
+      axios.delete(`/api/item/${id}`).then(response => {
+        this.collection.items.splice(index, 1);
+      });
+    },
     OnFileSelected(event) {
       this.fileSelected = event.target.files[0];
       this.collection.img_url = URL.createObjectURL(this.fileSelected);
@@ -241,10 +255,6 @@ export default {
       }
     }
   }
-
-  // metaInfo () {
-  //   return { title: this.$t('home') }
-  // }
 };
 </script>
 

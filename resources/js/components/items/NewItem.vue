@@ -50,7 +50,7 @@ export default {
       fileSelected: "",
 
       // collectionId: 1,
-      //isNew: true,
+      // isNew: true,
       editMode: false
     };
   },
@@ -61,7 +61,11 @@ export default {
   //       console.log("hoal");
   //     }
   //   },
-
+  mounted() {
+    if (!this.isNew) {
+      this.newItem = this.selectedItem;
+    }
+  },
   methods: {
     OnFileSelected(event) {
       this.fileSelected = event.target.files[0];
@@ -70,13 +74,26 @@ export default {
       reader.readAsDataURL(this.fileSelected);
       reader.onload = e => {
         this.image = e.target.result;
-        this.createItem();
+        this.modifyItem();
       };
     },
     closeItem() {
       this.$emit("closeItem");
     },
-    saveItem() {},
+    saveItem() {
+      let formData = new FormData();
+      formData.append("name", this.newItem.name);
+      formData.append("description", this.newItem.description);
+      formData.append("id", this.newItem.id);
+      formData.append("collection_id", this.collection.id);
+      if (this.image) {
+        formData.append("image", this.image);
+        this.image = "";
+      }
+      formData.append("_method", "PUT");
+
+      axios.post("/api/item", formData, config).then(response => {});
+    },
 
     createItem() {
       let formData = new FormData();
@@ -96,14 +113,10 @@ export default {
       };
 
       axios.post("/api/item", formData, config).then(response => {
-        console.log(response.data);
+        this.isNew = false;
+        this.newItem.id = response.data.id;
+        this.$emit("updateItems", this.newItem);
       });
-
-      // if (!this.isNew) {
-      //   formData.append("type", "PUT");
-
-      //   axios.post("/api/item", formData, config).then(Response => {});
-      // }
     },
     modifyItem() {
       if (this.isNew) {
