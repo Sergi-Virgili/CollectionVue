@@ -2,7 +2,7 @@
     <div class="container">
         <div class="card">
             <figure v-if="!edit.image">
-                <img :src="image.url"/>
+                <img :src="image"/>
             </figure>
             <figure v-if="edit.image">
                 <img id="image" :src="imagen">

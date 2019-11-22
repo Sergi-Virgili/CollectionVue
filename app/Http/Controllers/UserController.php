@@ -18,8 +18,12 @@ class UserController extends Controller
     {
         $user = User::find($id);
         $user['isUserProfile'] = false;
+        $user['usrimage'] = false;
         if($user->id == auth()->user()->id){
             $user['isUserProfile'] = true;
+        }
+        if($user->image()){
+            $user['usrimage'] = $user->image->url;
         }
 
         return response()->json($user);
