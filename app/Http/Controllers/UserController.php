@@ -31,6 +31,10 @@ class UserController extends Controller
     public function updateUser(Request $request, Int $id)
     {
         $user = User::find($id);
+        if($request->image){
+        $newimage = new Image();
+        $newimage->storeImageUser($request, $user->id);
+        }
         $user->update($request->all());
     }
 }
