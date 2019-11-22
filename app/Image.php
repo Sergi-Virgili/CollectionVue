@@ -37,74 +37,62 @@ class Image extends Model
 
     public function storeImageCategory($request, $id){
 
-        DB::beginTransaction();
-        try{
-            //save image
-
         $newimage = new Image();
 
-        //obtenemos el campo file definido en el formulario
-        $image = $request->file('icon');
+        $category = Category::find($id);
 
-        //obtenemos el nombre del archivo
-        $nombrearchivo = $image->getClientOriginalName();
-
-        //indicamos que queremos guardar un nuevo archivo en el disco local
-        Storage::disk('local')->put($nombrearchivo,  \File::get($image));
-
-        $newimage->name = $nombrearchivo;
-        $newimage->category_id = $id;
-        $newimage->save();
-
-        DB::commit();
-
-        return redirect()->back();
-
+        if($category->image) {
+            $prevImage = $category->image;
+            $prevImage->delete();
         }
+        
+        $base64_image = $request->image;
 
-        catch(\Exception $e)
-        {
-            DB::rollback();
-            return redirect()->back()
-                ->with('warning', $e);
-        }
+        $fileName = $newimage->saveImageDisk($request, $base64_image);
+
+         $newimage->name = $fileName;
+         $newimage->category_id = $id;
+         $newimage->url = "/storage/" . $fileName;
+         $newimage->save();  
     }
 
+    function saveImageDisk($request, $base64_image){
+
+        $pos  = strpos($base64_image, ';');
+        
+        $type = explode('/', substr($base64_image, 0, $pos))[1];
+        if ($type == 'jpeg') {$type = 'jpg';};
+        $fileName = 'collect-' . $request->collection_id . '-' . rand( 0, 100000) . '.' . $type;
+
+        $image = substr($base64_image, strpos($base64_image, ',') + 1);
+        $image = base64_decode($image);
+        
+        Storage::disk('public')->put($fileName,  $image);
+
+        return $fileName;
+    }
+
+ 
     public function storeImageCollection($request, $id){
-
-
-        DB::beginTransaction();
-        try{
-            //save image
 
         $newimage = new Image();
 
-        //obtenemos el campo file definido en el formulario
-       // $image = $request->file('image');
-        $image = $request->image;
+        $collection = Collection::find($id);
 
-        //obtenemos el nombre del archivo
-       // $nombrearchivo = $image->getClientOriginalName();
-        $nombrearchivo = 'file';
-        //indicamos que queremos guardar un nuevo archivo en el disco local
-        Storage::disk('local')->put($nombrearchivo,  \File::get($image));
-
-        $newimage->name = $nombrearchivo;
-        $newimage->collection_id = $id;
-        $newimage->save();
-
-        DB::commit();
-
-        return redirect()->back();
-
+        if($collection->image) {
+            $prevImage = $collection->image;
+            $prevImage->delete();
         }
+        
+        $base64_image = $request->image;
 
-        catch(\Exception $e)
-        {
-            DB::rollback();
-            return redirect()->back()
-                ->with('warning', $e);
-        }
+        $fileName = $newimage->saveImageDisk($request, $base64_image);
+
+         $newimage->name = $fileName;
+         $newimage->collection_id = $id;
+         $newimage->url = "/storage/" . $fileName;
+         $newimage->save();        
+
     }
 
     public function storeImageItem($request, $id){
@@ -179,36 +167,22 @@ class Image extends Model
 
     public function storeImageUser($request, $id){
 
-        DB::beginTransaction();
-        try{
-            //save image
-
         $newimage = new Image();
 
-        //obtenemos el campo file definido en el formulario
-        $image = $request->file('image');
+        $user = User::find($id);
 
-        //obtenemos el nombre del archivo
-        $nombrearchivo = $image->getClientOriginalName();
-
-        //indicamos que queremos guardar un nuevo archivo en el disco local
-        Storage::disk('local')->put($nombrearchivo,  \File::get($image));
-
-        $newimage->name = $nombrearchivo;
-        $newimage->user_id = $id;
-        $newimage->save();
-
-        DB::commit();
-
-        return redirect()->back();
-
+        if($user->image) {
+            $prevImage = $user->image;
+            $prevImage->delete();
         }
+        
+        $base64_image = $request->image;
 
-        catch(\Exception $e)
-        {
-            DB::rollback();
-            return redirect()->back()
-                ->with('warning', $e);
-        }
+        $fileName = $newimage->saveImageDisk($request, $base64_image);
+
+         $newimage->name = $fileName;
+         $newimage->user_id = $id;
+         $newimage->url = "/storage/" . $fileName;
+         $newimage->save();  
     }
 }
