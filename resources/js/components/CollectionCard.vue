@@ -1,12 +1,12 @@
 <template>
   <div class="card">
-    <router-link
-      :to="{ name: 'collection', params: { collectionId: collection.id } }"
-    >
-      <div
-        class="collection-image"
-        :style="{ backgroundImage: 'url(' + collection.img_url + ')' }"
-      ></div>
+    <router-link :to="{ name: 'collection', params: { collectionId: collection.id } }">
+      <div class="collection-image">
+        <div
+          class="collection-image-in"
+          :style="{ backgroundImage: 'url(' + collection.img_url + ')' }"
+        ></div>
+      </div>
     </router-link>
     <div class="footer">
       <div class="title">{{ collection.name }}</div>
@@ -126,8 +126,18 @@ export default {
 .collection-image {
   /* width: 250px; */
   height: 200px;
+  overflow: hidden;
+}
+.collection-image-in {
+  /* width: 250px; */
+  height: 100%;
+  width: 100%;
   background-position: center;
   background-size: cover;
+  transition: all 0.9s ease-out;
+}
+.collection-image-in:hover {
+  transform: scale(1.2);
 }
 .footer {
   width: 100%;
