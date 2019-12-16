@@ -1,17 +1,9 @@
 <template>
   <div>
     <h3>
-      <router-link :to="{ name: 'home' }">all</router-link>
-      => {{ collection.name }}
+      <router-link :to="{ name: 'home' }"><img id="home_icon" src="https://image.flaticon.com/icons/png/512/1215/1215236.png" alt="go back to home page button"></router-link>
+      {{ collection.name }}
     </h3>
-
-    <!-- <div v-for="item in collection.items" :key="item.id">
-
-      <router-link :to="'/collection/'+collection.id+'/item/'+item.id" >link</router-link>
-
-
-    </div>-->
-
     <div
       class="view_child card"
       v-touch:swipe.left="swipeHandler"
@@ -67,20 +59,19 @@ export default {
     }
   }
 
-  // metaInfo () {
-  //   return { title: this.$t('home') }
-  // }
 };
 </script>
 
 <style lang="scss" scoped>
 .view_child {
-  // background-color:lightgrey;
   background-position: center;
   background-size: cover;
   height: 50vh;
 }
 .comments-list {
   margin-bottom: 6em;
+}
+#home_icon {
+  width: 30px;
 }
 </style>

@@ -57,6 +57,13 @@ export default [
     children: [{ path: "item/:id", name: "item", component: page("item.vue") }]
   },
 
+  { 
+    path: '/user/:id/collections', 
+    name: 'userCollections', 
+    component: page('userCollections.vue') 
+  },
+
+
   // ------------- CATEGORIES
 
   {
@@ -70,9 +77,11 @@ export default [
     component: page("categories.vue")
   },
 
-  // { path: '/collection/item/:id', name: 'item', component: page('item.vue') },
+  // -------------- PROFILE
 
-  // --------------- / OUR ROUTES
+  { path: '/user/:id', name: 'profile', component: page('profile.vue') },
+
+  // --------------- OUR ROUTES
 
   {
     path: "/settings",

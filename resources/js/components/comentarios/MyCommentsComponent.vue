@@ -1,5 +1,4 @@
 <template>
-
         <div class="component">
             <div class="comments-list">
                 <comments-component id="comment" v-for="(comment, index) in comments"
@@ -7,20 +6,14 @@
                 :comment="comment"
                 @update="updateComment(index, arguments)"
                 @delete="deleteComment(index)" />
-
-
-
-
             </div>
-
              <div class="barraComment">
                 <form-component @new="addComment" />
             </div>
 
         </div>
-
-
 </template>
+
 <script>
 import axios from 'axios'
 import commentsComponent from './commentsComponent.vue'
@@ -43,8 +36,6 @@ import FormComponent from './FormComponent.vue'
         },
         methods:{
             addComment(comment){
-
-               // this.comments.isAuthor=true;
                 this.comments.unshift(comment);
             },
             getData(){

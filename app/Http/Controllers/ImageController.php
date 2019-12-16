@@ -81,7 +81,7 @@ class ImageController extends Controller
     public function destroy(Image $image)
     {
         $imagePath = storage_path();
-        $imageUrl = $imagePath.'/foro/storage/'.$image->name;
+        $imageUrl = $imagePath.'/app/'.$image->name;
         $image->delete();
         unlink($imageUrl);
         return back();

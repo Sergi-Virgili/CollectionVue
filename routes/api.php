@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CollectionController;
 use Illuminate\Http\Request;
 
 Route::group(['middleware' => 'auth:api'], function () {
@@ -27,45 +28,43 @@ Route::group(['middleware' => 'guest:api'], function () {
     Route::get('oauth/{driver}/callback', 'Auth\OAuthController@handleProviderCallback')->name('oauth.callback');
 });
 
-Route::get('/', 'CategoryController@apiHome');
-
-Route::get('/category/collections/{category}', 'CollectionController@apiCollectionsByCotegory');
+// --------- COLLECTIONS
 
 Route::get('/collection/{callection}', 'CollectionController@show');
-
 Route::get('/mycollections', 'CollectionController@myCollections');
-
 Route::get('/collection/item/{item}', 'ItemController@show');
-
 Route::delete('/collection/{collection}', 'CollectionController@destroy');
-
 Route::put('/collection', 'CollectionController@updateCollection');
 Route::post('/collection', 'CollectionController@store');
+Route::get('/userCollections/{id}', 'CollectionController@userCollections');
 
-Route::post('/comments', 'CommentController@store');
-Route::delete('/comments/{comment}', 'CommentController@destroy');
-// ----------!!
+
+
+// ---------- CATEGORY REGISTER FORM
 
 Route::get('/register/data', 'CategoryController@returnCategoriesDataJSON');
 Route::get('/categoryUser/data', 'CategoryController@returnUserCategoryDataJSON');
 Route::post('/register/attach', 'CategoryController@attachCategoryUser');
 Route::delete('/register/detach', 'CategoryController@detachCategoryUser');
 
-// -----------!!
+// ---------- CATEGORY
 
+Route::get('/', 'CategoryController@apiHome');
+Route::get('/category/collections/{category}', 'CollectionController@apiCollectionsByCotegory');
 Route::post('/category', 'CategoryController@store');
 Route::put('/category/{id}/update', 'CategoryController@updateCategory');
 Route::delete('/category/{id}/destroy', 'CategoryController@deleteCategory');
 
-//------------!!
+// ---------- COMMENTS
 
+Route::post('/comments', 'CommentController@store');
+Route::delete('/comments/{comment}', 'CommentController@destroy');
 Route::get('/comments/{comment}', 'CommentController@index');
 Route::get('/comments/{comment}/edit', 'CommentController@edit');
 Route::put('/comments/{comment}', 'CommentController@update');
-//Route::apiResource('comments', 'CommentController');
 
-//------------------------
 // ITEM ROUTES
+
 Route::post('/item', 'ItemController@store');
 Route::put('/item', 'ItemController@updateItem');
 Route::delete('/item/{item}', 'ItemController@destroy');
@@ -77,3 +76,8 @@ Route::get('/collection/totalLikes/{id}', 'LoveItController@getTotalLikes');
 Route::get('/myFavorites', 'CollectionController@myFavorites');
 Route::post('/user/{id}/attach', 'LoveItController@attachLoveCollectionUser');
 Route::delete('/user/{id}/detach', 'LoveItController@detachLoveCollectionUser');
+
+// PROFILE
+
+Route::get('/user/profile/{id}', 'UserController@user');
+Route::put('/user/{id}/update', 'UserController@updateUser');

@@ -1,6 +1,6 @@
 <template>
     <div class="card container justify-content-sm-center">
-        <form action="" method="" enctype="multipart/form-data" v-on:submit.prevent="create()">
+        <form enctype="multipart/form-data" v-on:submit.prevent="create()">
             <label>Name</label>
             <input type="text" name="name" v-model="category.name">
             <label>Description</label>

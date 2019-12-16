@@ -1,12 +1,12 @@
 <template>
     <div class="card col-sm-12">
-        <form v-if="editMode" v-on:submit.prevent="updateCategory()" action="" method="" enctype="multipart/form-data">
+        <form v-if="editMode" v-on:submit.prevent="updateCategory()" enctype="multipart/form-data">
             <div class="card">
                 <input type="text" v-model="categoryItem.name">
                 <textarea v-model="categoryItem.description"></textarea>
             </div>
             <figure>
-                <img id="image" :src="categoryItem.icon">
+                <img id="image" :src="imagen">
             </figure>
             <input class="btn btn-outline-primary" type="file" name="icon" @change="getImage">
             <div class="d-flex flex-nowrap">
@@ -16,7 +16,7 @@
         </form>
         <div v-if="!editMode">
             <h3>{{categoryItem.name}}</h3>
-            <img id="categoryIcon" :src="categoryItem.icon"/>
+            <img id="image" :src="categoryItem.icon"/>
             <p>{{categoryItem.description}}</p>
             <button class="btn btn-outline-primary" @click="editCategory()">EDITAR</button>
             <button class="btn btn-outline-danger" @click="deleteCategory()">ELIMINAR</button>
@@ -37,6 +37,7 @@
             return{
                 preImage: '',
                 editMode: false,
+                icon: '',
             }
         },
 
@@ -47,8 +48,8 @@
                 const id = this.categoryItem.id;
                 const params = {
                     name: this.categoryItem.name,
-                    cription: this.categoryItem.description,
-                    icon: this.categoryItem.icon,
+                    description: this.categoryItem.description,
+                    icon: this.imagen,
                 }
                 axios.put(`api/category/${id}/update`, params).then((response) => {
                 this.editMode = false;

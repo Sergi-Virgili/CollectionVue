@@ -35,11 +35,13 @@ class CategoryController extends Controller
         return view('public.showCategory',['collections' => $collections]);
     }
 
-   
-    public function update(Request $request, Category $category)
-    {
-        
-    }
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Category  $category
+     * @return \Illuminate\Http\Response
+     */
     public function updateCategory(Request $request, $category)
     {
         $category = Category::find($category);
