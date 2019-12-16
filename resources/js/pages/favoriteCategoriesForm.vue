@@ -20,7 +20,6 @@
     <div id="relative" class="justify-content-center">
       <ul id="absolute" class="autocomplete-results" v-show="isOpen">
         <li
-          id="zindex"
           class="autocomplete-result"
           v-for="(result, index) in results"
           :key="index"
@@ -163,7 +162,9 @@ export default {
 </script>
 
 <style>
+
 .autocomplete-result {
+  list-style-type: none;
   background-color: white;
 }
 .autocomplete-result:hover {
@@ -185,9 +186,8 @@ export default {
   position: relative;
 }
 #absolute {
+  z-index: 100;
   position: absolute;
 }
-#zindex {
-  z-index: 100;
-}
+
 </style>
