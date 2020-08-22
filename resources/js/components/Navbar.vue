@@ -18,11 +18,6 @@
       </button>
 
       <div id="navbarToggler" class="collapse navbar-collapse">
-        <ul class="navbar-nav">
-          <locale-dropdown />
-          <li class="nav-item"></li>
-        </ul>
-
         <ul class="navbar-nav ml-auto">
           <!-- Authenticated -->
           <li v-if="user" class="nav-item dropdown">
@@ -90,15 +85,15 @@ import LocaleDropdown from "./LocaleDropdown";
 
 export default {
   components: {
-    LocaleDropdown
+    LocaleDropdown,
   },
 
   data: () => ({
-    appName: window.config.appName
+    appName: window.config.appName,
   }),
 
   computed: mapGetters({
-    user: "auth/user"
+    user: "auth/user",
   }),
 
   methods: {
@@ -108,8 +103,8 @@ export default {
 
       // Redirect to login.
       this.$router.push({ name: "login" });
-    }
-  }
+    },
+  },
 };
 </script>
 
