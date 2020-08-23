@@ -2,8 +2,9 @@
   <div>
     <h4>myCollections</h4>
 
-    <div class="collection-list mb-5">
+    <div class="row mb-5">
       <CollectionCard
+        class="col-md-4 col-lg-3"
         v-for="(collection, index) in collections"
         :key="collection.id"
         :collection="collection"
@@ -25,12 +26,12 @@ export default {
   middleware: "auth",
 
   components: {
-    CollectionCard
+    CollectionCard,
   },
 
   data() {
     return {
-      collections: []
+      collections: [],
     };
   },
   beforeMount() {
@@ -39,27 +40,19 @@ export default {
 
   methods: {
     importCollectionsData(id) {
-      axios.get("/api/mycollections").then(response => {
+      axios.get("/api/mycollections").then((response) => {
         this.collections = response.data;
         console.log(response.data);
       });
     },
     deleteCollection(index) {
       this.collections.splice(index, 1);
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="scss">
-.collection-list {
-  // width: 90%;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1em;
-  margin-top: 1.5em;
-}
 .newCollection {
   position: fixed;
   bottom: 0px;

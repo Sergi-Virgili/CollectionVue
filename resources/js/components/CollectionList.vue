@@ -1,8 +1,9 @@
 <template>
-  <div>
+  <div class>
     <transition name="fade" mode="out-in">
-      <div class="collection-list">
+      <div class="row">
         <CollectionCard
+          class="col-md-4 col-xl-3"
           v-for="(collection, index) in collections"
           :key="collection.id"
           :collection="collection"
@@ -19,15 +20,15 @@ import CollectionCard from "./CollectionCard";
 
 export default {
   props: {
-    categoryId: Number
+    categoryId: Number,
   },
   components: {
-    CollectionCard
+    CollectionCard,
   },
 
   data() {
     return {
-      collections: []
+      collections: [],
     };
   },
   mounted() {
@@ -35,36 +36,22 @@ export default {
   },
 
   watch: {
-    categoryId: function() {
+    categoryId: function () {
       this.importCategoryData(this.categoryId);
-    }
+    },
   },
   methods: {
     importCategoryData(id) {
-      axios.get(`/api/category/collections/${id}`).then(response => {
+      axios.get(`/api/category/collections/${id}`).then((response) => {
         this.collections = response.data;
       });
     },
     deleteCollection(index) {
       this.collections.splice(index, 1);
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang='scss'>
-.collection-list {
-  // width: 90%;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1em;
-}
-fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s;
-}
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0;
-}
 </style>

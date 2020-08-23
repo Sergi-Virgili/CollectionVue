@@ -50,7 +50,7 @@ export default {
   data() {
     return {
       loved: false,
-      likes: 0
+      likes: 0,
     };
   },
   mounted() {
@@ -60,7 +60,7 @@ export default {
     LoveComponent,
     EditButton,
     DeleteButton,
-    TrashButton
+    TrashButton,
   },
   props: ["collection"],
 
@@ -73,11 +73,11 @@ export default {
     loveIt() {
       const collectionId = this.collection.id;
       const params = {
-        id: collectionId
+        id: collectionId,
       };
       axios
         .post(`/api/user/${this.collection.id}/attach`, params)
-        .then(response => {
+        .then((response) => {
           this.loved = true;
           this.likes = this.likes + 1;
         });
@@ -85,11 +85,11 @@ export default {
     dontLove() {
       const collectionId = this.collection.id;
       const params = {
-        id: collectionId
+        id: collectionId,
       };
       axios
         .delete(`/api/user/${this.collection.id}/detach`, { data: { params } })
-        .then(response => {
+        .then((response) => {
           this.loved = false;
           this.likes = this.likes - 1;
           this.$emit("deleteFavorite");
@@ -98,8 +98,8 @@ export default {
     isLovedOrLiked() {
       this.loved = this.collection.loved;
       this.likes = this.collection.likes;
-    }
-  }
+    },
+  },
 };
 </script>
 
