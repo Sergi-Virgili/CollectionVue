@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <!-- <h3> {{categoryName}} </h3> -->
     <CategoryList class="category-list" @categorySelect="selectCategory" />
     <transition name="fade" mode="out-in">
