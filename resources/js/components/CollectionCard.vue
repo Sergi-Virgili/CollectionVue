@@ -1,38 +1,40 @@
 <template>
-  <div class="card">
-    <router-link :to="{ name: 'collection', params: { collectionId: collection.id } }">
-      <div class="collection-image">
-        <div
-          class="collection-image-in"
-          :style="{ backgroundImage: 'url(' + collection.img_url + ')' }"
-        ></div>
-      </div>
-    </router-link>
-    <div class="footer">
-      <div class="title">{{ collection.name }}</div>
-
-      <div class="card-buttons">
-        <div class="likes">
-          <LoveComponent
-            :collection="collection"
-            @loveIt="loveIt()"
-            @dontLove="dontLove()"
-            :loved="loved"
-            :likes="likes"
-          ></LoveComponent>
+  <div>
+    <div class="card mb-4">
+      <router-link :to="{ name: 'collection', params: { collectionId: collection.id } }">
+        <div class="collection-image">
+          <div
+            class="collection-image-in"
+            :style="{ backgroundImage: 'url(' + collection.img_url + ')' }"
+          ></div>
         </div>
-        <router-link
-          :to="{
+      </router-link>
+      <div class="footer">
+        <div class="title">{{ collection.name }}</div>
+
+        <div class="card-buttons">
+          <div class="likes">
+            <LoveComponent
+              :collection="collection"
+              @loveIt="loveIt()"
+              @dontLove="dontLove()"
+              :loved="loved"
+              :likes="likes"
+            ></LoveComponent>
+          </div>
+          <router-link
+            :to="{
             name: 'collectionEdit',
             params: { collectionId: collection.id }
           }"
-        >
-          <div v-if="collection.author" class="edit-button">
-            <EditButton :collection="collection" />
+          >
+            <div v-if="collection.author" class="edit-button">
+              <EditButton :collection="collection" />
+            </div>
+          </router-link>
+          <div v-on:click="deleteOnClick()" v-if="collection.author" class>
+            <TrashButton :collection="collection" />
           </div>
-        </router-link>
-        <div v-on:click="deleteOnClick()" v-if="collection.author" class>
-          <TrashButton :collection="collection" />
         </div>
       </div>
     </div>
