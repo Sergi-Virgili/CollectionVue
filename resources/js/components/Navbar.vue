@@ -19,16 +19,28 @@
 
       <div id="navbarToggler" class="collapse navbar-collapse">
         <ul class="navbar-nav ml-auto">
-          <router-link :to="{ name: 'home' }" class="dropdown-item pl-3">Home</router-link>
-
-          <router-link :to="{ name: 'myCollections' }" class="dropdown-item pl-3">My Collections</router-link>
-
-          <router-link :to="{ name: 'home' }" class="dropdown-item pl-3">The Best</router-link>
-
-          <router-link :to="{ name: 'favoriteCategories' }" class="dropdown-item pl-3">My Categories</router-link>
-          <router-link :to="{ name: 'collectionNew' }" class="dropdown-item pl-3">Add Collection</router-link>
-          <router-link :to="{ name: 'myFavorites' }" class="dropdown-item pl-3">My Favorites</router-link>
-          <!-- Authenticated -->
+          <li v-if="user">
+            <router-link :to="{ name: 'home' }" class="dropdown-item pl-3">Home</router-link>
+          </li>
+          <li v-if="user">
+            <router-link :to="{ name: 'myCollections' }" class="dropdown-item pl-3">My Collections</router-link>
+          </li>
+          <li v-if="user">
+            <router-link :to="{ name: 'home' }" class="dropdown-item pl-3">The Best</router-link>
+          </li>
+          <li v-if="user">
+            <router-link
+              :to="{ name: 'favoriteCategories' }"
+              class="dropdown-item pl-3"
+            >My Categories</router-link>
+          </li>
+          <li v-if="user">
+            <router-link :to="{ name: 'collectionNew' }" class="dropdown-item pl-3">Add Collection</router-link>
+          </li>
+          <li v-if="user">
+            <router-link :to="{ name: 'myFavorites' }" class="dropdown-item pl-3">My Favorites</router-link>
+            <!-- Authenticated -->
+          </li>
           <li v-if="user" class="nav-item dropdown">
             <a
               class="nav-link dropdown-toggle text-dark"
