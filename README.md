@@ -1,5 +1,8 @@
 # 🏺 CooLleCT – Plataforma de coleccionismo social
 
+![Coolect](https://www.uharts.co.uk/__data/assets/image/0005/359735/Generic-Large-Banner-Steve-McPherson-2000-x-600.jpg)
+
+
 > Aplicación Laravel para crear, compartir y descubrir colecciones temáticas.  
 > Usuarios pueden **crear categorías**, **subir colecciones e ítems**, **comentar**, y **dar “me gusta” (LoveIt)**.  
 > Es un sistema pensado para comunidades de coleccionistas — numismática, arte, cromos, minerales, NFTs o cualquier ámbito de catálogo.
